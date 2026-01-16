@@ -1,154 +1,957 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>创投图书、影视、作品售卖</title>
+    <title>创投文化空间 | 杭州创投影视有限公司</title>
+    <meta name="description" content="专业创投图书、影视作品、文创产品交易平台">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+        :root {
+            --primary: #1a237e;
+            --secondary: #ff6f00;
+            --accent: #00acc1;
+            --dark: #121212;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        header h1 {
-            margin: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        .section h2 {
-            font-size: 24px;
-            color: #333;
-        }
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
-        .product {
-            width: 30%;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 20px;
-        }
-        .product img {
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
             width: 100%;
-            height: auto;
-            border-radius: 8px;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
         }
-        .product h3 {
-            margin: 10px 0;
-            color: #333;
-        }
-        .product p {
-            color: #777;
-        }
-        .price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #E74C3C;
-        }
-        .contact-info {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 18px;
-            color: #555;
-        }
-        .contact-info a {
-            color: #3498DB;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
             text-decoration: none;
         }
-        .contact-info a:hover {
-            text-decoration: underline;
+
+        .logo i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.9)), 
+                        url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ff6f00, #ffab40);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--secondary), #ff8f00);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.3);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(255, 111, 0, 0.4);
+            background: linear-gradient(45deg, #ff8f00, var(--secondary));
+        }
+
+        /* 产品区域 */
+        .section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* 产品网格 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .product-image {
+            height: 250px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-category {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+
+        .buy-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .buy-button:hover {
+            background: #0d184d;
+            transform: scale(1.05);
+        }
+
+        /* 特色区域 */
+        .features {
+            background: var(--primary);
+            color: white;
+            padding: 5rem 5%;
+            margin-top: 5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 联系区域 */
+        .contact-section {
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            margin: 5rem auto;
+            max-width: 1000px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 172, 193, 0.2);
+        }
+
+        .contact-form button {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 172, 193, 0.3);
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-top: 5px;
+        }
+
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .contact-section {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 3rem 5%;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Header Section -->
-    <header>
-        <h1>杭州创投影视有限公司</h1>
-    </header>
-
-    <!-- Main Content Section -->
-    <div class="container">
-        <div class="section">
-            <h2>经营分支</h2>
-            <p>创投图书、影视、作品售卖</p>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-lightbulb"></i>
+            <span>创投文化空间</span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#books">图书</a>
+            <a href="#movies">影视</a>
+            <a href="#features">服务</a>
+            <a href="#contact">联系我们</a>
         </div>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
 
-        <!-- Books Section -->
-        <div class="section">
-            <h2>图书</h2>
-            <div class="product-list">
-                <div class="product">
-                    <img src="book1.jpg" alt="图书1">
-                    <h3>图书1：创投与未来</h3>
-                    <p>探索创投行业的趋势与挑战，适合创业者和投资人阅读。</p>
-                    <div class="price">￥99.99</div>
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="fade-in">创投智慧，启迪未来</h1>
+            <p class="fade-in">汇聚顶尖创投图书、精品影视作品与文创产品，打造创业投资领域的知识殿堂与文化高地</p>
+            <a href="#books" class="cta-button fade-in">探索产品 <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- 图书区域 -->
+    <section class="section" id="books">
+        <div class="section-header">
+            <h2>精品图书</h2>
+            <p>精选全球创投领域权威著作，涵盖创业、投资、管理、创新等全方位知识体系</p>
+        </div>
+        
+        <div class="product-grid">
+            <!-- 图书1 -->
+            <div class="product-card fade-in">
+                <div class="product-badge">畅销推荐</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="创投与未来">
                 </div>
-                <div class="product">
-                    <img src="book2.jpg" alt="图书2">
-                    <h3>图书2：影视投资宝典</h3>
-                    <p>详细介绍影视投资的流程与技巧，帮助你在影视行业成功。</p>
-                    <div class="price">￥129.99</div>
+                <div class="product-info">
+                    <div class="product-category">创业指南</div>
+                    <h3 class="product-title">创投与未来：颠覆性创新的商业逻辑</h3>
+                    <p class="product-description">深度剖析全球创投趋势，解读独角兽企业的成功密码，为创业者提供实战指南。</p>
+                    <div class="product-footer">
+                        <div class="price">
+                            ¥99.99 <span>¥129.99</span>
+                        </div>
+                        <button class="buy-button">
+                            <i class="fas fa-shopping-cart"></i> 立即购买
+                        </button>
+                    </div>
                 </div>
-                <div class="product">
-                    <img src="book3.jpg" alt="图书3">
-                    <h3>图书3：创业者的心路历程</h3>
-                    <p>分享成功创业者的故事和经验，激励你走向成功的道路。</p>
-                    <div class="price">￥89.99</div>
+            </div>
+            
+            <!-- 图书2 -->
+            <div class="product-card fade-in">
+                <div class="product-badge">新品上市</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1531346688376-ab6275c4725e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="影视投资宝典">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">影视投资</div>
+                    <h3 class="product-title">影视投资宝典：从剧本到银幕的资本运作</h3>
+                    <p class="product-description">系统讲解影视项目投资全流程，揭秘票房背后的资本逻辑与风险管理策略。</p>
+                    <div class="product-footer">
+                        <div class="price">
+                            ¥129.99 <span>¥159.99</span>
+                        </div>
+                        <button class="buy-button">
+                            <i class="fas fa-shopping-cart"></i> 立即购买
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 图书3 -->
+            <div class="product-card fade-in">
+                <div class="product-badge">限时特惠</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1491841573634-28140fc7ced7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="创业者的心路历程">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">创业故事</div>
+                    <h3 class="product-title">创业者的心路历程：从0到1的蜕变之路</h3>
+                    <p class="product-description">收录30位成功创业者的真实故事，分享他们在融资、团队、产品等方面的经验教训。</p>
+                    <div class="product-footer">
+                        <div class="price">
+                            ¥89.99 <span>¥119.99</span>
+                        </div>
+                        <button class="buy-button">
+                            <i class="fas fa-shopping-cart"></i> 立即购买
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Movies Section -->
-        <div class="section">
+    <!-- 影视作品区域 -->
+    <section class="section" id="movies">
+        <div class="section-header">
             <h2>影视作品</h2>
-            <div class="product-list">
-                <div class="product">
-                    <img src="movie1.jpg" alt="作品1">
-                    <h3>作品1：投资帝国</h3>
-                    <p>一部讲述创业者如何一步步成功的励志电影。</p>
+            <p>精心制作的创投主题影视作品，用影像讲述创业故事，展现商业世界的波澜壮阔</p>
+        </div>
+        
+        <div class="product-grid">
+            <!-- 作品1 -->
+            <div class="product-card fade-in">
+                <div class="product-badge">获奖作品</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="投资帝国">
                 </div>
-                <div class="product">
-                    <img src="movie2.jpg" alt="作品2">
-                    <h3>作品2：风险与机遇</h3>
-                    <p>揭示影视投资的背后故事，挑战与机遇并存。</p>
+                <div class="product-info">
+                    <div class="product-category">纪录片</div>
+                    <h3 class="product-title">投资帝国：风投巨头的崛起与博弈</h3>
+                    <p class="product-description">深入硅谷风投核心圈，揭示红杉、A16Z等顶级投资机构如何塑造科技产业格局。</p>
+                    <div class="product-footer">
+                        <div class="price">¥199.99</div>
+                        <button class="buy-button">
+                            <i class="fas fa-play-circle"></i> 观看预告
+                        </button>
+                    </div>
                 </div>
-                <div class="product">
-                    <img src="movie3.jpg" alt="作品3">
-                    <h3>作品3：创业之路</h3>
-                    <p>纪录片式电影，带你走进创业者的真实世界。</p>
+            </div>
+            
+            <!-- 作品2 -->
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="风险与机遇">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">专题片</div>
+                    <h3 class="product-title">风险与机遇：中国创投二十年风云录</h3>
+                    <p class="product-description">回顾中国创投行业发展历程，专访行业领军人物，展望未来投资趋势。</p>
+                    <div class="product-footer">
+                        <div class="price">¥159.99</div>
+                        <button class="buy-button">
+                            <i class="fas fa-play-circle"></i> 观看预告
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 作品3 -->
+            <div class="product-card fade-in">
+                <div class="product-badge">独家发行</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="创业之路">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">系列剧</div>
+                    <h3 class="product-title">创业之路：十二位创业者的春夏秋冬</h3>
+                    <p class="product-description">跟踪拍摄十二位不同领域创业者一整年，真实记录他们的挣扎、突破与成长。</p>
+                    <div class="product-footer">
+                        <div class="price">¥249.99</div>
+                        <button class="buy-button">
+                            <i class="fas fa-play-circle"></i> 观看预告
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Contact Information -->
-        <div class="contact-info">
-            <p>如有购买意向，请通过以下方式与我们联系：</p>
-            <p>邮箱：<a href="mailto:648974542@qq.com">648974542@qq.com</a></p>
+    <!-- 特色服务区域 -->
+    <section class="features" id="features">
+        <div class="section-header" style="color: white;">
+            <h2>我们的优势</h2>
+            <p>专业、专注、专心，为创投从业者提供全方位的知识服务与文化交流平台</p>
         </div>
-    </div>
+        
+        <div class="features-grid">
+            <div class="feature-item fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>精选内容</h3>
+                <p>由行业专家团队精心筛选，确保每一本书、每一部作品都具有深度和实用价值。</p>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>高清影视</h3>
+                <p>提供4K超高清画质，支持多平台播放，带来沉浸式的观影体验。</p>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>快速配送</h3>
+                <p>全国主要城市24小时送达，支持上门安装与调试服务。</p>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>专业咨询</h3>
+                <p>提供一对一创投咨询服务，帮助您选择最适合的学习资源。</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- 联系区域 -->
+    <section class="section" id="contact">
+        <div class="contact-section fade-in">
+            <div class="section-header">
+                <h2>联系我们</h2>
+                <p>有任何问题或合作意向？欢迎随时与我们联系，我们将在24小时内回复您</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <input type="text" placeholder="您的姓名" required>
+                        <input type="email" placeholder="电子邮箱" required>
+                        <input type="tel" placeholder="联系电话">
+                        <textarea rows="5" placeholder="您的留言或需求..." required></textarea>
+                        <button type="submit">发送消息 <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>公司地址</h3>
+                            <p>浙江省杭州市西湖区文二路创业大厦A座18层</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>电子邮箱</h3>
+                            <p><a href="mailto:648974542@qq.com" style="color: var(--accent);">648974542@qq.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>联系电话</h3>
+                            <p>0571-8888 9999</p>
+                            <p>工作日 9:00-18:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>创投文化空间</h3>
+                <p>致力于打造中国最具影响力的创投知识服务平台，连接创业者、投资者与创新思想。</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <div class="footer-links">
+                    <a href="#home">首页</a>
+                    <a href="#books">图书产品</a>
+                    <a href="#movies">影视作品</a>
+                    <a href="#features">服务优势</a>
+                    <a href="#contact">联系我们</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>服务支持</h3>
+                <div class="footer-links">
+                    <a href="#">常见问题</a>
+                    <a href="#">配送政策</a>
+                    <a href="#">退换货政策</a>
+                    <a href="#">隐私政策</a>
+                    <a href="#">用户协议</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>订阅资讯</h3>
+                <p>订阅我们的 newsletter，获取最新创投图书和影视作品推荐</p>
+                <div style="margin-top: 1rem;">
+                    <input type="email" placeholder="输入您的邮箱" style="width: 100%; padding: 0.8rem; border-radius: 5px; border: none;">
+                    <button class="buy-button" style="margin-top: 0.5rem; width: 100%;">订阅</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 杭州创投影视有限公司 版权所有 | 浙ICP备12345678号</p>
+            <p>创业投资知识服务平台 | 打造创投文化新地标</p>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.innerHTML = document.querySelector('.nav-links').classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有需要动画的元素
+        document.querySelectorAll('.product-card, .feature-item, .contact-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(26, 35, 126, 0.98)';
+                navbar.style.padding = '0.8rem 5%';
+            } else {
+                navbar.style.background = 'rgba(26, 35, 126, 0.95)';
+                navbar.style.padding = '1rem 5%';
+            }
+        });
+
+        // 表单提交
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢您的留言！我们会尽快与您联系。');
+            this.reset();
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 移动端点击后关闭菜单
+                    if(window.innerWidth <= 992) {
+                        document.querySelector('.nav-links').classList.remove('active');
+                        document.getElementById('mobileMenuBtn').innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
