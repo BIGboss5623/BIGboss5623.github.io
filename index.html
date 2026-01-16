@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>杭州创投影视有限公司 | 杭州创投影视有限公司</title>
-    <meta name="description" content="专业创投图书、影视作品、文创产品交易平台">
+    <!-- 优化标题：植入公司全称+核心业务，符合搜索习惯 -->
+    <title>杭州创投影视有限公司官网 | 影视制作_广告代理_创投图书出版</title>
+    <!-- 优化元描述：包含公司名+信用代码+地址+核心业务，强化唯一性关联 -->
+    <meta name="description" content="杭州创投影视有限公司（统一信用代码 913301035687501626），专注影视制作发行、广告设计、创投类图书出版，提供 4K 影视内容、权威创投著作及一对一咨询服务，地址：杭州市下城区朝晖路 168 号钛合国际大厦。">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -165,7 +167,7 @@
             background: linear-gradient(45deg, #ff8f00, var(--secondary));
         }
 
-        /* 产品区域 */
+        /* 通用区块样式 */
         .section {
             padding: 5rem 5%;
             max-width: 1400px;
@@ -203,6 +205,60 @@
             max-width: 600px;
             margin: 0 auto;
             font-size: 1.1rem;
+        }
+
+        /* 新增：关于我们/企业资质板块样式 */
+        .about-section {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .qualification-card {
+            background: var(--light);
+            border-left: 4px solid var(--secondary);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .qualification-item {
+            display: flex;
+            margin-bottom: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .qualification-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            margin-top: 5px;
+            min-width: 20px;
+        }
+
+        .qualification-item strong {
+            display: inline-block;
+            width: 120px;
+            color: var(--dark);
         }
 
         /* 产品网格 */
@@ -539,6 +595,10 @@
             .contact-section {
                 padding: 2rem;
             }
+            
+            .about-section {
+                padding: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -561,11 +621,15 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- 导航栏：新增"关于我们"导航项 -->
     <nav class="navbar">
         <a href="#" class="logo">
             <i class="fas fa-lightbulb"></i>
@@ -574,6 +638,7 @@
         
         <div class="nav-links">
             <a href="#home">首页</a>
+            <a href="#about">关于我们</a>
             <a href="#books">图书</a>
             <a href="#movies">影视</a>
             <a href="#features">服务</a>
@@ -591,6 +656,59 @@
             <h1 class="fade-in">创投智慧，启迪未来</h1>
             <p class="fade-in">汇聚顶尖创投图书、精品影视作品与文创产品，打造创业投资领域的知识殿堂与文化高地</p>
             <a href="#books" class="cta-button fade-in">探索产品 <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- 新增：关于我们/企业资质板块 -->
+    <section class="section" id="about">
+        <div class="section-header">
+            <h2>关于我们</h2>
+            <p>深耕创投文化领域，以专业资质和丰富经验为客户提供全方位的文创与咨询服务</p>
+        </div>
+        
+        <div class="about-section fade-in">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>公司简介</h3>
+                    <p>杭州创投影视有限公司成立于2010年，是经杭州市市场监督管理局核准登记的专业文创类企业，统一社会信用代码913301035687501626。</p>
+                    <p>公司深耕创投文化领域十余年，核心业务覆盖：制作发行专题/综艺/电视剧、广告设计制作、书报刊零售、创投咨询等，致力于为创业者、投资者提供专业的知识服务与文化产品。</p>
+                    <p>公司坐落于杭州市下城区朝晖路168号钛合国际大厦2号楼1803室，拥有专业的创作、制作、咨询团队，累计服务超千家企业与个人客户，是创投文化领域的标杆企业。</p>
+                </div>
+                
+                <div class="qualification-card">
+                    <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">企业核心资质</h3>
+                    <div class="qualification-item">
+                        <i class="fas fa-id-card"></i>
+                        <div>
+                            <strong>公司全称：</strong>杭州创投影视有限公司
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <strong>信用代码：</strong>913301035687501626
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>办公地址：</strong>浙江省杭州市下城区朝晖路168号钛合国际大厦2号楼1803室
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <i class="fas fa-briefcase"></i>
+                        <div>
+                            <strong>核心业务：</strong>制作发行专题/综艺/电视剧、广告设计制作、书报刊零售、创投咨询
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>企业状态：</strong>存续（在营、开业、在册）
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -775,7 +893,7 @@
         </div>
     </section>
 
-    <!-- 联系区域 -->
+    <!-- 联系区域：修正地址信息 -->
     <section class="section" id="contact">
         <div class="contact-section fade-in">
             <div class="section-header">
@@ -799,7 +917,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
                             <h3>公司地址</h3>
-                            <p>浙江省杭州市西湖区文二路创业大厦A座18层</p>
+                            <p>浙江省杭州市下城区朝晖路168号钛合国际大厦2号楼1803室</p>
                         </div>
                     </div>
                     
@@ -831,12 +949,12 @@
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- 页脚：补充企业核心信息 -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h3>创投文化空间</h3>
-                <p>致力于打造中国最具影响力的创投知识服务平台，连接创业者、投资者与创新思想。</p>
+                <p>杭州创投影视有限公司（统一社会信用代码：913301035687501626）致力于打造中国最具影响力的创投知识服务平台，连接创业者、投资者与创新思想。</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-weixin"></i></a>
                     <a href="#"><i class="fab fa-weibo"></i></a>
@@ -848,6 +966,7 @@
                 <h3>快速链接</h3>
                 <div class="footer-links">
                     <a href="#home">首页</a>
+                    <a href="#about">关于我们</a>
                     <a href="#books">图书产品</a>
                     <a href="#movies">影视作品</a>
                     <a href="#features">服务优势</a>
@@ -877,8 +996,8 @@
         </div>
         
         <div class="copyright">
-            <p>&copy; 2023 杭州创投影视有限公司 版权所有 | 浙ICP备12345678号</p>
-            <p>创业投资知识服务平台 | 打造创投文化新地标</p>
+            <p>&copy; 2023 杭州创投影视有限公司 版权所有 | 统一社会信用代码：913301035687501626 | 浙ICP备12345678号</p>
+            <p>地址：浙江省杭州市下城区朝晖路168号钛合国际大厦2号楼1803室</p>
         </div>
     </footer>
 
@@ -905,8 +1024,8 @@
             });
         }, observerOptions);
 
-        // 观察所有需要动画的元素
-        document.querySelectorAll('.product-card, .feature-item, .contact-section').forEach(el => {
+        // 观察所有需要动画的元素（新增about-section）
+        document.querySelectorAll('.product-card, .feature-item, .contact-section, .about-section').forEach(el => {
             observer.observe(el);
         });
 
