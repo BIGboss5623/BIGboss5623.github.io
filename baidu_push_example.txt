@@ -1,0 +1,17 @@
+百度主动推送说明：
+
+1. 先进入百度搜索资源平台，添加并验证站点：https://hzct.pages.dev
+2. 进入：资源提交 → 普通收录 → API提交。
+3. 百度会给你一个 token，例如：
+   http://data.zz.baidu.com/urls?site=https://hzct.pages.dev&token=你的token
+4. 将下面两行网址作为推送内容：
+   https://hzct.pages.dev/
+   https://hzct.pages.dev/company.html
+5. 如果不会用命令行，可以先用百度后台的“手动提交/普通收录”提交以上两个链接。
+
+curl 推送示例：
+curl -H 'Content-Type:text/plain' --data-binary @urls.txt 'http://data.zz.baidu.com/urls?site=https://hzct.pages.dev&token=你的token'
+
+urls.txt 内容：
+https://hzct.pages.dev/
+https://hzct.pages.dev/company.html
