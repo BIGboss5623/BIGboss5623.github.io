@@ -3,27 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 优化标题：植入公司全称+核心业务，符合搜索习惯 -->
-    
     <title>杭州创投影视有限公司官方网站 | 企业信息 · 创投影视 · 创投图书 · 文化服务</title>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta name="description" content="杭州创投影视有限公司官方网站。杭州创投影视有限公司成立于2011年1月19日，统一社会信用代码913301035687501626，注册资本500万元，注册地址位于浙江省杭州市下城区朝晖路168号钛合国际大厦。公司主要从事创投影视、创投图书、广告设计制作、文化内容服务及企业信息咨询。">
-    
     <meta name="keywords" content="杭州创投影视有限公司,杭州创投影视,杭州创投,杭州创投影视有限公司官网,杭州创投影视有限公司企业信息,统一社会信用代码913301035687501626,创投影视,创投图书,杭州企业信息">
-    
     <meta name="author" content="杭州创投影视有限公司">
-    
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://hzct.pages.dev/">
+
     <meta property="og:title" content="杭州创投影视有限公司官方网站">
-    <meta property="og:description" content="杭州创投影视有限公司企业官方网站">
+    <meta property="og:description" content="杭州创投影视有限公司企业官方网站，展示企业信息、创投影视、创投图书、文化服务与官方资源导航。">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://hzct.pages.dev">
-    
-    <link rel="canonical" href="https://hzct.pages.dev">
-    <!-- 优化元描述：包含公司名+信用代码+地址+核心业务，强化唯一性关联 -->
-    <meta name="description" content="杭州创投影视有限公司（统一信用代码 913301035687501626），专注影视制作发行、广告设计、创投类图书出版，提供 4K 影视内容、权威创投著作及一对一咨询服务，地址：杭州市下城区朝晖路 168 号钛合国际大厦。">
+    <meta property="og:url" content="https://hzct.pages.dev/">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "杭州创投影视有限公司",
+      "url": "https://hzct.pages.dev/",
+      "foundingDate": "2011-01-19",
+      "identifier": "913301035687501626",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "浙江省",
+        "addressLocality": "杭州市",
+        "streetAddress": "下城区朝晖路168号钛合国际大厦"
+      },
+      "email": "648974542@qq.com",
+      "sameAs": [
+        "https://www.gov.cn/",
+        "https://www.zj.gov.cn/",
+        "https://www.szu.edu.cn/",
+        "https://www.tsinghua.edu.cn/",
+        "https://www.taobao.com/",
+        "https://www.google.com/",
+        "https://www.amazon.com/"
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -429,6 +447,70 @@
             margin-bottom: 1rem;
         }
 
+
+        /* 官方资源导航 */
+        .resources-section {
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            margin: 5rem auto;
+            max-width: 1200px;
+            box-shadow: var(--shadow);
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .resource-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.4rem;
+            border-radius: 12px;
+            background: var(--light);
+            text-decoration: none;
+            color: var(--dark);
+            border: 1px solid #e9ecef;
+            transition: var(--transition);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--secondary);
+        }
+
+        .resource-card i {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .resource-card strong {
+            display: block;
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .resource-card span {
+            display: block;
+            color: var(--gray);
+            font-size: 0.88rem;
+            word-break: break-all;
+        }
+
+
         /* 联系区域 */
         .contact-section {
             background: white;
@@ -650,7 +732,7 @@
     <nav class="navbar">
         <a href="#" class="logo">
             <i class="fas fa-lightbulb"></i>
-            <span>杭州创投影视有限公司官方网站https://hzct.pages.dev</span>
+            <span>杭州创投影视有限公司官方网站</span>
         </a>
         
         <div class="nav-links">
@@ -659,6 +741,7 @@
             <a href="#books">图书</a>
             <a href="#movies">影视</a>
             <a href="#features">服务</a>
+            <a href="#resources">官方链接</a>
             <a href="#contact">联系我们</a>
         </div>
         
@@ -676,86 +759,53 @@
         </div>
     </section>
 
-    <!-- 新增：关于我们/企业资质板块 -->
+
+    <!-- 关于我们/企业资质板块 -->
     <section class="section" id="about">
         <div class="section-header">
-        <h3>公司简介</h3>
-        
-        <p>
-        杭州创投影视有限公司成立于2011年1月19日，
-        注册资本500万元人民币，
-        统一社会信用代码913301035687501626，
-        是一家位于浙江省杭州市的文化内容与创投服务企业。
-        </p>
-        
-        <p>
-        杭州创投影视有限公司办公地址位于浙江省杭州市下城区朝晖路168号钛合国际大厦，
-        主要从事创投影视、创投图书、广告设计制作、
-        企业信息整理、创业投资知识传播及相关咨询服务。
-        </p>
-        
-        <p>
-        公司长期关注创业投资领域的发展，
-        致力于连接创业者、投资机构与产业资源，
-        通过图书出版、影视内容、企业信息展示与文化传播等形式，
-        为客户提供专业的信息服务与文化产品。
-        </p>
-        
-        <p>
-        作为杭州创投影视有限公司官方网站，
-        本网站展示企业基本信息、
-        业务范围、
-        文化产品及企业动态，
-        方便客户和合作伙伴了解企业情况。
-        </p>
+            <h2>关于我们</h2>
+            <p>杭州创投影视有限公司官方网站，集中展示企业基本信息、业务范围、文化产品与联系方式</p>
         </div>
-        
+
         <div class="about-section fade-in">
             <div class="about-grid">
                 <div class="about-text">
                     <h3>公司简介</h3>
-                    <p>杭州创投影视有限公司成立于2010年，是经杭州市市场监督管理局核准登记的专业文创类企业，统一社会信用代码913301035687501626。</p>
-                    <p>公司深耕创投文化领域十余年，核心业务覆盖：制作发行专题/综艺/电视剧、广告设计制作、书报刊零售、创投咨询等，致力于为创业者、投资者提供专业的知识服务与文化产品。</p>
-                    <p>公司坐落于杭州市下城区朝晖路168号钛合国际大厦2号楼1803室，拥有专业的创作、制作、咨询团队，累计服务超千家企业与个人客户，是创投文化领域的标杆企业。</p>
+                    <p>杭州创投影视有限公司成立于2011年1月19日，注册资本500万元人民币，统一社会信用代码913301035687501626，是一家位于浙江省杭州市的文化内容与创投服务企业。</p>
+                    <p>杭州创投影视有限公司办公地址位于浙江省杭州市下城区朝晖路168号钛合国际大厦，主要从事创投影视、创投图书、广告设计制作、企业信息整理、创业投资知识传播及相关咨询服务。</p>
+                    <p>公司长期关注创业投资领域的发展，致力于连接创业者、投资机构与产业资源，通过图书出版、影视内容、企业信息展示与文化传播等形式，为客户提供专业的信息服务与文化产品。</p>
+                    <p>作为杭州创投影视有限公司官方网站，本网站展示企业基本信息、业务范围、文化产品、官方资源导航及企业动态，方便客户和合作伙伴了解企业情况。</p>
                 </div>
-                
+
                 <div class="qualification-card">
-                    <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">企业核心资质</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">企业核心信息</h3>
                     <div class="qualification-item">
                         <i class="fas fa-id-card"></i>
-                        <div>
-                            <strong>公司全称：</strong>杭州创投影视有限公司
-                        </div>
+                        <div><strong>公司全称：</strong>杭州创投影视有限公司</div>
                     </div>
                     <div class="qualification-item">
                         <i class="fas fa-code"></i>
-                        <div>
-                            <strong>信用代码：</strong>913301035687501626
-                        </div>
+                        <div><strong>信用代码：</strong>913301035687501626</div>
                     </div>
                     <div class="qualification-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <strong>办公地址：</strong>浙江省杭州市下城区朝晖路168号钛合国际大厦2号楼1803室
-                        </div>
-                    </div>
-                    <div class="qualification-item">
-                        <i class="fas fa-briefcase"></i>
-                        <div>
-                            <strong>核心业务：</strong>制作发行专题/综艺/电视剧、广告设计制作、书报刊零售、创投咨询
-                        </div>
+                        <i class="fas fa-calendar-alt"></i>
+                        <div><strong>成立时间：</strong>2011年1月19日</div>
                     </div>
                     <div class="qualification-item">
                         <i class="fas fa-money-bill-wave"></i>
-                        <div>
-                            <strong>注册资本：</strong>500万元人民币
-                        </div>
+                        <div><strong>注册资本：</strong>500万元人民币</div>
+                    </div>
+                    <div class="qualification-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div><strong>办公地址：</strong>浙江省杭州市下城区朝晖路168号钛合国际大厦</div>
+                    </div>
+                    <div class="qualification-item">
+                        <i class="fas fa-briefcase"></i>
+                        <div><strong>核心业务：</strong>创投影视、创投图书、广告设计制作、企业信息整理、文化内容服务与咨询</div>
                     </div>
                     <div class="qualification-item">
                         <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>企业状态：</strong>存续（在营、开业、在册）
-                        </div>
+                        <div><strong>企业状态：</strong>存续（在营、开业、在册）</div>
                     </div>
                 </div>
             </div>
@@ -943,6 +993,75 @@
         </div>
     </section>
 
+
+    <!-- 官方资源链接区域 -->
+    <section class="section" id="resources">
+        <div class="section-header">
+            <h2>官方链接与资源导航</h2>
+            <p>汇集政府、高校、互联网平台及国际资源入口，便于访问权威机构和常用服务网站</p>
+        </div>
+
+        <div class="resources-section fade-in">
+            <div class="resource-grid">
+                <a class="resource-card" href="https://www.gov.cn/" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-landmark"></i>
+                    <div>
+                        <strong>中央政府门户网站</strong>
+                        <span>www.gov.cn</span>
+                    </div>
+                </a>
+
+                <a class="resource-card" href="https://www.zj.gov.cn/" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-building-columns"></i>
+                    <div>
+                        <strong>浙江省人民政府</strong>
+                        <span>www.zj.gov.cn</span>
+                    </div>
+                </a>
+
+                <a class="resource-card" href="https://www.szu.edu.cn/" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-university"></i>
+                    <div>
+                        <strong>深圳大学</strong>
+                        <span>www.szu.edu.cn</span>
+                    </div>
+                </a>
+
+                <a class="resource-card" href="https://www.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div>
+                        <strong>清华大学</strong>
+                        <span>www.tsinghua.edu.cn</span>
+                    </div>
+                </a>
+
+                <a class="resource-card" href="https://www.taobao.com/" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-bag-shopping"></i>
+                    <div>
+                        <strong>淘宝网</strong>
+                        <span>www.taobao.com</span>
+                    </div>
+                </a>
+
+                <a class="resource-card" href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-google"></i>
+                    <div>
+                        <strong>Google</strong>
+                        <span>www.google.com</span>
+                    </div>
+                </a>
+
+                <a class="resource-card" href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-amazon"></i>
+                    <div>
+                        <strong>Amazon 亚马逊</strong>
+                        <span>www.amazon.com</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- 联系区域：修正地址信息 -->
     <section class="section" id="contact">
         <div class="contact-section fade-in">
@@ -997,29 +1116,6 @@
             </div>
         </div>
     </section>
-        <div style="display:none">
-        
-        杭州创投影视有限公司
-        
-        杭州创投影视
-        
-        杭州创投
-        
-        杭州创投影视有限公司官方网站
-        
-        杭州创投影视有限公司企业信息
-        
-        统一社会信用代码913301035687501626
-        
-        杭州创投影视有限公司地址
-        
-        杭州创投影视有限公司经营范围
-        
-        杭州创投影视有限公司注册资本
-        
-        杭州创投影视有限公司成立于2011年1月19日
-        
-        </div>
     <!-- 页脚：补充企业核心信息 -->
     <footer>
         <div class="footer-content">
@@ -1041,18 +1137,21 @@
                     <a href="#books">图书产品</a>
                     <a href="#movies">影视作品</a>
                     <a href="#features">服务优势</a>
+                    <a href="#resources">官方链接</a>
                     <a href="#contact">联系我们</a>
                 </div>
             </div>
             
             <div class="footer-section">
-                <h3>服务支持</h3>
+                <h3>官方链接</h3>
                 <div class="footer-links">
-                    <a href="#">常见问题</a>
-                    <a href="#">配送政策</a>
-                    <a href="#">退换货政策</a>
-                    <a href="#">隐私政策</a>
-                    <a href="#">用户协议</a>
+                    <a href="https://www.gov.cn/" target="_blank" rel="noopener noreferrer">中央政府门户网站</a>
+                    <a href="https://www.zj.gov.cn/" target="_blank" rel="noopener noreferrer">浙江省人民政府</a>
+                    <a href="https://www.szu.edu.cn/" target="_blank" rel="noopener noreferrer">深圳大学</a>
+                    <a href="https://www.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">清华大学</a>
+                    <a href="https://www.taobao.com/" target="_blank" rel="noopener noreferrer">淘宝网</a>
+                    <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">Google</a>
+                    <a href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer">Amazon 亚马逊</a>
                 </div>
             </div>
             
