@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" rx="32" fill="#f7f2e8"/>
+  <rect x="34" y="34" width="732" height="432" rx="28" fill="#fffdf8" stroke="#d8b36d" stroke-width="4"/>
+  <circle cx="400" cy="220" r="148" fill="#f4d06f" stroke="#c07f1c" stroke-width="8"/>
+  <path d="M289 235c0-61 49-111 111-111 41 0 77 22 97 56" fill="none" stroke="#a15713" stroke-width="16" stroke-linecap="round"/>
+  <rect x="280" y="248" width="240" height="112" rx="18" fill="#d9971f"/>
+  <rect x="306" y="272" width="188" height="68" rx="14" fill="#fff6d8"/>
+  <path d="M320 328h160" stroke="#8d4c0f" stroke-width="10" stroke-linecap="round"/>
+  <path d="M355 188l45-46 45 46" fill="none" stroke="#7a2f0c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="248" y="362" width="304" height="36" rx="18" fill="#8d4c0f"/>
+  <text x="400" y="390" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans SC, Arial" font-size="26" font-weight="700" fill="#fffdf8">五个一工程奖</text>
+  <text x="400" y="422" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans SC, Arial" font-size="24" font-weight="600" fill="#7a4f16">精神文明建设 “五个一工程”奖</text>
+</svg>

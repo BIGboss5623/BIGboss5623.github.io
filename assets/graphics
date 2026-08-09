@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+  <rect width="900" height="560" rx="30" fill="#0f1f2e"/>
+  <rect x="38" y="38" width="824" height="484" rx="26" fill="#132838" stroke="#4c6f86" stroke-width="4"/>
+  <rect x="92" y="108" width="716" height="348" rx="16" fill="#f3f3f0"/>
+  <rect x="124" y="142" width="652" height="284" rx="12" fill="#f7d8a2"/>
+  <path d="M170 386c68-86 112-146 197-182 49-21 115-26 182-12 58 12 103 31 152 84" fill="none" stroke="#85451c" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="304" cy="252" r="62" fill="#d6f0ff" stroke="#4d7a95" stroke-width="8"/>
+  <path d="M244 252c0-32 26-58 58-58 22 0 42 12 52 31" fill="none" stroke="#14506a" stroke-width="8" stroke-linecap="round"/>
+  <rect x="454" y="245" width="198" height="98" rx="12" fill="#ffffff" stroke="#b56820" stroke-width="4"/>
+  <path d="M496 318l34-63 38 63" fill="none" stroke="#c7761b" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M588 318l18-52 24 52" fill="none" stroke="#c7761b" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="450" y="202" font-family="Microsoft YaHei, Noto Sans SC, Arial" font-size="46" font-weight="700" fill="#182631">鸡毛飞上天</text>
+  <text x="450" y="242" font-family="Microsoft YaHei, Noto Sans SC, Arial" font-size="24" font-weight="600" fill="#5b6b75">电视剧 · 影视项目</text>
+  <rect x="620" y="378" width="126" height="28" rx="14" fill="#b91c1c"/>
+  <text x="683" y="397" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans SC, Arial" font-size="18" font-weight="700" fill="#ffffff">编辑与广告</text>
+</svg>
