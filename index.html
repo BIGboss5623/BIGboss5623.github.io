@@ -41,7 +41,6 @@
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -309,6 +308,45 @@
 
         .spotlight-card li { margin-bottom: 0.45rem; }
 
+        .drama-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        .drama-gallery figure {
+            position: relative;
+            min-height: 190px;
+            margin: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            background: #10283d;
+            box-shadow: var(--shadow);
+        }
+
+        .drama-gallery img {
+            width: 100%;
+            height: 100%;
+            min-height: 190px;
+            object-fit: cover;
+            transition: transform .45s ease;
+        }
+
+        .drama-gallery figure:hover img { transform: scale(1.04); }
+
+        .drama-gallery figcaption {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 2.4rem .85rem .7rem;
+            color: white;
+            font-size: .86rem;
+            font-weight: 600;
+            background: linear-gradient(transparent, rgba(0, 0, 0, .78));
+        }
+
         .section {
             padding: 5rem 5%;
             max-width: 1400px;
@@ -434,6 +472,8 @@
         .product-image { height: 235px; width: 100%; overflow: hidden; }
 
         .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+
+        .product-image.poster-image img { object-position: center 18%; }
 
         .product-card:hover .product-image img { transform: scale(1.05); }
 
@@ -668,6 +708,7 @@
         }
 
         @media (max-width: 992px) {
+            .drama-gallery { grid-template-columns: 1fr 1fr; }
             .hero h1 { font-size: 2.7rem; }
             .nav-links {
                 display: none;
@@ -691,6 +732,7 @@
             .section { padding: 3.5rem 5%; }
             .section-header h2 { font-size: 2rem; }
             .product-grid, .resource-grid { grid-template-columns: 1fr; }
+            .drama-gallery { grid-template-columns: 1fr; }
             .features-grid { grid-template-columns: 1fr; }
             .about-grid { grid-template-columns: 1fr; }
             .product-footer { flex-direction: column; align-items: flex-start; }
@@ -862,10 +904,17 @@
             </div>
         </div>
 
+        <div class="drama-gallery fade-in" aria-label="鸡毛飞上天电视剧剧照">
+            <figure><img src="assets/images/jimao-still-1.jpg" alt="鸡毛飞上天电视剧剧照，两位男性角色交谈" loading="lazy"><figcaption>商路上的选择与坚持</figcaption></figure>
+            <figure><img src="assets/images/jimao-still-2.jpg" alt="鸡毛飞上天电视剧剧照，陈江河与骆玉珠" loading="lazy"><figcaption>陈江河与骆玉珠</figcaption></figure>
+            <figure><img src="assets/images/jimao-still-3.jpg" alt="鸡毛飞上天电视剧剧照，骆玉珠经营摊位" loading="lazy"><figcaption>从“鸡毛换糖”到创业经商</figcaption></figure>
+            <figure><img src="assets/images/jimao-still-4.jpg" alt="鸡毛飞上天电视剧海外商业场景" loading="lazy"><figcaption>从义乌走向世界的商业故事</figcaption></figure>
+        </div>
+
         <div class="product-grid">
             <div class="product-card fade-in">
                 <div class="product-badge">奖项展示</div>
-                <div class="product-image"><img src="assets/graphics/qige-yi-award.svg" alt="五个一工程奖展示"></div>
+                <div class="product-image"><img src="assets/qige-yi-award.svg" alt="五个一工程奖展示"></div>
                 <div class="product-info">
                     <div class="product-category">荣誉奖项</div>
                     <h3 class="product-title">精神文明建设“五个一工程”奖</h3>
@@ -911,13 +960,13 @@
             </div>
             <div class="product-card fade-in">
                 <div class="product-badge">代表项目</div>
-                <div class="product-image"><img src="assets/graphics/ji-mao-fei-shang-tian.svg" alt="鸡毛飞上天电视剧项目展示"></div>
+                <div class="product-image poster-image"><img src="assets/images/jimao-poster.jpg" alt="鸡毛飞上天电视剧海报" loading="lazy"></div>
                 <div class="product-info">
                     <div class="product-category">电视剧</div>
                     <h3 class="product-title">《鸡毛飞上天》电视剧</h3>
-                    <p class="product-description">参与项目的编辑与广告工作，承担内容策划与宣传推广支持。该项目曾获得“精神文明建设五个一工程奖”，并获得 5 个一等奖，体现公司在影视内容与传播服务方面的综合能力。</p>
+                    <p class="product-description">该剧由余丁执导、申捷编剧，张译、殷桃领衔主演，以陈江河与骆玉珠的感情和创业经历为线索，展现义乌改革发展历程。公司参与项目编辑与广告相关工作。</p>
                     <div class="product-footer">
-                        <a class="buy-button mail-link" href="#" data-subject="影视合作：鸡毛飞上天电视剧" data-body="您好，我想了解《鸡毛飞上天》电视剧相关合作与项目情况。"><i class="fas fa-envelope"></i> 联系咨询</a>
+                        <a class="buy-button" href="https://baike.baidu.com/item/%E9%B8%A1%E6%AF%9B%E9%A3%9E%E4%B8%8A%E5%A4%A9/18751525" target="_blank" rel="noopener noreferrer"><i class="fas fa-circle-info"></i> 查看作品资料</a>
                     </div>
                 </div>
             </div>        </div>
