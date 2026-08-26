@@ -741,6 +741,18 @@
             .logo span { max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
         }
     </style>
+    <style>
+      .innovation-zone{background:linear-gradient(135deg,#070d18,#111c2d 58%,#18293b)}
+      .quant-window,.news-window{background:#0d1726;border-color:#3a4a61;box-shadow:0 28px 70px #0007}
+      .window-bar{color:#c1cbd8;border-bottom-color:#34445b}.quant-brand small,.innovation-head p{color:#c3cedc}.metric{background:#152236;border-color:#35455c}.metric span{color:#abb8c9}.metric strong{color:#f7f9fc}.metric .risk{color:#ff9ca5}.live-pill{background:#163b36;color:#85e3c1}
+      .mini-chart{height:190px;background:linear-gradient(180deg,#18324655,transparent),repeating-linear-gradient(0deg,transparent 0 46px,#ffffff12 47px),repeating-linear-gradient(90deg,transparent 0 90px,#ffffff0d 91px);border:1px solid #2f4259;border-radius:8px}.mini-chart canvas{width:100%;height:100%;display:block}
+      .quant-actions a{color:#f7f9fc;text-decoration:none}.quant-actions a:first-child{background:#e5bf68;color:#101a29}.quant-actions a:last-child{border-color:#8190a5;background:#17253a}.quant-actions a:hover,.quant-actions a:focus-visible{transform:translateY(-2px);box-shadow:0 8px 22px #0005}.quant-actions a:focus-visible,.news-item:focus-visible,.news-more:focus-visible{outline:3px solid #f0c86e;outline-offset:3px}
+      .news-list{display:grid;grid-template-columns:1fr 1fr;padding:8px 18px 14px}.news-item{padding:16px 13px;color:#f4f7fb!important;border-bottom:1px solid #34445b;text-decoration:none}.news-item:nth-child(odd){border-right:1px solid #34445b}.news-item:hover{padding-left:17px;background:#18263a}.news-item small{color:#f0c86e}.news-item h3{color:#f7f9fc!important;font-size:.96rem}.news-item p{color:#b5c1d1}.news-more{color:#f0c86e!important;text-decoration:none;font-weight:700}
+      @media(max-width:560px){.news-list{grid-template-columns:1fr}.news-item:nth-child(odd){border-right:0}.quant-actions{flex-direction:column}.quant-actions a{text-align:center}}
+      @media(prefers-reduced-motion:reduce){.float-slow,.innovation-zone:before{animation:none!important}}
+      .innovation-grid{grid-template-columns:1fr 1fr;align-items:stretch}.quant-window,.news-window{border-radius:14px}.float-slow{animation:none}.quant-window{display:flex;flex-direction:column}.quant-body{display:flex;flex:1;flex-direction:column}.quant-actions{margin-top:auto;padding-top:20px}.window-bar b{color:#e9eef5;letter-spacing:.03em}.window-bar span{padding:.18rem .5rem;border:1px solid #4a5b72;border-radius:99px;color:#cbd5e2}.news-item{position:relative}.news-item:after{content:"↗";position:absolute;right:12px;top:14px;color:#71839b;transition:.2s}.news-item:hover:after{color:#f0c86e;transform:translate(2px,-2px)}.news-item small{display:inline-flex;align-items:center;min-height:22px}.news-item h3{padding-right:18px}.source-note{margin:0 20px 16px;color:#91a2b7;font-size:.73rem;line-height:1.55}.snapshot-note{display:flex;justify-content:space-between;gap:1rem;margin-top:10px;color:#99a9bc;font-size:.73rem}.snapshot-note b{color:#cbd6e3;font-weight:500}
+      @media(max-width:980px){.innovation-grid{grid-template-columns:1fr}.quant-window,.news-window{min-height:auto}}
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -833,8 +845,8 @@
     <section class="innovation-zone" id="innovation">
         <div class="innovation-head"><div><span class="innovation-label">DIGITAL LAB · NEWSROOM</span><h2>量化研究与重点新闻</h2></div><p>将数据研究工具与权威信息入口放进同一个窗口。量化结果仅供研究与学习，不构成任何投资建议。</p></div>
         <div class="innovation-grid">
-            <article class="quant-window float-slow"><div class="window-bar"><i></i><i></i><i></i><b>FundPilot 公开研究台</b><span>只读演示</span></div><div class="quant-body"><div class="quant-top"><div class="quant-brand"><strong>基金趋势研判</strong><small>策略回测 · 风险观察 · 多基金比较</small></div><span class="live-pill">● PUBLIC DEMO</span></div><div class="metric-row"><div class="metric"><span>示例标的</span><strong>110017</strong></div><div class="metric"><span>数据日期</span><strong>2026-08-18</strong></div><div class="metric"><span>风险声明</span><strong class="risk">研究用途</strong></div></div><div class="mini-chart" aria-label="量化趋势动态示意图"><div class="chart-line"></div></div><div class="quant-actions"><a href="fund/">打开公开演示</a><a href="https://live-fund.zgland.com/" target="_blank" rel="noopener">进入完整工作台</a></div></div></article>
-            <aside class="news-window"><div class="window-bar"><i></i><i></i><i></i><b>重点新闻</b><span>权威来源</span></div><div class="news-list"><a class="news-item" href="https://www.gov.cn/yaowen/" target="_blank" rel="noopener"><small>中国政府网 · 国务院要闻</small><h3>政策部署与经济社会发展重点</h3><p>查看国务院最新重要政策和政务信息</p></a><a class="news-item" href="https://www.news.cn/fortune/" target="_blank" rel="noopener"><small>新华网 · 财经</small><h3>宏观经济、产业发展与资本市场观察</h3><p>进入新华网财经频道查看最新报道</p></a><a class="news-item" href="https://www.news.cn/tech/" target="_blank" rel="noopener"><small>新华网 · 科技</small><h3>人工智能、数字经济与科技创新动态</h3><p>进入新华网科技频道查看最新报道</p></a></div><a class="news-more" href="https://www.news.cn/" target="_blank" rel="noopener">进入新华网查看更多 →</a></aside>
+            <article class="quant-window"><div class="window-bar"><i></i><i></i><i></i><b>FundPilot 量化研究</b><span>公开只读</span></div><div class="quant-body"><div class="quant-top"><div class="quant-brand"><strong>基金趋势研判</strong><small>策略回测 · 风险观察 · 多基金比较</small></div><span class="live-pill">● DEMO ONLINE</span></div><div class="metric-row"><div class="metric"><span>示例标的</span><strong>110017</strong></div><div class="metric"><span>快照日期</span><strong>2026-08-18</strong></div><div class="metric"><span>使用范围</span><strong class="risk">研究学习</strong></div></div><div class="mini-chart" role="img" aria-label="基金净值趋势动态示意图"><canvas id="quantPreviewChart"></canvas></div><div class="snapshot-note"><span><b>示意曲线</b> · 用于呈现产品交互效果</span><span>不连接证券账户</span></div><div class="quant-actions"><a href="fund/">进入公开研究演示</a><a href="help.html">阅读使用与风险说明</a></div></div></article>
+            <aside class="news-window"><div class="window-bar"><i></i><i></i><i></i><b>权威资讯导航</b><span>六个方向</span></div><div class="news-list"><a class="news-item" href="https://www.gov.cn/yaowen/" target="_blank" rel="noopener"><small>政策 · 中国政府网</small><h3>国务院要闻与重要政策部署</h3><p>国家政策和政务信息</p></a><a class="news-item" href="https://www.news.cn/fortune/" target="_blank" rel="noopener"><small>财经 · 新华网</small><h3>宏观经济、产业与资本市场</h3><p>权威财经报道与观察</p></a><a class="news-item" href="https://www.news.cn/tech/" target="_blank" rel="noopener"><small>科技 · 新华网</small><h3>人工智能与数字经济新动态</h3><p>科技创新和产业应用</p></a><a class="news-item" href="https://www.cctv.com/" target="_blank" rel="noopener"><small>社会 · 央视网</small><h3>国内外新闻与社会热点</h3><p>中央广播电视总台报道</p></a><a class="news-item" href="https://www.chinafilm.gov.cn/" target="_blank" rel="noopener"><small>文化影视 · 国家电影局</small><h3>电影行业政策与产业资讯</h3><p>贴近公司影视内容方向</p></a><a class="news-item" href="https://www.hangzhou.gov.cn/" target="_blank" rel="noopener"><small>杭州本地 · 市政府</small><h3>城市发展与营商环境动态</h3><p>关注企业所在地信息</p></a></div><p class="source-note">标题为栏目导览，点击后进入各权威机构最新内容页面；外部信息以来源网站发布为准。</p><a class="news-more" href="https://www.zj.gov.cn/" target="_blank" rel="noopener">继续查看浙江省政务信息 →</a></aside>
         </div>
     </section>
 
@@ -1097,6 +1109,29 @@
                 }
             });
         });
+
+        const quantCanvas = document.getElementById('quantPreviewChart');
+        if (quantCanvas) {
+            const ctx = quantCanvas.getContext('2d');
+            const values = [42,45,43,48,51,49,55,58,56,62,60,65,69,67,72,75,73,79,82,80,86,89];
+            let phase = 0;
+            function drawQuantPreview() {
+                const ratio = window.devicePixelRatio || 1;
+                const box = quantCanvas.getBoundingClientRect();
+                const w = Math.max(1, Math.round(box.width * ratio));
+                const h = Math.max(1, Math.round(box.height * ratio));
+                if (quantCanvas.width !== w || quantCanvas.height !== h) { quantCanvas.width = w; quantCanvas.height = h; }
+                ctx.clearRect(0,0,w,h); ctx.lineWidth = 2.5 * ratio; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+                const points = values.map((v,i)=>[i/(values.length-1)*w,h-(v-36)/58*h + Math.sin(phase+i*.55)*2.5*ratio]);
+                const fill = ctx.createLinearGradient(0,0,0,h); fill.addColorStop(0,'rgba(73,211,162,.28)'); fill.addColorStop(1,'rgba(73,211,162,0)');
+                ctx.beginPath(); points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p)); ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();ctx.fillStyle=fill;ctx.fill();
+                ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.strokeStyle='#69dfb4';ctx.shadowColor='#49d3a2';ctx.shadowBlur=10*ratio;ctx.stroke();ctx.shadowBlur=0;
+                phase += .025;
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(drawQuantPreview);
+            }
+            drawQuantPreview();
+            window.addEventListener('resize', drawQuantPreview, {passive:true});
+        }
     </script>
 </body>
 </html>
