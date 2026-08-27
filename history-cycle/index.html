@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="比较各国不同年代的发展阶段、产业热点与历史相似结构。">
+  <title>历史周期研究室｜各国发展阶段与机会迁移</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span>HZ</span> 杭州创投影视 · 研究室</a>
+    <nav><a href="#lab">周期实验室</a><a href="#method">研究结论</a><a href="#sources">资料来源</a><a class="back" href="../">返回官网</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">HISTORY CYCLE LAB · 1930—2020s</p>
+        <h1>历史不会复制，<br><em>但结构会押韵。</em></h1>
+        <p class="lead">把国家、年代与产业热点放进同一套坐标系，观察哪些机会随发展阶段迁移，哪些“老路”会因人口、制度与技术条件而改写。</p>
+        <a class="primary" href="#lab">开始比较 <span>↓</span></a>
+      </div>
+      <div class="orbit" aria-hidden="true"><i></i><i></i><i></i><b>38<br><small>年代样本</small></b></div>
+    </section>
+
+    <section class="stats" aria-label="样本概览">
+      <div><strong id="countryCount">8</strong><span>国家样本</span></div>
+      <div><strong id="recordCount">38</strong><span>发展阶段</span></div>
+      <div><strong>8</strong><span>结构维度</span></div>
+      <div><strong>1930s—2020s</strong><span>观察区间</span></div>
+    </section>
+
+    <section class="lab" id="lab">
+      <div class="section-head"><div><p class="eyebrow">INTERACTIVE RESEARCH</p><h2>选择一个国家与年代</h2></div><p>先看这个阶段自身，再从全部样本中寻找结构最接近的历史片段。</p></div>
+      <div class="controls"><div id="countries" class="pills" role="group" aria-label="选择国家"></div><label>年代<select id="decade"></select></label></div>
+      <div class="research-grid">
+        <article class="stage-card">
+          <div class="card-top"><span id="selection">中国 · 2020年代</span><span class="status">研究编码</span></div>
+          <h3 id="stageName">—</h3><p id="evidence">—</p>
+          <div class="split"><div><h4>热点与机遇</h4><div id="opportunities" class="tags"></div></div><div><h4>主要约束</h4><div id="risks" class="tags risk"></div></div></div>
+        </article>
+        <article class="dimension-card"><div class="card-top"><span>八维结构画像</span><span>0—5</span></div><div id="bars" class="bars"></div></article>
+        <article class="analogue-card"><div class="card-top"><span>历史相似样本</span><span>余弦相似度</span></div><div id="analogues" class="analogue-list"></div></article>
+      </div>
+    </section>
+
+    <section class="method" id="method">
+      <div class="section-head"><div><p class="eyebrow">WHAT REPEATS?</p><h2>重复的是约束组合，不是年份</h2></div></div>
+      <div class="theses">
+        <article><b>01</b><h3>热点具有阶段性</h3><p>基础设施、耐用消费、金融扩张、数字化与绿色转型，常随城市化和技术扩散依次获得更高关注。</p></article>
+        <article><b>02</b><h3>路径存在可比性</h3><p>处于相近工业化、人口与全球化位置的国家，可能出现相似需求，但时间跨度和产业载体并不相同。</p></article>
+        <article><b>03</b><h3>历史不会机械重演</h3><p>制度选择、人口年龄、能源条件与关键技术会改变同一阶段的结果，因此相似度只能用来提出问题。</p></article>
+      </div>
+      <div class="sequence"><span>基础工业</span><i>→</i><span>城市化</span><i>→</i><span>耐用消费</span><i>→</i><span>服务与金融</span><i>→</i><span>数字与绿色</span></div>
+    </section>
+
+    <section class="sources" id="sources">
+      <div><p class="eyebrow">DATA & BOUNDARIES</p><h2>从假设出发，回到原始资料</h2><p>当前版本的阶段分值是用于跨国比较的研究编码，不是官方统计指标。正式研究应结合原始时间序列、政策背景和国别制度复核。</p></div>
+      <div id="sourceLinks" class="source-links"></div>
+    </section>
+  </main>
+  <footer><span>© 2026 杭州创投影视有限公司</span><span>历史与产业研究工具 · 不构成投资建议</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
