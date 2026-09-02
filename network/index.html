@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>网络连接工具｜zgland.com</title>
+  <meta name="description" content="ZeroTier One 安装文件与受保护的自动配置入口。">
+  <link rel="canonical" href="https://zgland.com/network/">
+  <link rel="stylesheet" href="network.css">
+  <script defer src="network.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span>ZG</span><strong>网络连接工具</strong></a>
+    <a class="back" href="../">返回网站首页</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">PRIVATE NETWORK TOOLKIT</p>
+      <h1>把不同网络中的电脑，<br>安全接入同一虚拟局域网。</h1>
+      <p class="intro">本站提供经过校验的 ZeroTier One 安装文件，以及受口令保护的自动配置包。配置过程不会更改系统代理、默认路由或 DNS。</p>
+      <div class="status-row">
+        <span><i></i> Windows 10 / 11</span>
+        <span><i></i> 官方数字签名有效</span>
+        <span><i></i> 不开放公网 3389</span>
+      </div>
+    </section>
+
+    <section class="cards" aria-label="下载与配置">
+      <article class="card installer-card">
+        <div class="step">01</div>
+        <p class="label">安装程序</p>
+        <h2>下载 ZeroTier One</h2>
+        <p>适用于 64 位 Windows 的 MSI 安装文件，版本 1.14.1，文件大小约 10.6 MB。</p>
+        <dl>
+          <div><dt>发布者</dt><dd>ZeroTier, Inc.</dd></div>
+          <div><dt>签名状态</dt><dd class="verified">验证有效</dd></div>
+          <div><dt>SHA-256</dt><dd><code>3CD94E51…C7A47A8</code></dd></div>
+        </dl>
+        <a class="button primary" href="downloads/zerotier-one-1.14.1-x64.msi" download>下载安装包</a>
+      </article>
+
+      <article class="card config-card">
+        <div class="step">02</div>
+        <p class="label">自动配置</p>
+        <h2>加入指定网络</h2>
+        <p>输入配置口令后，在浏览器本地解密并下载自动配置包。口令不会上传、保存或写入网页源码。</p>
+        <div class="network-id"><span>目标网络</span><strong>632e••••••••4a8e</strong></div>
+        <form id="unlockForm" autocomplete="off">
+          <label for="password">配置口令</label>
+          <div class="password-row">
+            <input id="password" name="password" type="password" required autocomplete="off" placeholder="请输入配置口令">
+            <button id="togglePassword" type="button" aria-label="显示或隐藏口令">显示</button>
+          </div>
+          <button class="button accent" type="submit">验证并生成配置包</button>
+        </form>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </article>
+    </section>
+
+    <section class="guide">
+      <div>
+        <p class="eyebrow">QUICK START</p>
+        <h2>下载后怎么使用</h2>
+      </div>
+      <ol>
+        <li><span>1</span><div><strong>解压配置包</strong><p>把 ZIP 文件完整解压，不要直接在压缩包内运行。</p></div></li>
+        <li><span>2</span><div><strong>双击一键配置</strong><p>运行“一键配置ZeroTier.cmd”，并允许管理员权限。</p></div></li>
+        <li><span>3</span><div><strong>等待管理员授权</strong><p>首次加入私有网络后，由群组管理员在 ZeroTier Central 授权设备。</p></div></li>
+        <li><span>4</span><div><strong>使用虚拟地址连接</strong><p>授权后使用分配的虚拟 IP 进行微软远程桌面连接。</p></div></li>
+      </ol>
+    </section>
+
+    <section class="notice">
+      <strong>重要说明</strong>
+      <p>网页口令仅用于保护自动配置包，不等同于 ZeroTier 管理员权限。为了避免管理令牌泄露，网站不会自动批准陌生设备；首次加入仍需管理员在控制台确认。</p>
+    </section>
+  </main>
+
+  <footer><span>© 2026 zgland.com</span><span>网络配置仅用于已获授权的设备</span></footer>
+</body>
+</html>
