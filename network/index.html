@@ -8,6 +8,7 @@
   <meta name="description" content="ZeroTier One 安装文件与受保护的自动配置入口。">
   <link rel="canonical" href="https://zgland.com/network/">
   <link rel="stylesheet" href="network.css">
+  <link rel="stylesheet" href="network-central.css">
   <script defer src="network.js"></script>
 </head>
 <body>
@@ -57,6 +58,10 @@
           <button class="button accent" type="submit">验证并生成配置包</button>
         </form>
         <p id="message" class="message" role="status" aria-live="polite"></p>
+        <div class="central-panel">
+          <div><strong>管理设备授权</strong><span>登录后进入 Members，勾选新设备的 Authorized。</span></div>
+          <a href="https://central.zerotier.com/network/632ea29085b84a8e" target="_blank" rel="noopener noreferrer">打开 ZeroTier Central</a>
+        </div>
       </article>
     </section>
 
@@ -68,7 +73,7 @@
       <ol>
         <li><span>1</span><div><strong>解压配置包</strong><p>把 ZIP 文件完整解压，不要直接在压缩包内运行。</p></div></li>
         <li><span>2</span><div><strong>双击一键配置</strong><p>运行“一键配置ZeroTier.cmd”，并允许管理员权限。</p></div></li>
-        <li><span>3</span><div><strong>等待管理员授权</strong><p>首次加入私有网络后，由群组管理员在 ZeroTier Central 授权设备。</p></div></li>
+        <li><span>3</span><div><strong>进入 Central 授权</strong><p>首次加入私有网络后，点击页面上的 ZeroTier Central 入口，在 Members 中勾选新设备的 Authorized。</p></div></li>
         <li><span>4</span><div><strong>使用虚拟地址连接</strong><p>授权后使用分配的虚拟 IP 进行微软远程桌面连接。</p></div></li>
       </ol>
     </section>
