@@ -1,0 +1,33 @@
+name: zgland.com domain expiry reminder
+
+on:
+  schedule:
+    # Every day at 10:15 China Standard Time. The script only sends on reminder dates.
+    - cron: "15 2 * * *"
+  workflow_dispatch:
+    inputs:
+      send_test:
+        description: "Send a test reminder email now"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  check-domain-expiry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+
+      - name: Check expiry and send reminder when due
+        shell: bash
+        run: |
+          if [[ "${{ inputs.send_test }}" == "true" ]]; then
+            python3 scripts/domain_expiry_reminder.py --send-test
+          else
+            python3 scripts/domain_expiry_reminder.py
+          fi
