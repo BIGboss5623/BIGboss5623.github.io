@@ -56,11 +56,20 @@ jobs:
               state: "all",
               per_page: 100
             });
-            if (!issues.some(issue => issue.title === title)) {
+            const existing = issues.find(issue => issue.title === title);
+            if (!existing) {
               await github.rest.issues.create({
                 owner,
                 repo,
                 title,
+                body: process.env.ISSUE_BODY,
+                assignees: [owner]
+              });
+            } else {
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: existing.number,
                 body: process.env.ISSUE_BODY,
                 assignees: [owner]
               });

@@ -96,6 +96,8 @@ def send_email(subject: str, message: str) -> None:
         headers={
             "Accept": "application/json",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Origin": "https://zgland.com",
+            "Referer": "https://zgland.com/",
         },
     )
     if result.get("success") not in (True, "true"):
@@ -156,7 +158,8 @@ def main() -> int:
         f"- 当前登记到期日：**{expiry_date}**\n"
         f"- 注册商：阿里云 / 万网（HiChina）\n"
         f"- [打开阿里云域名控制台]({ALIYUN_CONSOLE})\n"
-        f"- 直接邮件状态：`{mail_status}`\n\n"
+        f"- 联系邮箱提醒状态：`{mail_status}`\n"
+        "- GitHub指派通知：已启用（由GitHub账户的通知邮箱接收）\n\n"
         "此通知由 zgland.com 域名到期检查任务自动生成。"
     )
     write_github_output(
