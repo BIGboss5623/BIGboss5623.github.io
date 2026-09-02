@@ -1,6 +1,12 @@
 name: zgland.com domain expiry reminder
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/domain-expiry-reminder.yml"
+      - "scripts/domain_expiry_reminder.py"
   schedule:
     # Every day at 10:15 China Standard Time. The script only sends on reminder dates.
     - cron: "15 2 * * *"
@@ -26,7 +32,7 @@ jobs:
       - name: Check expiry and send reminder when due
         shell: bash
         run: |
-          if [[ "${{ inputs.send_test }}" == "true" ]]; then
+          if [[ "${{ github.event_name }}" == "push" || "${{ inputs.send_test }}" == "true" ]]; then
             python3 scripts/domain_expiry_reminder.py --send-test
           else
             python3 scripts/domain_expiry_reminder.py
