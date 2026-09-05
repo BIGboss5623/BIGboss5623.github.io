@@ -54,7 +54,8 @@ $payload = [ordered]@{
     tag = [Convert]::ToBase64String($tag)
     filename = "ZeroTier-auto-config.zip"
 }
-$payload | ConvertTo-Json -Compress | Set-Content -LiteralPath $OutputJson -Encoding UTF8
+$json = $payload | ConvertTo-Json -Compress
+[IO.File]::WriteAllText($OutputJson, $json, (New-Object Text.UTF8Encoding($false)))
 Write-Host "Encrypted configuration created: $OutputJson"
 
 $password = $null
