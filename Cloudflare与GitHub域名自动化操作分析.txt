@@ -1,0 +1,181 @@
+Cloudflare 与 GitHub 域名自动化操作分析
+编写日期：2026-09-06
+
+一、目标
+
+把“增加 www.zgland.com、增加新的子域名、查看是否生效”等操作尽量放进 GitHub 仓库管理，平时不再频繁进入 Cloudflare 控制台。
+
+建议采用“GitHub 保存期望配置 + GitHub Actions 调用 Cloudflare 官方 API”的方式。
+
+以后增加域名时，只修改仓库里的域名清单并提交。例如：
+
+www.zgland.com        -> 当前 Cloudflare Pages 项目
+hzct.zgland.com       -> 当前 Cloudflare Pages 项目
+tools.zgland.com      -> 当前 Cloudflare Pages 项目
+
+GitHub Actions 自动完成：
+
+1. 检查域名是不是 zgland.com 的子域名；
+2. 查询 Cloudflare 当前 DNS 记录；
+3. 新增或更新 CNAME；
+4. 把域名绑定到指定 Cloudflare Pages 项目；
+5. 等待域名验证和 HTTPS 证书状态；
+6. 在 GitHub Actions 日志中显示成功、等待或错误原因。
+
+二、为什么不能只修改 GitHub 的 CNAME 文件
+
+当前网站实际由 Cloudflare Pages 对外提供。GitHub 仓库中的 CNAME 文件主要用于 GitHub Pages 自定义域名，不能代替 Cloudflare DNS，也不能自动把域名绑定到 Cloudflare Pages 项目。
+
+增加 www.zgland.com 通常涉及两层配置：
+
+1. DNS 层：创建 www 的 CNAME 记录；
+2. Pages 层：把 www.zgland.com 加入对应 Pages 项目的自定义域名列表。
+
+所以最合理的自动化方式不是依赖一个 CNAME 文件，而是让 GitHub Actions 调用 Cloudflare API 同步这两层配置。
+
+三、推荐方案
+
+方案名称：安全的半自动同步（推荐）
+
+第一次仍需人工操作一次：
+
+1. 在 Cloudflare 创建一个专用 API Token；
+2. 权限只给：Zone / DNS / Edit，以及 Account / Cloudflare Pages / Edit；
+3. 资源范围只选择 zgland.com 所在区域和当前 Pages 项目所属账户；
+4. 在 GitHub 仓库 Settings -> Secrets and variables -> Actions 中保存以下机密：
+
+CLOUDFLARE_API_TOKEN
+CLOUDFLARE_ACCOUNT_ID
+CLOUDFLARE_ZONE_ID
+CLOUDFLARE_PAGES_PROJECT
+
+API Token 绝对不能写进 TXT、Python、YAML、HTML 或 git 提交。GitHub Actions 的 Secrets 只会把机密提供给运行中的工作流，并会对常见机密内容进行日志遮盖。
+
+以后日常操作：
+
+1. 修改 config/domains.json；
+2. 提交并运行“同步 Cloudflare 域名”工作流；
+3. 工作流先显示计划，不删除任何记录；
+4. 确认后选择 apply；
+5. 工作流自动创建或修正 DNS 与 Pages 域名绑定；
+6. 最后检测 https://新域名/ 是否可以访问。
+
+四、建议的域名清单格式
+
+文件：config/domains.json
+
+{
+  "pages_project": "填写当前Cloudflare Pages项目名",
+  "domains": [
+    {
+      "hostname": "www.zgland.com",
+      "target": "填写当前项目的pages.dev地址",
+      "proxied": true,
+      "enabled": true
+    },
+    {
+      "hostname": "hzct.zgland.com",
+      "target": "填写当前项目的pages.dev地址",
+      "proxied": true,
+      "enabled": true
+    }
+  ]
+}
+
+这样添加 www 时只需复制一个对象，修改 hostname，然后提交。
+
+五、工作流应该执行的接口
+
+1. 查询 DNS 记录：
+GET /zones/{zone_id}/dns_records?name=www.zgland.com
+
+2. 不存在时创建 CNAME：
+POST /zones/{zone_id}/dns_records
+
+3. 已存在时仅在内容不一致的情况下更新：
+PATCH /zones/{zone_id}/dns_records/{record_id}
+
+4. 查询 Pages 自定义域名：
+GET /accounts/{account_id}/pages/projects/{project_name}/domains
+
+5. 尚未绑定时加入 Pages 项目：
+POST /accounts/{account_id}/pages/projects/{project_name}/domains
+
+请求正文：
+{"name":"www.zgland.com"}
+
+Cloudflare 官方 Pages API 返回 initializing、pending、active、error 等状态。工作流应该持续查询一段时间，但证书签发可能需要更久；超过等待时间只标记“仍在等待”，不要反复删除重建。
+
+六、安全限制
+
+自动化程序建议写死以下保护规则：
+
+1. 只允许处理 zgland.com 或以 .zgland.com 结尾的域名；
+2. 默认禁止删除 DNS 和 Pages 域名；
+3. 默认禁止修改 zgland.com 根域名；
+4. 遇到 A、AAAA、MX、TXT 或 NS 冲突时停止并报错，不自动覆盖；
+5. 每次运行保留操作摘要；
+6. API Token 使用最小权限，不使用 Global API Key；
+7. Pull Request 只能做检查，合并到 main 后才允许 apply；
+8. 域名清单中不得保存密码、Token、ZeroTier Network Token 或代理订阅。
+
+七、www.zgland.com 的推荐设置
+
+如果 www 和 zgland.com 显示同一个网站，建议：
+
+DNS 类型：CNAME
+名称：www
+目标：当前 Cloudflare Pages 项目的 *.pages.dev 域名
+代理状态：已代理（橙色云）
+Pages 自定义域名：www.zgland.com
+
+然后二选一：
+
+A. www 与根域名都能直接打开同一网站；
+B. 使用 Cloudflare Redirect Rule，把 www.zgland.com 永久跳转到 https://zgland.com（更利于统一网址和搜索收录）。
+
+推荐选择 B，以 zgland.com 为唯一主网址。重定向规则也可以后续通过 Cloudflare Rules API 管理，但第一阶段先只自动化 DNS 和 Pages 域名，降低误操作风险。
+
+八、可选操作方式
+
+方式一：修改 domains.json 后提交
+适合长期管理多个域名，变更记录清楚，可回退。
+
+方式二：GitHub Actions 手动运行
+在 Actions 页面输入 www.zgland.com，先选 plan，再选 apply。操作最直观，但需要进入 GitHub。
+
+方式三：本地脚本
+运行“域名管理.ps1”，脚本修改 domains.json、提交并调用上传.py。仍由 GitHub Actions 执行 Cloudflare 修改，本地电脑不保存 Cloudflare Token。
+
+综合建议：方式一作为正式记录，方式二作为执行入口，方式三以后再增加快捷操作。
+
+九、不能完全自动化的情况
+
+1. 域名不在当前 Cloudflare 账户；
+2. 域名注册商没有使用 Cloudflare 名称服务器；
+3. 已存在冲突的 A、AAAA 或 CNAME；
+4. Cloudflare 要求额外 TXT 所有权验证；
+5. 证书签发遇到 CAA 限制；
+6. API Token 过期、被撤销或权限不足；
+7. Pages 项目名称、账户 ID 或 pages.dev 目标填写错误。
+
+这些情况应由工作流明确报错并停止，不能通过自动覆盖来“修复”。
+
+十、结论
+
+可行，而且非常适合当前网站。
+
+最稳妥的做法是：Cloudflare 控制台只完成一次 API Token 初始化；以后通过 GitHub 中的 domains.json 和 Actions 管理新增子域名。添加 www 时可以自动完成 DNS CNAME、Pages 自定义域名绑定和 HTTPS 状态检查。
+
+建议下一步先实现“只检查、不修改”的 plan 工作流。确认读取到正确的账户、区域、Pages 项目和现有域名后，再开放 apply。第一版不提供自动删除功能。
+
+官方依据：
+
+Cloudflare Pages 添加域名 API：
+https://developers.cloudflare.com/api/resources/pages/subresources/projects/subresources/domains/methods/create/
+
+Cloudflare DNS 记录 API：
+https://developers.cloudflare.com/api/resources/dns/subresources/records/
+
+GitHub Actions Secrets：
+https://docs.github.com/en/actions/reference/security/secrets
