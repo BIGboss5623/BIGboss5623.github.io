@@ -19,7 +19,13 @@ function normalizeHostname(value) {
 function validManagedHostname(hostname) {
   if (!hostname || hostname === ROOT_DOMAIN || !hostname.endsWith(`.${ROOT_DOMAIN}`)) return false;
   if (hostname.length > 253 || hostname.includes("*")) return false;
-  return hostname.split(".").every((label) => /^(?!-)[a-z0-9-]{1,63}(?<!-)$/.test(label));
+  const prefix = hostname.slice(0, -(ROOT_DOMAIN.length + 1));
+  return /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(prefix);
+}
+
+function sitePath(hostname) {
+  const prefix = hostname.slice(0, -(ROOT_DOMAIN.length + 1));
+  return ["www", "hzct"].includes(prefix) ? "/" : `/${prefix}/`;
 }
 
 async function sameSecret(left, right) {
@@ -129,7 +135,7 @@ async function handleRequest(context) {
   else operations.push({ area: "Pages", operation: "none", detail: `已绑定，状态：${current.pagesDomain.status || "未知"}` });
 
   if (action === "plan") {
-    return json({ ok: true, mode: "plan", hostname, target, changed: false, operations });
+    return json({ ok: true, mode: "plan", hostname, target, sitePath: sitePath(hostname), changed: false, operations });
   }
 
   const dnsOperation = operations.find((item) => item.area === "DNS");
@@ -159,6 +165,7 @@ async function handleRequest(context) {
     mode: "apply",
     hostname,
     target,
+    sitePath: sitePath(hostname),
     changed: operations.some((item) => item.operation !== "none"),
     operations,
     result: {

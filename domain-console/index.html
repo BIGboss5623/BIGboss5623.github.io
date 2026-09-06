@@ -21,18 +21,19 @@
   <main>
     <div class="top"><div class="brand">ZGLAND · Cloudflare</div><a class="back" href="../">返回网站</a></div>
     <h1>子域名控制台</h1>
-    <p class="lead">输入一个名称，先查看计划，再确认应用。控制台只会创建或修正指向当前 Pages 项目的 CNAME，并绑定 Pages 自定义域名。</p>
+    <p class="lead">一个仓库可以承载多个独立页面：输入一个名称，先检查目录和 Cloudflare 计划，再确认应用，不需要为每个子域名单独建立 GitHub 项目。</p>
     <div class="grid">
       <section class="card">
-        <div class="field"><label for="subdomain">子域名</label><div class="input-wrap"><input class="subdomain" id="subdomain" autocomplete="off" placeholder="例如 www"><span class="suffix">.zgland.com</span></div></div>
+        <div class="field"><label for="subdomain">一级子域名</label><div class="input-wrap"><input class="subdomain" id="subdomain" autocomplete="off" placeholder="例如 network"><span class="suffix">.zgland.com</span></div></div>
+        <div class="field"><label>页面对应关系</label><div id="routePreview" class="hint">network.zgland.com → 仓库 /network/ 目录</div></div>
         <div class="field"><label for="password">控制台密码</label><input id="password" type="password" autocomplete="current-password" placeholder="仅随本次请求发送，不写入网页"></div>
         <div class="actions"><button class="plan" id="planButton" type="button">检查计划</button><button class="apply" id="applyButton" type="button">确认并应用</button></div>
-        <p class="hint">为防误操作，“应用”前仍会再次检查现有记录；不提供删除功能。首次保存 Pages 变量后需要重新部署一次。</p>
+        <p class="hint">`www` 和 `hzct` 显示主站，其余一级子域名显示仓库中的同名目录。请先建立目录页面，再添加域名。</p>
         <div id="result" aria-live="polite">等待操作。</div>
       </section>
       <aside class="card">
         <h2>安全保护</h2>
-        <div class="guard"><div><span class="dot"></span><span>只能管理 <b>zgland.com</b> 的子域名</span></div><div><span class="dot"></span><span>禁止修改根域名和通配符</span></div><div><span class="dot"></span><span>遇到 A、AAAA、MX、TXT 等冲突立即停止</span></div><div><span class="dot"></span><span>不删除记录，不把 API Token 交给浏览器</span></div></div>
+        <div class="guard"><div><span class="dot"></span><span>一个 GitHub 仓库管理全部独立目录</span></div><div><span class="dot"></span><span>只能管理 <b>zgland.com</b> 的一级子域名</span></div><div><span class="dot"></span><span>禁止修改根域名、通配符和删除记录</span></div><div><span class="dot"></span><span>遇到其他类型 DNS 冲突立即停止</span></div><div><span class="dot"></span><span>API Token 始终只保存在服务器端</span></div></div>
         <div class="links"><a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">打开 Cloudflare 后台</a><a href="https://github.com/BIGboss5623/BIGboss5623.github.io/actions" target="_blank" rel="noopener noreferrer">打开 GitHub Actions</a></div>
       </aside>
     </div>
@@ -41,16 +42,24 @@
     const subdomain = document.getElementById("subdomain");
     const password = document.getElementById("password");
     const result = document.getElementById("result");
+    const routePreview = document.getElementById("routePreview");
     const buttons = [document.getElementById("planButton"), document.getElementById("applyButton")];
 
     function hostname() {
       const value = subdomain.value.trim().toLowerCase().replace(/\.zgland\.com\.?$/, "").replace(/\.$/, "");
       return value ? `${value}.zgland.com` : "";
     }
+    function updateRoutePreview() {
+      const label = subdomain.value.trim().toLowerCase().replace(/\.zgland\.com\.?$/, "").replace(/\.$/, "");
+      const host = label ? `${label}.zgland.com` : "子域名.zgland.com";
+      const path = ["www", "hzct"].includes(label) ? "/（主站）" : `/${label || "同名目录"}/`;
+      routePreview.textContent = `${host} → 仓库 ${path}`;
+    }
     function show(payload, success) {
       const lines = [payload.message || (payload.mode === "plan" ? "检查完成。" : "操作完成。")];
       if (payload.hostname) lines.push(`域名：${payload.hostname}`);
       if (payload.target) lines.push(`目标：${payload.target}`);
+      if (payload.sitePath) lines.push(`页面目录：${payload.sitePath}`);
       if (Array.isArray(payload.operations)) payload.operations.forEach((item) => lines.push(`• ${item.area}：${item.detail}`));
       if (Array.isArray(payload.missing)) lines.push(`首次配置缺少：${payload.missing.join("、")}`);
       result.textContent = lines.filter(Boolean).join("\n");
@@ -76,7 +85,10 @@
     document.getElementById("planButton").addEventListener("click", () => run("plan"));
     document.getElementById("applyButton").addEventListener("click", () => run("apply"));
     subdomain.addEventListener("keydown", (event) => { if (event.key === "Enter") password.focus(); });
+    subdomain.addEventListener("input", updateRoutePreview);
     password.addEventListener("keydown", (event) => { if (event.key === "Enter") run("plan"); });
+    subdomain.value = "network";
+    updateRoutePreview();
   </script>
 </body>
 </html>

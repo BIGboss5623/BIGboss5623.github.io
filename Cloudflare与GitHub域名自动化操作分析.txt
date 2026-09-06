@@ -191,6 +191,26 @@ DOMAIN_CONSOLE_PASSWORD
 
 其中 API Token 仅授予 zgland.com 的 DNS 编辑和当前账户 Pages 编辑权限。完成这一次配置后，日常只需打开网站控制台操作。
 
+十二、一个仓库承载多个独立子域名页面
+
+不为每个子域名创建新 GitHub 项目。Cloudflare Pages Function 中间件按访问主机名自动选择同名目录：
+
+network.zgland.com  -> 仓库 /network/ 目录
+proxy.zgland.com    -> 仓库 /proxy/ 目录
+fund.zgland.com     -> 仓库 /fund/ 目录
+www.zgland.com      -> 仓库根目录主站
+hzct.zgland.com     -> 仓库根目录主站
+
+以后新增独立页面的日常流程为：
+
+1. 在网站仓库建立与子域名前缀同名的目录，例如 tools/；
+2. 在 tools/index.html 内独立编辑该页面；
+3. 使用上传.py 发布；
+4. 打开 /domain-console/，输入 tools，先检查计划再应用；
+5. 访问 tools.zgland.com 验证。
+
+第一版只支持一级子域名，避免多级名称与目录映射产生歧义。不同页面仍共享一个仓库和发布流程，但代码、样式和资源都可以分别放在各自目录内独立维护。
+
 官方依据：
 
 Cloudflare Pages 添加域名 API：
