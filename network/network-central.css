@@ -34,6 +34,15 @@
   filter: brightness(1.08);
 }
 
+.central-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.central-panel a.new-central {
+  background: var(--navy);
+}
+
 @media (max-width: 520px) {
   .central-panel {
     grid-template-columns: 1fr;
