@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>域名控制台 | zgland</title>
+  <style>
+    :root{color-scheme:dark;--bg:#07111f;--panel:#0f2035;--line:#29415e;--blue:#62a8ff;--green:#57d6a3;--amber:#ffc96b;--red:#ff7d87;--text:#edf6ff;--muted:#9db0c5}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:radial-gradient(circle at 85% 0,#173b63 0,transparent 35%),linear-gradient(145deg,#050b14,#0a1727);color:var(--text)}
+    main{width:min(920px,calc(100% - 32px));margin:0 auto;padding:42px 0 72px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:26px}.brand{font-size:14px;color:var(--blue);letter-spacing:.18em;text-transform:uppercase}.back{color:var(--muted);text-decoration:none}.back:hover{color:#fff}
+    h1{font-size:clamp(30px,6vw,54px);line-height:1.08;margin:8px 0 12px}.lead{max-width:700px;color:var(--muted);line-height:1.75;margin:0 0 26px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.card{background:rgba(15,32,53,.92);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.28)}
+    label{display:block;font-size:14px;color:#bfd0e2;margin:0 0 8px}.field{margin-bottom:17px}.input-wrap{display:flex;align-items:stretch}input{width:100%;border:1px solid #385675;background:#091626;color:#fff;padding:14px 15px;border-radius:11px;font-size:16px;outline:none}input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(98,168,255,.14)}.suffix{display:flex;align-items:center;padding:0 14px;background:#162b44;border:1px solid #385675;border-left:0;border-radius:0 11px 11px 0;color:#bfd0e2}.subdomain{border-radius:11px 0 0 11px}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}button{border:0;border-radius:11px;padding:14px 16px;font-size:16px;font-weight:700;cursor:pointer}.plan{background:#dcecff;color:#0b315b}.apply{background:linear-gradient(135deg,#4f9dff,#57d6a3);color:#061322}.apply:disabled,.plan:disabled{opacity:.5;cursor:wait}
+    .guard{display:grid;gap:10px}.guard div{display:flex;gap:10px;align-items:flex-start;color:#c4d1df;font-size:14px;line-height:1.55}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);margin-top:6px;flex:none}.links{display:grid;gap:9px;margin-top:20px}.links a{color:var(--blue);text-decoration:none;padding:10px 12px;border:1px solid var(--line);border-radius:10px}.links a:hover{background:#152b44}
+    #result{margin-top:18px;min-height:92px;background:#071320;border:1px solid #243c57;border-radius:14px;padding:16px;white-space:pre-wrap;line-height:1.6;color:#cfe0f1}.ok{border-color:#2b7c62!important;color:#bdf6df!important}.error{border-color:#8b3942!important;color:#ffd0d4!important}.hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+    @media(max-width:760px){main{padding-top:24px}.top{align-items:flex-start}.grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.card{padding:18px}.suffix{padding:0 10px}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="top"><div class="brand">ZGLAND · Cloudflare</div><a class="back" href="../">返回网站</a></div>
+    <h1>子域名控制台</h1>
+    <p class="lead">输入一个名称，先查看计划，再确认应用。控制台只会创建或修正指向当前 Pages 项目的 CNAME，并绑定 Pages 自定义域名。</p>
+    <div class="grid">
+      <section class="card">
+        <div class="field"><label for="subdomain">子域名</label><div class="input-wrap"><input class="subdomain" id="subdomain" autocomplete="off" placeholder="例如 www"><span class="suffix">.zgland.com</span></div></div>
+        <div class="field"><label for="password">控制台密码</label><input id="password" type="password" autocomplete="current-password" placeholder="仅随本次请求发送，不写入网页"></div>
+        <div class="actions"><button class="plan" id="planButton" type="button">检查计划</button><button class="apply" id="applyButton" type="button">确认并应用</button></div>
+        <p class="hint">为防误操作，“应用”前仍会再次检查现有记录；不提供删除功能。</p>
+        <div id="result" aria-live="polite">等待操作。</div>
+      </section>
+      <aside class="card">
+        <h2>安全保护</h2>
+        <div class="guard"><div><span class="dot"></span><span>只能管理 <b>zgland.com</b> 的子域名</span></div><div><span class="dot"></span><span>禁止修改根域名和通配符</span></div><div><span class="dot"></span><span>遇到 A、AAAA、MX、TXT 等冲突立即停止</span></div><div><span class="dot"></span><span>不删除记录，不把 API Token 交给浏览器</span></div></div>
+        <div class="links"><a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">打开 Cloudflare 后台</a><a href="https://github.com/BIGboss5623/BIGboss5623.github.io/actions" target="_blank" rel="noopener noreferrer">打开 GitHub Actions</a></div>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const subdomain = document.getElementById("subdomain");
+    const password = document.getElementById("password");
+    const result = document.getElementById("result");
+    const buttons = [document.getElementById("planButton"), document.getElementById("applyButton")];
+
+    function hostname() {
+      const value = subdomain.value.trim().toLowerCase().replace(/\.zgland\.com\.?$/, "").replace(/\.$/, "");
+      return value ? `${value}.zgland.com` : "";
+    }
+    function show(payload, success) {
+      const lines = [payload.message || (payload.mode === "plan" ? "检查完成。" : "操作完成。")];
+      if (payload.hostname) lines.push(`域名：${payload.hostname}`);
+      if (payload.target) lines.push(`目标：${payload.target}`);
+      if (Array.isArray(payload.operations)) payload.operations.forEach((item) => lines.push(`• ${item.area}：${item.detail}`));
+      if (Array.isArray(payload.missing)) lines.push(`首次配置缺少：${payload.missing.join("、")}`);
+      result.textContent = lines.filter(Boolean).join("\n");
+      result.className = success ? "ok" : "error";
+    }
+    async function run(action) {
+      const host = hostname();
+      if (!host || !password.value) return show({message:"请填写子域名和控制台密码。"}, false);
+      if (action === "apply" && !window.confirm(`确认创建或修正 ${host} 并绑定到当前 Pages 项目？`)) return;
+      buttons.forEach((button) => { button.disabled = true; });
+      result.className = "";
+      result.textContent = action === "plan" ? "正在读取 Cloudflare 当前配置……" : "正在应用并复查……";
+      try {
+        const response = await fetch("/api/domains", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({action, hostname:host, password:password.value})});
+        const payload = await response.json().catch(() => ({message:`服务器返回 HTTP ${response.status}`}));
+        show(payload, response.ok && payload.ok);
+      } catch (error) {
+        show({message:`请求失败：${error.message}`}, false);
+      } finally {
+        buttons.forEach((button) => { button.disabled = false; });
+      }
+    }
+    document.getElementById("planButton").addEventListener("click", () => run("plan"));
+    document.getElementById("applyButton").addEventListener("click", () => run("apply"));
+    subdomain.addEventListener("keydown", (event) => { if (event.key === "Enter") password.focus(); });
+    password.addEventListener("keydown", (event) => { if (event.key === "Enter") run("plan"); });
+  </script>
+</body>
+</html>

@@ -169,6 +169,28 @@ B. 使用 Cloudflare Redirect Rule，把 www.zgland.com 永久跳转到 https://
 
 建议下一步先实现“只检查、不修改”的 plan 工作流。确认读取到正确的账户、区域、Pages 项目和现有域名后，再开放 apply。第一版不提供自动删除功能。
 
+十一、实际采用的简化实现（2026-09-06）
+
+考虑到日常操作希望直接在 zgland 网站完成，现改用“Cloudflare Pages 页面 + Pages Function”的实现：
+
+1. 控制台页面为 /domain-console/；
+2. 页面向同站点 /api/domains 发送检查或应用请求；
+3. Cloudflare API Token 和控制台密码仅保存在 Pages 环境变量中，不进入网页和 Git；
+4. plan 只读取现状，apply 才创建或修正 CNAME 并绑定 Pages 自定义域名；
+5. 保留原安全约束：禁止删除、禁止根域名、禁止通配符、非 CNAME 冲突立即停止；
+6. config/domains.json 继续作为期望域名和安全策略的版本记录，但网页操作无需编辑 JSON 或进入 GitHub Actions。
+
+首次只需在 Cloudflare Pages 项目的 Settings / Variables and Secrets 中配置：
+
+CLOUDFLARE_API_TOKEN
+CLOUDFLARE_ACCOUNT_ID
+CLOUDFLARE_ZONE_ID
+CLOUDFLARE_PAGES_PROJECT
+CLOUDFLARE_PAGES_TARGET（仅填写项目的 xxxxx.pages.dev 主机名，不含 https://）
+DOMAIN_CONSOLE_PASSWORD
+
+其中 API Token 仅授予 zgland.com 的 DNS 编辑和当前账户 Pages 编辑权限。完成这一次配置后，日常只需打开网站控制台操作。
+
 官方依据：
 
 Cloudflare Pages 添加域名 API：

@@ -1,0 +1,14 @@
+{
+  "zone": "zgland.com",
+  "managed_domains": [
+    {
+      "hostname": "www.zgland.com",
+      "enabled": true
+    }
+  ],
+  "safety": {
+    "allow_delete": false,
+    "allow_root_domain_changes": false,
+    "stop_on_non_cname_conflict": true
+  }
+}
