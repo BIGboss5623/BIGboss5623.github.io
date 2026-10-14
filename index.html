@@ -347,6 +347,21 @@
             background: linear-gradient(transparent, rgba(0, 0, 0, .78));
         }
 
+        .project-credits { margin: 2rem 0 2.5rem; }
+        .credits-heading { display:flex; justify-content:space-between; gap:1rem; align-items:baseline; margin-bottom:1rem; }
+        .credits-heading h3 { color:var(--primary); font-size:1.45rem; }
+        .credits-heading p { color:var(--gray); font-size:.92rem; }
+        .credits-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem; }
+        .credit-card { margin:0; background:white; border:1px solid #e7edf4; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
+        .credit-card > a { display:block; background:#302319; }
+        .credit-card img { display:block; width:100%; height:auto; }
+        .credit-card figcaption { padding:1.25rem; }
+        .credit-card h4 { color:var(--primary); margin-bottom:.45rem; font-size:1.1rem; }
+        .credit-card p { color:var(--gray); font-size:.94rem; line-height:1.7; margin-bottom:.8rem; }
+        .credit-card figcaption a { color:var(--primary); font-weight:600; text-underline-offset:4px; }
+        .credit-card a:focus-visible { outline:3px solid var(--secondary); outline-offset:-3px; }
+        @media(max-width:700px) { .credits-grid { grid-template-columns:1fr; } .credits-heading { display:block; } }
+
         .section {
             padding: 5rem 5%;
             max-width: 1400px;
@@ -886,6 +901,20 @@
             <figure><img src="assets/images/jimao-still-3.jpg" alt="鸡毛飞上天电视剧剧照，骆玉珠经营摊位" loading="lazy"><figcaption>从“鸡毛换糖”到创业经商</figcaption></figure>
             <figure><img src="assets/images/jimao-still-4.jpg" alt="鸡毛飞上天电视剧海外商业场景" loading="lazy"><figcaption>从义乌走向世界的商业故事</figcaption></figure>
         </div>
+
+        <section class="project-credits" aria-labelledby="credits-title">
+            <div class="credits-heading"><h3 id="credits-title">《鸡毛飞上天》项目参与资料</h3><p>片尾资料展示 · 点击图片查看原图</p></div>
+            <div class="credits-grid">
+                <figure class="credit-card">
+                    <a href="assets/images/chuangtou-work-1.png" target="_blank" rel="noopener noreferrer" aria-label="查看创投作品1完整原图"><img src="assets/images/chuangtou-work-1.png" alt="鸡毛飞上天片尾协拍人员截图，其中列有余玺姓名" loading="lazy" decoding="async"></a>
+                    <figcaption><h4>创投作品1 · 协拍人员</h4><p>《鸡毛飞上天》片尾工作人员资料，协拍人员名单中列有余玺姓名。</p><a href="assets/images/chuangtou-work-1.png" target="_blank" rel="noopener noreferrer">查看完整原图 →</a></figcaption>
+                </figure>
+                <figure class="credit-card">
+                    <a href="assets/images/chuangtou-work-2.png" target="_blank" rel="noopener noreferrer" aria-label="查看创投作品2完整原图"><img src="assets/images/chuangtou-work-2.png" alt="鸡毛飞上天片尾鸣谢单位截图，其中列有杭州创投广告有限公司" loading="lazy" decoding="async"></a>
+                    <figcaption><h4>创投作品2 · 鸣谢单位</h4><p>《鸡毛飞上天》片尾鸣谢单位资料，名单中列有杭州创投广告有限公司。</p><a href="assets/images/chuangtou-work-2.png" target="_blank" rel="noopener noreferrer">查看完整原图 →</a></figcaption>
+                </figure>
+            </div>
+        </section>
 
         <div class="product-grid">
             <div class="product-card fade-in">
