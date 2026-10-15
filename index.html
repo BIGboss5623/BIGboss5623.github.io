@@ -40,8 +40,6 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #112a43;
@@ -57,7 +55,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #f5f7fb 0%, #eef3f7 100%);
             color: var(--dark);
             line-height: 1.7;
@@ -143,8 +141,7 @@
         }
 
         .hero {
-            background: linear-gradient(120deg, rgba(17, 42, 67, 0.92), rgba(17, 42, 67, 0.8)),
-                        url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background: radial-gradient(ellipse at 85% 20%, #34556f 0%, transparent 55%), linear-gradient(120deg, #112a43, #1d364e);
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -159,7 +156,7 @@
         .hero-content { max-width: 920px; }
 
         .hero h1 {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
             font-size: 3.25rem;
             line-height: 1.15;
             margin-bottom: 1rem;
@@ -374,7 +371,7 @@
         }
 
         .section-header h2 {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
             font-size: 2.15rem;
             color: var(--primary);
             margin-bottom: 1rem;
@@ -768,6 +765,29 @@
       .innovation-grid{grid-template-columns:1fr 1fr;align-items:stretch}.quant-window,.news-window{border-radius:14px}.float-slow{animation:none}.quant-window{display:flex;flex-direction:column}.quant-body{display:flex;flex:1;flex-direction:column}.quant-actions{margin-top:auto;padding-top:20px}.window-bar b{color:#e9eef5;letter-spacing:.03em}.window-bar span{padding:.18rem .5rem;border:1px solid #4a5b72;border-radius:99px;color:#cbd5e2}.news-item{position:relative}.news-item:after{content:"↗";position:absolute;right:12px;top:14px;color:#71839b;transition:.2s}.news-item:hover:after{color:#f0c86e;transform:translate(2px,-2px)}.news-item small{display:inline-flex;align-items:center;min-height:22px}.news-item h3{padding-right:18px}.source-note{margin:0 20px 16px;color:#91a2b7;font-size:.73rem;line-height:1.55}.snapshot-note{display:flex;justify-content:space-between;gap:1rem;margin-top:10px;color:#99a9bc;font-size:.73rem}.snapshot-note b{color:#cbd6e3;font-weight:500}
       @media(max-width:980px){.innovation-grid{grid-template-columns:1fr}.quant-window,.news-window{min-height:auto}}
     </style>
+    <style>
+
+        .site-icon { display:inline-block; width:1.2em; height:1.2em; flex-shrink:0; vertical-align:-.2em; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+        .qualification-item .site-icon { width:1.35em; height:1.35em; color:var(--secondary); }
+        .resource-card .site-icon { width:2rem; height:2rem; color:var(--primary); }
+        .contact-item .site-icon { width:1.6rem; height:1.6rem; color:var(--secondary); }
+        .hero-content { width:100%; display:grid; grid-template-columns:minmax(0,1.6fr) minmax(250px,1fr); gap:clamp(24px,4vw,64px); max-width:1280px; align-items:center; }
+        .hero-copy,.hero-card { min-width:0; }
+        .hero-card { padding:28px; border:1px solid rgba(255,255,255,.22); border-radius:20px; background:rgba(255,255,255,.07); }
+        .hero-card h3 { font-size:1.25rem; margin-bottom:12px; color:#f4d58a; }
+        .hero .hero-card p { font-size:1rem; line-height:1.8; margin:0 0 18px; animation:none; }
+        .hero-card ul { list-style:none; display:grid; gap:12px; padding:0; }
+        .hero-card li { padding-left:16px; position:relative; color:#e0e8f0; }
+        .hero-card li:before { content:""; width:5px; height:5px; border-radius:50%; background:#e4c578; position:absolute; left:0; top:.7em; }
+        .hero h1,.hero p,.cta-button,.outline-button,.fade-in { animation:none; }
+        .hero-meta { gap:10px; } .hero-actions { gap:14px; }
+        .hero-meta span { border-radius:10px; font-size:.92rem; background:rgba(255,255,255,.08); }
+        .hero-actions a { min-height:52px; padding:14px 24px; font-size:1rem; }
+        .logo-mark { animation:none; }
+        @media(max-width:1100px){ .navbar { position:sticky; padding:14px 4%; } .nav-links { display:none; position:absolute; top:100%; left:0; right:0; background:#112a43; padding:16px 4%; flex-direction:column; align-items:stretch; gap:4px; max-height:75vh; overflow:auto; } .nav-links.active { display:flex; } .mobile-menu-btn { display:block; } .hero { min-height:auto; padding:70px 5%; } }
+        @media(max-width:760px){ .hero-content { grid-template-columns:1fr; gap:28px; } .hero h1 { font-size:clamp(1.8rem,7vw,2.5rem); } .hero p { font-size:1rem; } .hero-card { padding:22px; } .hero-actions a { flex:1; justify-content:center; padding:12px 16px; } .logo { font-size:1rem; gap:8px; } }
+        @media(prefers-reduced-motion:reduce){ *,*:before,*:after { animation:none!important; scroll-behavior:auto!important; } }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -798,7 +818,7 @@
         </div>
 
         <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="打开菜单">
-            <i class="fas fa-bars"></i>
+            <svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18M3 12h18M3 19h18"/></svg>
         </button>
     </nav>
 
@@ -808,13 +828,13 @@
                 <h1 class="fade-in">杭州创投影视有限公司</h1>
                 <p class="fade-in">专注影视内容、文化服务与品牌传播相关领域，致力于提供专业的信息展示与合作交流。</p>
                 <div class="hero-actions">
-                    <a href="#movies" class="cta-button fade-in">了解代表项目 <i class="fas fa-arrow-right"></i></a>
-                    <a href="#contact" class="outline-button fade-in">联系合作 <i class="fas fa-envelope"></i></a>
+                    <a href="#movies" class="cta-button fade-in">了解代表项目 <svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+                    <a href="#contact" class="outline-button fade-in">联系合作 <svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
                 </div>
                 <div class="hero-meta fade-in">
-                    <span><i class="fas fa-film"></i> 影视内容方向</span>
-                    <span><i class="fas fa-book-open"></i> 文化内容方向</span>
-                    <span><i class="fas fa-bullhorn"></i> 品牌传播</span>
+                    <span><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 8h4M3 16h4M17 8h4M17 16h4"/></svg> 影视内容方向</span>
+                    <span><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16M3 4c4-1 6 0 9 2 3-2 5-3 9-2v15c-4-1-6 0-9 2-3-2-5-3-9-2Z"/></svg> 文化内容方向</span>
+                    <span><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m4 10 16-6v16L4 14Zm3 5 2 6h4l-3-7M2 10v4"/></svg> 品牌传播</span>
                 </div>
             </div>
             <div class="hero-card fade-in">
@@ -847,13 +867,13 @@
 
                 <div class="qualification-card">
                     <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">企业核心信息</h3>
-                    <div class="qualification-item"><i class="fas fa-id-card"></i><div><strong>公司全称：</strong>杭州创投影视有限公司</div></div>
-                    <div class="qualification-item"><i class="fas fa-code"></i><div><strong>信用代码：</strong>913301035687501626</div></div>
-                    <div class="qualification-item"><i class="fas fa-calendar-alt"></i><div><strong>成立时间：</strong>2011年1月19日</div></div>
-                    <div class="qualification-item"><i class="fas fa-money-bill-wave"></i><div><strong>注册资本：</strong>500万元人民币</div></div>
-                    <div class="qualification-item"><i class="fas fa-map-marker-alt"></i><div><strong>办公地址：</strong>浙江省杭州市下城区朝晖路168号钛合国际大厦</div></div>
-                    <div class="qualification-item"><i class="fas fa-briefcase"></i><div><strong>核心业务：</strong>影视内容方向、文化内容方向、品牌传播与内容服务</div></div>
-                    <div class="qualification-item"><i class="fas fa-check-circle"></i><div><strong>企业状态：</strong>存续（在营、开业、在册）</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M5 17c0-4 6-4 6 0m3-8h5m-5 5h5"/></svg><div><strong>公司全称：</strong>杭州创投影视有限公司</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m8 5-6 7 6 7m8-14 6 7-6 7m-3-17-2 20"/></svg><div><strong>信用代码：</strong>913301035687501626</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M7 2v6M17 2v6"/></svg><div><strong>成立时间：</strong>2011年1月19日</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M5 9v6m14-6v6"/></svg><div><strong>注册资本：</strong>500万元人民币</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 10c0 6-7 12-7 12S5 16 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2"/></svg><div><strong>办公地址：</strong>浙江省杭州市下城区朝晖路168号钛合国际大厦</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12c5 4 13 4 18 0M12 12v4"/></svg><div><strong>核心业务：</strong>影视内容方向、文化内容方向、品牌传播与内容服务</div></div>
+                    <div class="qualification-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m7 12 3 3 7-7"/></svg><div><strong>企业状态：</strong>存续（在营、开业、在册）</div></div>
                 </div>
             </div>
         </div>
@@ -906,11 +926,11 @@
             <div class="credits-heading"><h3 id="credits-title">《鸡毛飞上天》项目参与资料</h3><p>片尾资料展示 · 点击图片查看原图</p></div>
             <div class="credits-grid">
                 <figure class="credit-card">
-                    <a href="assets/images/chuangtou-work-1.png" target="_blank" rel="noopener noreferrer" aria-label="查看创投作品1完整原图"><img src="assets/images/chuangtou-work-1.png" alt="鸡毛飞上天片尾协拍人员截图，其中列有余玺姓名" loading="lazy" decoding="async"></a>
+                    <a href="assets/images/chuangtou-work-1.png" target="_blank" rel="noopener noreferrer" aria-label="查看创投作品1完整原图"><img src="assets/images/chuangtou-work-1-preview.webp" width="1200" height="675" alt="鸡毛飞上天片尾协拍人员截图，其中列有余玺姓名" loading="lazy" decoding="async"></a>
                     <figcaption><h4>创投作品1 · 协拍人员</h4><p>《鸡毛飞上天》片尾工作人员资料，协拍人员名单中列有余玺姓名。</p><a href="assets/images/chuangtou-work-1.png" target="_blank" rel="noopener noreferrer">查看完整原图 →</a></figcaption>
                 </figure>
                 <figure class="credit-card">
-                    <a href="assets/images/chuangtou-work-2.png" target="_blank" rel="noopener noreferrer" aria-label="查看创投作品2完整原图"><img src="assets/images/chuangtou-work-2.png" alt="鸡毛飞上天片尾鸣谢单位截图，其中列有杭州创投广告有限公司" loading="lazy" decoding="async"></a>
+                    <a href="assets/images/chuangtou-work-2.png" target="_blank" rel="noopener noreferrer" aria-label="查看创投作品2完整原图"><img src="assets/images/chuangtou-work-2-preview.webp" width="1200" height="675" alt="鸡毛飞上天片尾鸣谢单位截图，其中列有杭州创投广告有限公司" loading="lazy" decoding="async"></a>
                     <figcaption><h4>创投作品2 · 鸣谢单位</h4><p>《鸡毛飞上天》片尾鸣谢单位资料，名单中列有杭州创投广告有限公司。</p><a href="assets/images/chuangtou-work-2.png" target="_blank" rel="noopener noreferrer">查看完整原图 →</a></figcaption>
                 </figure>
             </div>
@@ -934,7 +954,7 @@
                     <h3 class="product-title">《鸡毛飞上天》电视剧</h3>
                     <p class="product-description">该剧由余丁执导、申捷编剧，张译、殷桃领衔主演，以陈江河与骆玉珠的感情和创业经历为线索，展现义乌改革发展历程。公司参与项目编辑与广告相关工作。</p>
                     <div class="product-footer">
-                        <a class="buy-button" href="https://baike.baidu.com/item/%E9%B8%A1%E6%AF%9B%E9%A3%9E%E4%B8%8A%E5%A4%A9/18751525" target="_blank" rel="noopener noreferrer"><i class="fas fa-circle-info"></i> 查看作品资料</a>
+                        <a class="buy-button" href="https://baike.baidu.com/item/%E9%B8%A1%E6%AF%9B%E9%A3%9E%E4%B8%8A%E5%A4%A9/18751525" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg> 查看作品资料</a>
                     </div>
                 </div>
             </div>        </div>
@@ -947,10 +967,10 @@
         </div>
 
         <div class="features-grid">
-            <div class="feature-item fade-in"><div class="feature-icon"><i class="fas fa-book-open"></i></div><h3>文化内容方向</h3><p>围绕文化内容方向展示企业相关内容与服务范围，便于合作方了解公司定位。</p></div>
-            <div class="feature-item fade-in"><div class="feature-icon"><i class="fas fa-video"></i></div><h3>影视内容方向</h3><p>以影视内容方向为核心，提供内容展示与合作交流的正式入口。</p></div>
-            <div class="feature-item fade-in"><div class="feature-icon"><i class="fas fa-bullhorn"></i></div><h3>品牌传播与内容服务</h3><p>为合作方提供品牌传播与内容服务相关展示与咨询支持。</p></div>
-            <div class="feature-item fade-in"><div class="feature-icon"><i class="fas fa-headset"></i></div><h3>合作联系</h3><p>通过联系表单、邮箱和联系方式与我们建立正式合作与沟通渠道。</p></div>
+            <div class="feature-item fade-in"><div class="feature-icon"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16M3 4c4-1 6 0 9 2 3-2 5-3 9-2v15c-4-1-6 0-9 2-3-2-5-3-9-2Z"/></svg></div><h3>文化内容方向</h3><p>围绕文化内容方向展示企业相关内容与服务范围，便于合作方了解公司定位。</p></div>
+            <div class="feature-item fade-in"><div class="feature-icon"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-4v14l-6-4"/></svg></div><h3>影视内容方向</h3><p>以影视内容方向为核心，提供内容展示与合作交流的正式入口。</p></div>
+            <div class="feature-item fade-in"><div class="feature-icon"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m4 10 16-6v16L4 14Zm3 5 2 6h4l-3-7M2 10v4"/></svg></div><h3>品牌传播与内容服务</h3><p>为合作方提供品牌传播与内容服务相关展示与咨询支持。</p></div>
+            <div class="feature-item fade-in"><div class="feature-icon"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 14v-3a9 9 0 0 1 18 0v7a3 3 0 0 1-3 3h-6"/><rect x="2" y="11" width="4" height="7" rx="1"/><rect x="18" y="11" width="4" height="7" rx="1"/></svg></div><h3>合作联系</h3><p>通过联系表单、邮箱和联系方式与我们建立正式合作与沟通渠道。</p></div>
         </div>
     </section>
 
@@ -962,23 +982,23 @@
 
         <div class="resources-section fade-in">
             <div class="resource-grid">
-                <a class="resource-card" href="domain-console/"><i class="fas fa-sliders"></i><div><strong>Cloudflare 域名控制台</strong><span>检查并添加 zgland.com 子域名</span></div></a>
-                <a class="resource-card" href="https://dc.console.aliyun.com/next/index#/domain-list/all" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i><div><strong>阿里云域名管理</strong><span>zgland.com · 到期日 2027-08-09</span></div></a>
-                <a class="resource-card" href="network/"><i class="fas fa-network-wired"></i><div><strong>ZeroTier 网络连接</strong><span>安装文件与受保护的自动配置入口</span></div></a>
-                <a class="resource-card" href="proxy/"><i class="fas fa-shield-halved"></i><div><strong>网络代理工具</strong><span>Clash 兼容客户端官方入口与网络小游戏</span></div></a>
-                <a class="resource-card" href="https://obsproject.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-video"></i><div><strong>OBS Studio</strong><span>开源录制、直播与视频内容制作</span></div></a>
-                <a class="resource-card" href="https://www.blender.org/" target="_blank" rel="noopener noreferrer"><i class="fas fa-cube"></i><div><strong>Blender</strong><span>开源三维建模、动画、渲染与视频剪辑</span></div></a>
-                <a class="resource-card" href="https://penpot.app/" target="_blank" rel="noopener noreferrer"><i class="fas fa-pen-ruler"></i><div><strong>Penpot</strong><span>开源界面设计、原型与团队协作</span></div></a>
-                <a class="resource-card" href="https://excalidraw.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-pen-to-square"></i><div><strong>Excalidraw</strong><span>开源在线白板与快速视觉草图</span></div></a>
-                <a class="resource-card" href="https://jupyter.org/" target="_blank" rel="noopener noreferrer"><i class="fas fa-flask"></i><div><strong>Project Jupyter</strong><span>开源交互式计算与数据研究环境</span></div></a>
-                <a class="resource-card" href="https://echarts.apache.org/zh/index.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-chart-line"></i><div><strong>Apache ECharts</strong><span>开源交互式数据可视化与图表库</span></div></a>
-                <a class="resource-card" href="https://www.gov.cn/" target="_blank" rel="noopener noreferrer"><i class="fas fa-landmark"></i><div><strong>中央政府门户网站</strong><span>www.gov.cn</span></div></a>
-                <a class="resource-card" href="https://www.zj.gov.cn/" target="_blank" rel="noopener noreferrer"><i class="fas fa-building-columns"></i><div><strong>浙江省人民政府</strong><span>www.zj.gov.cn</span></div></a>
-                <a class="resource-card" href="https://www.szu.edu.cn/" target="_blank" rel="noopener noreferrer"><i class="fas fa-university"></i><div><strong>深圳大学</strong><span>www.szu.edu.cn</span></div></a>
-                <a class="resource-card" href="https://www.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer"><i class="fas fa-graduation-cap"></i><div><strong>清华大学</strong><span>www.tsinghua.edu.cn</span></div></a>
-                <a class="resource-card" href="https://www.taobao.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-bag-shopping"></i><div><strong>淘宝网</strong><span>www.taobao.com</span></div></a>
-                <a class="resource-card" href="https://www.google.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-google"></i><div><strong>Google</strong><span>www.google.com</span></div></a>
-                <a class="resource-card" href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-amazon"></i><div><strong>Amazon 亚马逊</strong><span>www.amazon.com</span></div></a>
+                <a class="resource-card" href="domain-console/"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3v18M12 3v18M20 3v18M1 8h6m2 8h6m2-10h6"/></svg><div><strong>Cloudflare 域名控制台</strong><span>检查并添加 zgland.com 子域名</span></div></a>
+                <a class="resource-card" href="https://dc.console.aliyun.com/next/index#/domain-list/all" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg><div><strong>阿里云域名管理</strong><span>zgland.com · 到期日 2027-08-09</span></div></a>
+                <a class="resource-card" href="network/"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="1" y="17" width="6" height="5" rx="1"/><rect x="17" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M4 17v-5h16v5"/></svg><div><strong>ZeroTier 网络连接</strong><span>安装文件与受保护的自动配置入口</span></div></a>
+                <a class="resource-card" href="proxy/"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6Z"/><path d="M12 2v20"/></svg><div><strong>网络代理工具</strong><span>Clash 兼容客户端官方入口与网络小游戏</span></div></a>
+                <a class="resource-card" href="https://obsproject.com/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-4v14l-6-4"/></svg><div><strong>OBS Studio</strong><span>开源录制、直播与视频内容制作</span></div></a>
+                <a class="resource-card" href="https://www.blender.org/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 10 5v10l-10 5-10-5V7Zm0 10v10M2 7l10 5 10-5"/></svg><div><strong>Blender</strong><span>开源三维建模、动画、渲染与视频剪辑</span></div></a>
+                <a class="resource-card" href="https://penpot.app/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 17 13-13 4 4L7 21H3Zm5-9L3 3m10 0 8 8m-8 8 6 2 2-2-2-6"/></svg><div><strong>Penpot</strong><span>开源界面设计、原型与团队协作</span></div></a>
+                <a class="resource-card" href="https://excalidraw.com/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3H4v17h17v-8M9 14l1-5L19 1l4 4-9 9Z"/></svg><div><strong>Excalidraw</strong><span>开源在线白板与快速视觉草图</span></div></a>
+                <a class="resource-card" href="https://jupyter.org/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 2h6m-5 0v7L3 21h18L14 9V2M7 15h10"/></svg><div><strong>Project Jupyter</strong><span>开源交互式计算与数据研究环境</span></div></a>
+                <a class="resource-card" href="https://echarts.apache.org/zh/index.html" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 2v19h19M6 16l5-6 4 3 6-8"/></svg><div><strong>Apache ECharts</strong><span>开源交互式数据可视化与图表库</span></div></a>
+                <a class="resource-card" href="https://www.gov.cn/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 8 10-6 10 6ZM3 22h18M5 9v10m7-10v10m7-10v10"/></svg><div><strong>中央政府门户网站</strong><span>www.gov.cn</span></div></a>
+                <a class="resource-card" href="https://www.zj.gov.cn/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 8 10-6 10 6ZM3 22h18M5 9v10m7-10v10m7-10v10"/></svg><div><strong>浙江省人民政府</strong><span>www.zj.gov.cn</span></div></a>
+                <a class="resource-card" href="https://www.szu.edu.cn/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 8 10-6 10 6ZM3 22h18M5 9v10m7-10v10m7-10v10"/></svg><div><strong>深圳大学</strong><span>www.szu.edu.cn</span></div></a>
+                <a class="resource-card" href="https://www.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 8 10-5 10 5-10 5ZM6 10v7c4 3 8 3 12 0v-7m4-2v10"/></svg><div><strong>清华大学</strong><span>www.tsinghua.edu.cn</span></div></a>
+                <a class="resource-card" href="https://www.taobao.com/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16l1 15H3ZM8 7V5a4 4 0 0 1 8 0v2"/></svg><div><strong>淘宝网</strong><span>www.taobao.com</span></div></a>
+                <a class="resource-card" href="https://www.google.com/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M21 12H12v5"/></svg><div><strong>Google</strong><span>www.google.com</span></div></a>
+                <a class="resource-card" href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 19c4 4 10 4 15-1M8 14c0-3 8-4 8 0m0 3V8a4 4 0 0 0-8 0m0 6a4 4 0 0 0 8 0"/></svg><div><strong>Amazon 亚马逊</strong><span>www.amazon.com</span></div></a>
             </div>
         </div>
     </section>
@@ -1000,21 +1020,21 @@
                         <input type="email" name="email" placeholder="电子邮箱" required>
                         <input type="tel" name="电话" placeholder="联系电话">
                         <textarea name="留言内容" rows="5" placeholder="您的留言或需求..." required></textarea>
-                        <button type="submit">发送到邮箱 <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit">发送到邮箱 <svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 11 20-9-8 20-4-8Zm8 3L22 2"/></svg></button>
                     </form>
                     <p class="form-tip">首次启用需要在收件箱或垃圾邮件中确认 FormSubmit；备用方式：<a href="mailto:648974542@qq.com?subject=杭州创投影视有限公司官网咨询">直接发送邮件到 648974542@qq.com</a></p>
                 </div>
 
                 <div class="contact-info">
-                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><div><h3>公司地址</h3><p>浙江省杭州市下城区朝晖路168号钛合国际大厦2号楼1803室</p></div></div>
-                    <div class="contact-item"><i class="fas fa-envelope"></i><div><h3>电子邮箱</h3><p><a href="mailto:648974542@qq.com" style="color: var(--accent);">648974542@qq.com</a></p></div></div>
-                    <div class="contact-item"><i class="fas fa-phone"></i><div><h3>商务合作</h3><p>请通过电子邮箱或联系表单沟通。</p><p>工作日 9:00-18:00</p></div></div>
+                    <div class="contact-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 10c0 6-7 12-7 12S5 16 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2"/></svg><div><h3>公司地址</h3><p>浙江省杭州市下城区朝晖路168号钛合国际大厦2号楼1803室</p></div></div>
+                    <div class="contact-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><div><h3>电子邮箱</h3><p><a href="mailto:648974542@qq.com" style="color: var(--accent);">648974542@qq.com</a></p></div></div>
+                    <div class="contact-item"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m4 2 5 2-2 5c2 4 4 6 8 8l5-2 2 5c-2 5-8 2-13-3S1 4 4 2Z"/></svg><div><h3>商务合作</h3><p>请通过电子邮箱或联系表单沟通。</p><p>工作日 9:00-18:00</p></div></div>
 
                     <div class="social-links">
-                        <a href="mailto:648974542@qq.com?subject=微信咨询" title="微信咨询"><i class="fab fa-weixin"></i></a>
-                        <a href="mailto:648974542@qq.com?subject=微博合作咨询" title="微博合作"><i class="fab fa-weibo"></i></a>
-                        <a href="mailto:648974542@qq.com?subject=LinkedIn商务合作" title="LinkedIn商务合作"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="mailto:648974542@qq.com?subject=国际合作咨询" title="国际合作"><i class="fab fa-twitter"></i></a>
+                        <a href="mailto:648974542@qq.com?subject=微信咨询" title="微信咨询"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11a8 8 0 0 1-11 7l-6 3 1-6a8 8 0 1 1 16-4Z"/><path d="M8 9h1m5 0h1"/></svg></a>
+                        <a href="mailto:648974542@qq.com?subject=微博合作咨询" title="微博合作"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11a8 8 0 0 1-11 7l-6 3 1-6a8 8 0 1 1 16-4Z"/><circle cx="12" cy="11" r="3"/></svg></a>
+                        <a href="mailto:648974542@qq.com?subject=LinkedIn商务合作" title="LinkedIn商务合作"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v8m0-12v1m5 11v-8m0 3c0-4 5-4 5 0v5"/></svg></a>
+                        <a href="mailto:648974542@qq.com?subject=国际合作咨询" title="国际合作"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m4 3 16 18M20 3 4 21"/></svg></a>
                     </div>
                 </div>
             </div>
@@ -1027,9 +1047,9 @@
                 <h3>创投文化空间</h3>
                 <p>杭州创投影视有限公司（统一社会信用代码：913301035687501626）致力于打造创投知识服务平台，连接创业者、投资者与创新思想。</p>
                 <div class="social-links">
-                    <a href="mailto:648974542@qq.com?subject=官网咨询" title="邮件联系"><i class="fas fa-envelope"></i></a>
-                    <a href="https://hzct.zgland.com/" title="官方网站"><i class="fas fa-globe"></i></a>
-                    <a href="#resources" title="资源导航"><i class="fas fa-link"></i></a>
+                    <a href="mailto:648974542@qq.com?subject=官网咨询" title="邮件联系"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
+                    <a href="https://hzct.zgland.com/" title="官方网站"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg></a>
+                    <a href="#resources" title="资源导航"><svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m10 7 3-3a5 5 0 0 1 7 7l-3 3m-3 3-3 3a5 5 0 0 1-7-7l3-3m1 6 8-8"/></svg></a>
                 </div>
             </div>
 
@@ -1108,8 +1128,8 @@
             mobileMenuBtn.addEventListener('click', function() {
                 navLinks.classList.toggle('active');
                 this.innerHTML = navLinks.classList.contains('active')
-                    ? '<i class="fas fa-times"></i>'
-                    : '<i class="fas fa-bars"></i>';
+                    ? '<svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 5 14 14M5 19 19 5"/></svg>'
+                    : '<svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18M3 12h18M3 19h18"/></svg>';
             });
         }
 
@@ -1143,7 +1163,7 @@
                     window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
                     if (window.innerWidth <= 992 && navLinks && mobileMenuBtn) {
                         navLinks.classList.remove('active');
-                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        mobileMenuBtn.innerHTML = '<svg class="site-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18M3 12h18M3 19h18"/></svg>';
                     }
                 }
             });
@@ -1166,7 +1186,7 @@
                 ctx.beginPath(); points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p)); ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();ctx.fillStyle=fill;ctx.fill();
                 ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.strokeStyle='#69dfb4';ctx.shadowColor='#49d3a2';ctx.shadowBlur=10*ratio;ctx.stroke();ctx.shadowBlur=0;
                 phase += .025;
-                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(drawQuantPreview);
+                // Decorative preview paints only on load and resize.
             }
             drawQuantPreview();
             window.addEventListener('resize', drawQuantPreview, {passive:true});
