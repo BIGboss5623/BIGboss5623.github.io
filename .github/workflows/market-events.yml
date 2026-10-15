@@ -1,0 +1,30 @@
+name: Archive major market events
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 1,4,8 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: market-events
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/collect_market_events.py
+      - name: Preserve event archive
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fund/events.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Archive major market event headlines'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

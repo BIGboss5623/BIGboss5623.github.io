@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "last_checked": "2026-10-15T18:57:31+08:00",
+  "collection_errors": [],
+  "events": [
+    {
+      "id": "174bd0614e263eb5",
+      "title": "信宇人，被立案调查！",
+      "published_at": "2026-10-14 17:41:26",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "理财周刊-财事汇",
+      "url": "https://finance.eastmoney.com/a/202610143895564935.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "d76c8739b63ee637",
+      "title": "信宇人跌停",
+      "published_at": "2026-10-14 14:58:23",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202610143895421058.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "718f285b0fff0321",
+      "title": "603815、600576实控人，被立案调查",
+      "published_at": "2026-10-09 22:23:33",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "上海证券报",
+      "url": "https://finance.eastmoney.com/a/202610093891546778.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "8488e6e49f29adf1",
+      "title": "600418，2连跌停+近24万手封单！龙头三季度业绩预喜，这一板块被点燃",
+      "published_at": "2026-10-09 12:33:17",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [
+        "600418"
+      ],
+      "source": "数据宝",
+      "url": "https://finance.eastmoney.com/a/202610093891025948.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "468eb0f2b3ccaddf",
+      "title": "MLCC龙头，跌停",
+      "published_at": "2026-10-09 11:38:00",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "上海证券报",
+      "url": "https://finance.eastmoney.com/a/202610093891017754.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "43a33bf8a884ca77",
+      "title": "江淮汽车开盘一字跌停",
+      "published_at": "2026-10-09 09:55:18",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [
+        "600418"
+      ],
+      "source": "央广财经",
+      "url": "https://finance.eastmoney.com/a/202610093890727585.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "stcn-4207790",
+      "title": "江淮汽车：产品测试争议相关报道及盘中跌停",
+      "published_at": "2026-10-08 16:29:00",
+      "recorded_at": "2026-10-15",
+      "symbols": [
+        "600418"
+      ],
+      "source": "证券时报网",
+      "url": "https://www.stcn.com/article/detail/4207790.html",
+      "status": "已核验报道来源",
+      "category": "产品安全与重大波动",
+      "summary": "报道涉及尊界产品测试争议、公司调查回应及江淮汽车当日盘中跌停。争议内容以公司后续调查和正式公告为准。",
+      "market_observation": "报道记录盘中跌幅10.01%；不是经本系统行情独立验证的收盘跌幅，也不证明单一因果。"
+    },
+    {
+      "id": "34ccf721b58c0403",
+      "title": "“开局一碗大面” ！尊界V800刹车测试引争议，600418被砸跌停，股民：早上没跑，现在也不用跑了",
+      "published_at": "2026-10-08 14:48:52",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [
+        "600418"
+      ],
+      "source": "华夏时报",
+      "url": "https://finance.eastmoney.com/a/202610083889574664.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "fe304f38c462afa8",
+      "title": "万科A跌停",
+      "published_at": "2026-09-30 10:44:00",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "证券时报网",
+      "url": "https://finance.eastmoney.com/a/202609303887537555.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "d51f26fa8932c747",
+      "title": "亨通光电跌停",
+      "published_at": "2026-09-28 10:15:00",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "证券时报网",
+      "url": "https://finance.eastmoney.com/a/202609283884916436.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "55a4bf56a1657b5e",
+      "title": "退市不是免罚牌",
+      "published_at": "2026-09-23 07:55:13",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "经济日报",
+      "url": "https://finance.eastmoney.com/a/202609233881647372.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "f492af7facec5462",
+      "title": "002253，被证监会立案调查",
+      "published_at": "2026-09-22 19:39:06",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "上海证券报",
+      "url": "https://finance.eastmoney.com/a/202609223881395578.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "b5cc19384feb16c2",
+      "title": "301139，退市！",
+      "published_at": "2026-09-22 08:24:00",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "证券时报网",
+      "url": "https://finance.eastmoney.com/a/202609223880646569.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "151307148ee7e460",
+      "title": "飞猪回应被立案调查：高度重视，将积极配合各项调查工作",
+      "published_at": "2026-09-19 11:48:17",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "每日经济新闻",
+      "url": "https://finance.eastmoney.com/a/202609193879192529.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "884eef27b1eb4e33",
+      "title": "飞猪回应被立案调查",
+      "published_at": "2026-09-19 11:43:53",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "界面新闻",
+      "url": "https://finance.eastmoney.com/a/202609193879222146.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "edaf8527624ee5ad",
+      "title": "途家回应被立案调查：高度重视 将全力配合监管调查",
+      "published_at": "2026-09-19 11:24:29",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202609193879192921.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "c11c21c01583fc4d",
+      "title": "途家回应被立案调查",
+      "published_at": "2026-09-19 11:16:06",
+      "recorded_at": "2026-10-15T18:57:31+08:00",
+      "symbols": [],
+      "source": "界面新闻",
+      "url": "https://finance.eastmoney.com/a/202609193879187046.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    }
+  ],
+  "last_attempted": "2026-10-15T18:57:31+08:00"
+}
