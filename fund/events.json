@@ -1,8 +1,23 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-15T18:57:31+08:00",
+  "last_checked": "2026-10-16T13:54:14+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "a5eb90f749ca8ac3",
+      "title": "三部门联合调查！600418，2分钟直线涨停",
+      "published_at": "2026-10-16 11:02:00",
+      "recorded_at": "2026-10-16T13:54:14+08:00",
+      "symbols": [
+        "600418"
+      ],
+      "source": "华夏时报",
+      "url": "https://finance.eastmoney.com/a/202610163898182281.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "174bd0614e263eb5",
       "title": "信宇人，被立案调查！",
@@ -207,6 +222,19 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     },
     {
+      "id": "ec3743134862d64d",
+      "title": "飞猪回应被立案调查：积极配合各项调查工作 全面落实监管要求",
+      "published_at": "2026-09-19 11:42:24",
+      "recorded_at": "2026-10-16T13:54:14+08:00",
+      "symbols": [],
+      "source": "财联社",
+      "url": "https://finance.eastmoney.com/a/202609193879191949.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
       "id": "edaf8527624ee5ad",
       "title": "途家回应被立案调查：高度重视 将全力配合监管调查",
       "published_at": "2026-09-19 11:24:29",
@@ -233,5 +261,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-15T18:57:31+08:00"
+  "last_attempted": "2026-10-16T13:54:14+08:00"
 }
