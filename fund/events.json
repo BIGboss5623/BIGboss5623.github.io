@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-16T13:54:14+08:00",
+  "last_checked": "2026-10-16T21:17:25+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "ad35d67030d448b0",
+      "title": "瑞芯微盘中跌停",
+      "published_at": "2026-10-16 14:01:58",
+      "recorded_at": "2026-10-16T21:17:25+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202610163898292747.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "a5eb90f749ca8ac3",
       "title": "三部门联合调查！600418，2分钟直线涨停",
@@ -261,5 +274,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-16T13:54:14+08:00"
+  "last_attempted": "2026-10-16T21:17:25+08:00"
 }
