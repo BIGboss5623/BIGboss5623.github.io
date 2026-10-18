@@ -11,7 +11,7 @@ const pages = process.env.QA_PAGES ? JSON.parse(process.env.QA_PAGES) : ['/', '/
     const errors = [], failed = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', r => { if(r.status() >= 400) failed.push({url:r.url(),status:r.status()}); });
-    if (process.env.QA_LOCAL) await page.route('https://zgland.com/assets/js/site-tools.js*', r => r.fulfill({path:require('node:path').resolve(__dirname,'../assets/js/site-tools.js'),contentType:'application/javascript'}));
+    if (process.env.QA_LOCAL) await page.route('https://zgland.com/assets/js/site-tools*.js*', r => r.fulfill({path:require('node:path').resolve(__dirname,'../assets/js/site-tools.js'),contentType:'application/javascript'}));
     const url = new URL(path, root).href;
     try {
       const start = Date.now();

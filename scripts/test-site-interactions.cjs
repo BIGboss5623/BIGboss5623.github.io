@@ -3,7 +3,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 (async()=>{
  const browser=await chromium.launch({channel:'msedge',headless:true,args:['--no-proxy-server']});
  const context=await browser.newContext({viewport:{width:390,height:844}});
- await context.route('https://zgland.com/assets/js/site-tools.js*',r=>r.fulfill({path:require('node:path').resolve(__dirname,'../assets/js/site-tools.js'),contentType:'application/javascript'}));
+ await context.route('https://zgland.com/assets/js/site-tools*.js*',r=>r.fulfill({path:require('node:path').resolve(__dirname,'../assets/js/site-tools.js'),contentType:'application/javascript'}));
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{Object.defineProperty(Storage.prototype,'getItem',{value(){throw new DOMException('disabled','SecurityError');}});window.downloaded=[];URL.createObjectURL=blob=>{window.downloaded.push(blob);return 'blob:qa-download';};document.addEventListener('click',e=>{if(e.target.closest('a[download]'))e.preventDefault();});});
  let attempts={};

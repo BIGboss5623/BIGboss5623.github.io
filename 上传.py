@@ -71,6 +71,7 @@ def main() -> None:
     default_message = f"网站更新 {timestamp}"
     message = input(f"本次更新说明（直接回车使用“{default_message}”）：").strip() or default_message
 
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_frontend_assets.py")], check=True)
     print("\n[1/4] 保存全部改动……")
     git("add", "--all")
     has_changes = git("diff", "--cached", "--quiet", check=False).returncode != 0
