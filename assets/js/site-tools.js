@@ -14,6 +14,6 @@
   }
   const top = document.createElement('button'); top.type='button'; top.textContent='↑ 返回顶部'; top.onclick=()=>{window.scrollTo({top:0});panel.open=false;}; nav.append(top);
   panel.append(summary,nav); document.body.append(panel);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){panel.open=false;summary.focus();}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && panel.open){panel.open=false;summary.focus();}});
   document.addEventListener('click',e=>{if(!panel.contains(e.target))panel.open=false;});
 })();
