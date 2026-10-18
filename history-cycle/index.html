@@ -6,11 +6,13 @@
   <meta name="description" content="比较各国不同年代的发展阶段、产业热点与历史相似结构。">
   <title>历史周期研究室｜各国发展阶段与机会迁移</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="usability.css?v=20261018">
+  <script defer src="https://zgland.com/assets/js/site-tools.js?v=20261018-2"></script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../"><span>HZ</span> 杭州创投影视 · 研究室</a>
-    <nav><a href="#lab">周期实验室</a><a href="#method">研究结论</a><a href="#sources">资料来源</a><a class="back" href="../">返回官网</a></nav>
+    <a class="brand" href="https://zgland.com/"><span>HZ</span> 杭州创投影视 · 研究室</a>
+    <nav><a href="#lab">周期实验室</a><a href="#method">研究结论</a><a href="#sources">资料来源</a><a class="back" href="https://zgland.com/">返回官网</a></nav>
   </header>
 
   <main>
@@ -33,7 +35,8 @@
 
     <section class="lab" id="lab">
       <div class="section-head"><div><p class="eyebrow">INTERACTIVE RESEARCH</p><h2>选择一个国家与年代</h2></div><p>先看这个阶段自身，再从全部样本中寻找结构最接近的历史片段。</p></div>
-      <div class="controls"><div id="countries" class="pills" role="group" aria-label="选择国家"></div><label>年代<select id="decade"></select></label></div>
+      <p id="loadStatus" role="status">正在读取研究样本……</p><button id="retryData" type="button" hidden>重新加载数据</button>
+      <div class="controls"><div id="countries" class="pills" role="group" aria-label="选择国家"></div><label>年代<select id="decade" disabled></select></label></div>
       <div class="research-grid">
         <article class="stage-card">
           <div class="card-top"><span id="selection">中国 · 2020年代</span><span class="status">研究编码</span></div>
@@ -61,6 +64,6 @@
     </section>
   </main>
   <footer><span>© 2026 杭州创投影视有限公司</span><span>历史与产业研究工具 · 不构成投资建议</span></footer>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261018-2"></script>
 </body>
 </html>

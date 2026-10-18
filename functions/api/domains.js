@@ -46,6 +46,7 @@ async function sameSecret(left, right) {
 async function cloudflare(env, path, init = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
+    signal: AbortSignal.timeout(12000),
     headers: {
       authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
       "content-type": "application/json",
@@ -72,14 +73,13 @@ function requiredEnv(env) {
 }
 
 async function inspectDomain(env, hostname) {
-  const dns = await cloudflare(
+  const [dns, pages] = await Promise.all([cloudflare(
     env,
     `/zones/${encodeURIComponent(env.CLOUDFLARE_ZONE_ID)}/dns_records?name=${encodeURIComponent(hostname)}&per_page=100`,
-  );
-  const pages = await cloudflare(
+  ), cloudflare(
     env,
     `/accounts/${encodeURIComponent(env.CLOUDFLARE_ACCOUNT_ID)}/pages/projects/${encodeURIComponent(env.CLOUDFLARE_PAGES_PROJECT)}/domains`,
-  );
+  )]);
   const records = Array.isArray(dns.result) ? dns.result : [];
   const domains = Array.isArray(pages.result) ? pages.result : [];
   const conflicts = records.filter((record) => record.type !== "CNAME");
@@ -111,6 +111,13 @@ async function handleRequest(context) {
   const target = normalizeHostname(env.CLOUDFLARE_PAGES_TARGET);
   if (!target.endsWith(".pages.dev")) {
     return json({ ok: false, message: "CLOUDFLARE_PAGES_TARGET 必须是当前项目的 pages.dev 主机名。" }, 503);
+  }
+
+  // A binding alone does not create page content. Reject missing directories
+  // before making any DNS or Pages changes (404.html disables SPA fallback).
+  const page = await env.ASSETS.fetch(new Request(new URL(sitePath(hostname), request.url)));
+  if (page.status !== 200 || !(page.headers.get('content-type') || '').includes('text/html')) {
+    return json({ok:false, message:`页面目录 ${sitePath(hostname)} 尚不可用，请先发布该目录的 index.html，再添加域名。`}, 409);
   }
 
   const current = await inspectDomain(env, hostname);

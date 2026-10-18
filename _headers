@@ -12,3 +12,12 @@
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 /hzyx/*.js
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/history-cycle/*.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/history-cycle/*.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/fund/events.json
+  Cache-Control: public, max-age=300, must-revalidate
+/proxy/downloads/*
+  Cache-Control: public, max-age=86400
+  X-Content-Type-Options: nosniff

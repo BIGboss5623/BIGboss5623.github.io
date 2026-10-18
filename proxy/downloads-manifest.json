@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "files": {
+    "Clash.Verge_2.5.2_x64-setup.exe": {
+      "bytes": 46964366,
+      "sha256": "ba42f00b1082e352352080170fe86ae411bcc854cb13f1b8bebc9025e8a7cbf4",
+      "parts": [
+        {
+          "bytes": 20971520,
+          "sha256": "dd8da273f5669b7412eb8798a0d506eae0899134fa04c417f1cd811a299e120c"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "124fc6489355b705495a53468b6c31abcc971140053b1f01941f2d74d1078383"
+        },
+        {
+          "bytes": 5021326,
+          "sha256": "815616e724034fdd994e2db0325542f3fceddc8cb9e5880b54d18ad3f1fff635"
+        }
+      ]
+    },
+    "Clash.for.Windows.Setup.0.20.39.exe": {
+      "bytes": 87209972,
+      "sha256": "477274ce22d30559ae5df8d41b0adb0a8461be0501d26a0500452ab68c650608",
+      "parts": [
+        {
+          "bytes": 20971520,
+          "sha256": "1165cfdefb88ddf78ea7f7e83484b66766e6bf654e1b8859b7ac91b1c466b0d6"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "87a107306ae672149393407831514f846840f4319c71b365cbb780cb7a818541"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "c1b123c9527ab693fe4e388ac357fb02cf1739b47e561475c37e0caf94c3b0eb"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "f332b37608b690b609cd5cc06c48645147255d0a18c31eb1e00755b5219d20ee"
+        },
+        {
+          "bytes": 3323892,
+          "sha256": "991cdbb4ffdf82f09e5ab86b68728ecefa91db52f28b1b8112b24d576bee66ac"
+        }
+      ]
+    },
+    "Clash.for.Windows-0.20.39-win.zip": {
+      "bytes": 121304923,
+      "sha256": "24a7076bd0e0c468b0f3d0d370378b6201dc15868f249786cd663f83b8d525dc",
+      "parts": [
+        {
+          "bytes": 20971520,
+          "sha256": "a3f0fc0406119fb32781b4938cf4162651a217cfd23170f883646d992a597b75"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "ae4e9c5c9123f6d7bca423c2025e7b61e45119f319075d0e3d1ce4304ab533d8"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "eec32f26fcdc7428b6049ee547e7218955e938d2f70c281a2f8d57117fe90453"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "2da1d6852122a68109a1f6e220b9d34c5e5320a3bb031f3550e7cc4a1c5dcdaa"
+        },
+        {
+          "bytes": 20971520,
+          "sha256": "d9a46b7d1cdc09d7af813475b0af866a7c473a4b3e4f059beaf98a788d9595d5"
+        },
+        {
+          "bytes": 16447323,
+          "sha256": "71e7def9ec6e1f3dd4ded488c686cd4e6380c9edb61015947f601130976c5a75"
+        }
+      ]
+    }
+  }
+}

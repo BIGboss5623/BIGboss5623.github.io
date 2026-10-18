@@ -12,6 +12,16 @@ navigation.addEventListener('click', event => {
     navigation.classList.remove('open');
   }
 });
+document.addEventListener('keydown', event => {
+  if(event.key === 'Escape' && navigation.classList.contains('open')) {
+    navigation.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.focus();
+  }
+});
+document.addEventListener('click', event => {
+  if(!menu.contains(event.target) && !navigation.contains(event.target)) {
+    navigation.classList.remove('open');menu.setAttribute('aria-expanded','false');
+  }
+});
 document.getElementById('copyEmail').addEventListener('click', async () => {
   const status = document.getElementById('copyStatus');
   try {
