@@ -18,6 +18,7 @@ const pages = process.env.QA_PAGES ? JSON.parse(process.env.QA_PAGES) : ['/', '/
       const response = await page.goto(url,{waitUntil:'load',timeout:30000});
       await page.waitForTimeout(300);
       const details = await page.evaluate(() => ({title:document.title,overflow:document.documentElement.scrollWidth>innerWidth+2,nav:document.querySelectorAll('.zg-tools').length,brokenImages:[...document.images].filter(i=>i.getAttribute('src') && i.complete && !i.naturalWidth).map(i=>i.getAttribute('src')),resources:performance.getEntriesByType('resource').length,bytes:performance.getEntriesByType('resource').reduce((s,r)=>s+r.transferSize,0),links:[...document.querySelectorAll('a[href]')].map(a=>({text:a.textContent.trim().slice(0,40),href:a.href}))}));
+      if(details.nav){await page.locator('.zg-tools summary').click();details.visibleNavLinks=await page.locator('.zg-tools a:visible').count();await page.keyboard.press('Escape');}
       await page.setViewportSize({width:1366,height:900});
       details.desktopOverflow = await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);
       results.push({url,status:response.status(),ms:Date.now()-start,...details,errors,failed});
@@ -27,5 +28,5 @@ const pages = process.env.QA_PAGES ? JSON.parse(process.env.QA_PAGES) : ['/', '/
   await browser.close();
   if(process.argv[3])fs.writeFileSync(process.argv[3],JSON.stringify(results,null,2));
   console.log(JSON.stringify(results.map(({links,...r})=>r),null,2));
-  if(results.some(r=>r.error || r.status!==200 || r.overflow || r.desktopOverflow || r.errors.length || r.brokenImages.length || r.failed.some(f=>new URL(f.url).origin===new URL(r.url).origin)))process.exitCode=1;
+  if(results.some(r=>r.error || r.status!==200 || r.overflow || r.desktopOverflow || r.visibleNavLinks!==9 || r.errors.length || r.brokenImages.length || r.failed.some(f=>new URL(f.url).origin===new URL(r.url).origin)))process.exitCode=1;
 })();

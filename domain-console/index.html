@@ -15,8 +15,9 @@
     .guard{display:grid;gap:10px}.guard div{display:flex;gap:10px;align-items:flex-start;color:#c4d1df;font-size:14px;line-height:1.55}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);margin-top:6px;flex:none}.links{display:grid;gap:9px;margin-top:20px}.links a{color:var(--blue);text-decoration:none;padding:10px 12px;border:1px solid var(--line);border-radius:10px}.links a:hover{background:#152b44}
     #result{margin-top:18px;min-height:92px;background:#071320;border:1px solid #243c57;border-radius:14px;padding:16px;white-space:pre-wrap;line-height:1.6;color:#cfe0f1}.ok{border-color:#2b7c62!important;color:#bdf6df!important}.error{border-color:#8b3942!important;color:#ffd0d4!important}.hint{font-size:13px;color:var(--muted);margin:12px 0 0}
     @media(max-width:760px){main{padding-top:24px}.top{align-items:flex-start}.grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.card{padding:18px}.suffix{padding:0 10px}}
+    #password{min-width:0}#showPassword{flex:0 0 64px;white-space:nowrap;background:#162b44;color:#dcecff;border:1px solid #385675;padding:10px}
   </style>
-<script defer src="https://zgland.com/assets/js/site-tools.4201e5a8e118.js"></script></head>
+<script defer src="https://zgland.com/assets/js/site-tools.50231a707a9d.js"></script></head>
 <body>
   <main>
     <div class="top"><div class="brand">ZGLAND · Cloudflare</div><a class="back" href="https://zgland.com/">返回网站</a></div>
@@ -26,10 +27,12 @@
       <section class="card">
         <div class="field"><label for="subdomain">一级子域名</label><div class="input-wrap"><input class="subdomain" id="subdomain" autocomplete="off" placeholder="例如 network"><span class="suffix">.zgland.com</span></div></div>
         <div class="field"><label>页面对应关系</label><div id="routePreview" class="hint">network.zgland.com → 仓库 /network/ 目录</div></div>
-        <div class="field"><label for="password">控制台密码</label><input id="password" type="password" autocomplete="current-password" placeholder="仅随本次请求发送，不写入网页"></div>
-        <div class="actions"><button class="plan" id="planButton" type="button">检查计划</button><button class="apply" id="applyButton" type="button">确认并应用</button></div>
+        <div class="field"><label for="password">控制台密码</label><div class="input-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="仅随本次请求发送，不保存"><button id="showPassword" type="button" aria-pressed="false">显示</button></div></div>
+        <div class="actions"><button class="plan" id="planButton" type="button">1 · 检查计划</button><button class="apply" id="applyButton" type="button" disabled>2 · 确认并应用</button></div>
+        <p class="hint" id="stepHint">先检查计划；只有检查成功后才可确认应用。更换域名或密码后需要重新检查。</p>
         <p class="hint">`www` 和 `hzct` 显示主站，其余一级子域名显示仓库中的同名目录。请先建立目录页面，再添加域名。</p>
         <div id="result" aria-live="polite">等待操作。</div>
+        <div id="resultLinks" class="links" hidden></div>
       </section>
       <aside class="card">
         <h2>安全保护</h2>
@@ -44,6 +47,9 @@
     const result = document.getElementById("result");
     const routePreview = document.getElementById("routePreview");
     const buttons = [document.getElementById("planButton"), document.getElementById("applyButton")];
+    let plannedHost = "", busy = false, revision = 0;
+    const resultLinks=document.getElementById('resultLinks');
+    function invalidatePlan(){revision++;plannedHost='';buttons[1].disabled=true;resultLinks.hidden=true;document.getElementById('stepHint').textContent='先检查计划；更换域名或密码后需重新检查。';}
 
     function hostname() {
       const value = subdomain.value.trim().toLowerCase().replace(/\.zgland\.com\.?$/, "").replace(/\.$/, "");
@@ -70,8 +76,11 @@
       if (!host || !password.value) return show({message:"请填写子域名和控制台密码。"}, false);
       const label = host.slice(0, -'.zgland.com'.length);
       if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)) return show({message:"请填写一级子域名：仅限字母、数字及中间的连字符，最多63位。例如 hzyx。"}, false);
-      if (buttons.some(button => button.disabled)) return;
+      if (busy) return;
+      if (action === 'apply' && plannedHost !== host) return show({message:'请先检查当前域名的计划，再确认应用。'},false);
       if (action === "apply" && !window.confirm(`确认创建或修正 ${host} 并绑定到当前 Pages 项目？`)) return;
+      const requestRevision=revision;busy=true;plannedHost='';resultLinks.hidden=true;
+      if(action==='apply'){subdomain.disabled=true;password.disabled=true;document.getElementById('showPassword').disabled=true;}
       buttons.forEach((button) => { button.disabled = true; });
       result.className = "";
       result.textContent = action === "plan" ? "正在读取 Cloudflare 当前配置……" : "正在应用并复查……";
@@ -80,20 +89,33 @@
       try {
         const response = await fetch("/api/domains", {signal:controller.signal, method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({action, hostname:host, password:password.value})});
         const payload = await response.json().catch(() => ({message:`服务器返回 HTTP ${response.status}`}));
+        if(revision!==requestRevision){show({message:'输入已发生变化，请重新检查当前域名。'},false);return;}
         show(payload, response.ok && payload.ok);
+        if(response.ok&&payload.ok){
+          if(action==='plan'){plannedHost=host;document.getElementById('stepHint').textContent='计划检查成功。请核对上方域名和变更内容，再点击确认应用。';try{localStorage.setItem('zgland-last-domain',label);}catch{}}
+          else document.getElementById('stepHint').textContent='应用请求已完成。DNS或证书可能仍需等待，以实际访问结果为准。';
+          resultLinks.replaceChildren();
+          const preview=document.createElement('a');preview.textContent='预览已发布目录 ↗';preview.href='https://zgland.com'+(['www','hzct'].includes(label)?'/':`/${label}/`);preview.target='_blank';preview.rel='noopener noreferrer';resultLinks.append(preview);
+          if(action==='apply'){const visit=document.createElement('a');visit.textContent='打开子域名验证 ↗';visit.href='https://'+host+'/';visit.target='_blank';visit.rel='noopener noreferrer';resultLinks.append(visit);}
+          resultLinks.hidden=false;
+        }
       } catch (error) {
         show({message:error.name === 'AbortError' ? "请求超过45秒。应用操作可能已在服务端完成，请先点击“检查计划”核对，不要重复应用。" : `连接失败：${error.message}。请检查网络后重试。`}, false);
       } finally {
         clearTimeout(timer);
-        buttons.forEach((button) => { button.disabled = false; });
+        busy=false;buttons[0].disabled=false;buttons[1].disabled=plannedHost!==hostname();
+        subdomain.disabled=false;password.disabled=false;document.getElementById('showPassword').disabled=false;
       }
     }
     document.getElementById("planButton").addEventListener("click", () => run("plan"));
     document.getElementById("applyButton").addEventListener("click", () => run("apply"));
     subdomain.addEventListener("keydown", (event) => { if (event.key === "Enter") password.focus(); });
-    subdomain.addEventListener("input", updateRoutePreview);
+    subdomain.addEventListener("input", () => {invalidatePlan();updateRoutePreview();});
+    password.addEventListener('input',invalidatePlan);
+    document.getElementById('showPassword').onclick=()=>{const visible=password.type==='password';password.type=visible?'text':'password';document.getElementById('showPassword').textContent=visible?'隐藏':'显示';document.getElementById('showPassword').setAttribute('aria-pressed',String(visible));};
     password.addEventListener("keydown", (event) => { if (event.key === "Enter") run("plan"); });
     subdomain.value = "network";
+    try{const saved=localStorage.getItem('zgland-last-domain');if(/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(saved||''))subdomain.value=saved;}catch{}
     updateRoutePreview();
   </script>
 </body>
