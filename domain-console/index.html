@@ -16,7 +16,7 @@
     #result{margin-top:18px;min-height:92px;background:#071320;border:1px solid #243c57;border-radius:14px;padding:16px;white-space:pre-wrap;line-height:1.6;color:#cfe0f1}.ok{border-color:#2b7c62!important;color:#bdf6df!important}.error{border-color:#8b3942!important;color:#ffd0d4!important}.hint{font-size:13px;color:var(--muted);margin:12px 0 0}
     @media(max-width:760px){main{padding-top:24px}.top{align-items:flex-start}.grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.card{padding:18px}.suffix{padding:0 10px}}
   </style>
-</head>
+<script defer src="https://zgland.com/assets/js/site-tools.js?v=20261018"></script></head>
 <body>
   <main>
     <div class="top"><div class="brand">ZGLAND · Cloudflare</div><a class="back" href="https://zgland.com/">返回网站</a></div>
@@ -68,17 +68,23 @@
     async function run(action) {
       const host = hostname();
       if (!host || !password.value) return show({message:"请填写子域名和控制台密码。"}, false);
+      const label = host.slice(0, -'.zgland.com'.length);
+      if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)) return show({message:"请填写一级子域名：仅限字母、数字及中间的连字符，最多63位。例如 hzyx。"}, false);
+      if (buttons.some(button => button.disabled)) return;
       if (action === "apply" && !window.confirm(`确认创建或修正 ${host} 并绑定到当前 Pages 项目？`)) return;
       buttons.forEach((button) => { button.disabled = true; });
       result.className = "";
       result.textContent = action === "plan" ? "正在读取 Cloudflare 当前配置……" : "正在应用并复查……";
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 45000);
       try {
-        const response = await fetch("/api/domains", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({action, hostname:host, password:password.value})});
+        const response = await fetch("/api/domains", {signal:controller.signal, method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({action, hostname:host, password:password.value})});
         const payload = await response.json().catch(() => ({message:`服务器返回 HTTP ${response.status}`}));
         show(payload, response.ok && payload.ok);
       } catch (error) {
-        show({message:`请求失败：${error.message}`}, false);
+        show({message:error.name === 'AbortError' ? "请求超过45秒。应用操作可能已在服务端完成，请先点击“检查计划”核对，不要重复应用。" : `连接失败：${error.message}。请检查网络后重试。`}, false);
       } finally {
+        clearTimeout(timer);
         buttons.forEach((button) => { button.disabled = false; });
       }
     }
