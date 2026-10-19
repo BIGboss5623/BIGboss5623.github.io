@@ -6,5 +6,6 @@ ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 - `/quant-console/`：量化操作导航及单次入口检查；写入操作在独立认证的云端工作台完成，不存储登录口令。
 - `/api/quant-status`：仅固定目标的匿名可达性探测；401挑战只能说明入口认证存在，不代表业务健康或永久托管。无后台轮询/自动续期。
 - 免费云端可能休眠或回收，保留公开研究台和浏览器CSV回测作为替代。没有承诺自动恢复。
+- 量化操作中心的状态备份初检仅在浏览器读取JSON并显示记录数，不上传文件、不执行恢复。完整兼容性检查与暂存恢复使用量化项目中的 `工具/restore_state_backup.py`，默认只检查，应用时仅允许新目录。
 
-发布使用原 `上传.py`。相关验证：`python scripts/audit_links.py`、`node scripts/test-domain-api.cjs`、`node scripts/test-portal.cjs`。
+发布使用原 `上传.py`。相关验证：`python scripts/audit_links.py`、`node scripts/test-domain-api.cjs`、`node scripts/test-portal.cjs`、`node scripts/test-backup-check.cjs`。
