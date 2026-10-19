@@ -14,7 +14,8 @@ export async function onRequest(context) {
   // Keep company assets and legacy root-level pages at their existing paths.
   // Only the company's home document differs from the navigation portal.
   if (hostname === `hzct.${ROOT_DOMAIN}` && ["/", "/index.html"].includes(url.pathname)) {
-    url.pathname = "/company-home.html";
+    // Pages redirects explicit .html URLs; use its clean asset URL internally.
+    url.pathname = "/company-home";
     return context.env.ASSETS.fetch(new Request(url, context.request));
   }
   const directory = mappedDirectory(hostname);

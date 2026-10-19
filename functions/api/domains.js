@@ -25,7 +25,7 @@ function validManagedHostname(hostname) {
 
 function sitePath(hostname) {
   const prefix = hostname.slice(0, -(ROOT_DOMAIN.length + 1));
-  if (prefix === "hzct") return "/company-home.html";
+  if (prefix === "hzct") return "/company-home";
   return prefix === "www" ? "/" : `/${prefix}/`;
 }
 
