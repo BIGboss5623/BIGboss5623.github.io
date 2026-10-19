@@ -1,8 +1,47 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-16T21:17:25+08:00",
+  "last_checked": "2026-10-19T14:15:57+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "f1bd786465241c5d",
+      "title": "天津普林跌停",
+      "published_at": "2026-10-19 10:28:20",
+      "recorded_at": "2026-10-19T14:15:57+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202610193899666538.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "d8272dbf9dd476d9",
+      "title": "东百集团跌停",
+      "published_at": "2026-10-19 10:13:35",
+      "recorded_at": "2026-10-19T14:15:57+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202610193899616866.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "2cd09e59d9675dee",
+      "title": "港股停牌退市常态化 年内25家公司遭强制退市",
+      "published_at": "2026-10-17 07:12:33",
+      "recorded_at": "2026-10-19T14:15:57+08:00",
+      "symbols": [],
+      "source": "证券时报",
+      "url": "https://finance.eastmoney.com/a/202610173898784633.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "ad35d67030d448b0",
       "title": "瑞芯微盘中跌停",
@@ -274,5 +313,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-16T21:17:25+08:00"
+  "last_attempted": "2026-10-19T14:15:57+08:00"
 }
