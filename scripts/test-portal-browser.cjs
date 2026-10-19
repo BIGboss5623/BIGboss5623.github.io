@@ -14,8 +14,8 @@ const live = base.startsWith('https:');
     for (const width of [1360,390]) {
       await page.setViewportSize({width,height:900});
       assert.equal((await page.goto(base+'/?qa=portal')).status(),200);
-      await page.waitForFunction(()=>document.getElementById('siteCount').textContent.includes('11'));
-      assert.equal(await page.locator('.site-card:visible').count(),11);
+      await page.waitForFunction(()=>document.getElementById('siteCount').textContent.includes('12'));
+      assert.equal(await page.locator('.site-card:visible').count(),12);
       await page.locator('#siteSearch').fill('创投');
       assert.equal(await page.locator('.site-card:visible').count(),1);
       await page.locator('#siteSearch').press('Escape');
