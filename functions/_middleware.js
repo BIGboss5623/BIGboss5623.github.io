@@ -11,6 +11,12 @@ function mappedDirectory(hostname) {
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const hostname = url.hostname.toLowerCase();
+  // Keep company assets and legacy root-level pages at their existing paths.
+  // Only the company's home document differs from the navigation portal.
+  if (hostname === `hzct.${ROOT_DOMAIN}` && ["/", "/index.html"].includes(url.pathname)) {
+    url.pathname = "/company-home.html";
+    return context.env.ASSETS.fetch(new Request(url, context.request));
+  }
   const directory = mappedDirectory(hostname);
 
   if (!directory || url.pathname === "/api" || url.pathname.startsWith("/api/")) {

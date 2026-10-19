@@ -28,5 +28,5 @@ const pages = process.env.QA_PAGES ? JSON.parse(process.env.QA_PAGES) : ['/', '/
   await browser.close();
   if(process.argv[3])fs.writeFileSync(process.argv[3],JSON.stringify(results,null,2));
   console.log(JSON.stringify(results.map(({links,...r})=>r),null,2));
-  if(results.some(r=>r.error || r.status!==200 || r.overflow || r.desktopOverflow || r.visibleNavLinks!==9 || r.errors.length || r.brokenImages.length || r.failed.some(f=>new URL(f.url).origin===new URL(r.url).origin)))process.exitCode=1;
+  if(results.some(r=>r.error || r.status!==200 || r.overflow || r.desktopOverflow || (r.nav && r.visibleNavLinks!==12) || r.errors.length || r.brokenImages.length || r.failed.some(f=>new URL(f.url).origin===new URL(r.url).origin)))process.exitCode=1;
 })();

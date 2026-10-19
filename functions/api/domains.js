@@ -25,7 +25,8 @@ function validManagedHostname(hostname) {
 
 function sitePath(hostname) {
   const prefix = hostname.slice(0, -(ROOT_DOMAIN.length + 1));
-  return ["www", "hzct"].includes(prefix) ? "/" : `/${prefix}/`;
+  if (prefix === "hzct") return "/company-home.html";
+  return prefix === "www" ? "/" : `/${prefix}/`;
 }
 
 async function sameSecret(left, right) {

@@ -17,7 +17,7 @@
     @media(max-width:760px){main{padding-top:24px}.top{align-items:flex-start}.grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.card{padding:18px}.suffix{padding:0 10px}}
     #password{min-width:0}#showPassword{flex:0 0 64px;white-space:nowrap;background:#162b44;color:#dcecff;border:1px solid #385675;padding:10px}
   </style>
-<script defer src="https://zgland.com/assets/js/site-tools.50231a707a9d.js"></script></head>
+<script defer src="https://zgland.com/assets/js/site-tools.306255691fe4.js"></script></head>
 <body>
   <main>
     <div class="top"><div class="brand">ZGLAND · Cloudflare</div><a class="back" href="https://zgland.com/">返回网站</a></div>
@@ -30,7 +30,7 @@
         <div class="field"><label for="password">控制台密码</label><div class="input-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="仅随本次请求发送，不保存"><button id="showPassword" type="button" aria-pressed="false">显示</button></div></div>
         <div class="actions"><button class="plan" id="planButton" type="button">1 · 检查计划</button><button class="apply" id="applyButton" type="button" disabled>2 · 确认并应用</button></div>
         <p class="hint" id="stepHint">先检查计划；只有检查成功后才可确认应用。更换域名或密码后需要重新检查。</p>
-        <p class="hint">`www` 和 `hzct` 显示主站，其余一级子域名显示仓库中的同名目录。请先建立目录页面，再添加域名。</p>
+        <p class="hint">www 显示 ZGLAND 导航首页，hzct 显示独立的杭州创投企业首页；其余一级子域名显示仓库中的同名目录。请先建立目录页面，再添加域名。</p>
         <div id="result" aria-live="polite">等待操作。</div>
         <div id="resultLinks" class="links" hidden></div>
       </section>
@@ -58,7 +58,7 @@
     function updateRoutePreview() {
       const label = subdomain.value.trim().toLowerCase().replace(/\.zgland\.com\.?$/, "").replace(/\.$/, "");
       const host = label ? `${label}.zgland.com` : "子域名.zgland.com";
-      const path = ["www", "hzct"].includes(label) ? "/（主站）" : `/${label || "同名目录"}/`;
+      const path = label === 'hzct' ? '/company-home.html（企业官网）' : label === 'www' ? '/（ZGLAND 导航）' : `/${label || "同名目录"}/`;
       routePreview.textContent = `${host} → 仓库 ${path}`;
     }
     function show(payload, success) {
@@ -95,7 +95,7 @@
           if(action==='plan'){plannedHost=host;document.getElementById('stepHint').textContent='计划检查成功。请核对上方域名和变更内容，再点击确认应用。';try{localStorage.setItem('zgland-last-domain',label);}catch{}}
           else document.getElementById('stepHint').textContent='应用请求已完成。DNS或证书可能仍需等待，以实际访问结果为准。';
           resultLinks.replaceChildren();
-          const preview=document.createElement('a');preview.textContent='预览已发布目录 ↗';preview.href='https://zgland.com'+(['www','hzct'].includes(label)?'/':`/${label}/`);preview.target='_blank';preview.rel='noopener noreferrer';resultLinks.append(preview);
+          const preview=document.createElement('a');preview.textContent='预览已发布目录 ↗';preview.href='https://zgland.com'+(label==='hzct'?'/company-home.html':label==='www'?'/':`/${label}/`);preview.target='_blank';preview.rel='noopener noreferrer';resultLinks.append(preview);
           if(action==='apply'){const visit=document.createElement('a');visit.textContent='打开子域名验证 ↗';visit.href='https://'+host+'/';visit.target='_blank';visit.rel='noopener noreferrer';resultLinks.append(visit);}
           resultLinks.hidden=false;
         }

@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 SITES = {"zgland.com": ROOT, "www.zgland.com": ROOT, "hzct.zgland.com": ROOT,
          "feitianshan.zgland.com": ROOT.parent / "feitianshan"}
-for folder in ("network", "proxy", "hzyx", "fund", "history-cycle", "domain-console"):
+for folder in ("network", "proxy", "hzyx", "fund", "history-cycle", "domain-console", "quant-console"):
     SITES[folder + ".zgland.com"] = ROOT / folder
 
 
@@ -32,7 +32,7 @@ def main():
     for root in (ROOT, ROOT.parent / "feitianshan"):
         pages = list(root.glob("*.html"))
         if root == ROOT:
-            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console")]
+            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench")]
         for page in pages:
             parser = Links()
             parser.feed(page.read_text(encoding="utf-8"))
@@ -47,6 +47,8 @@ def main():
                         continue
                     base = SITES[url.hostname]
                     target = base / unquote(url.path).lstrip("/")
+                    if url.hostname == 'hzct.zgland.com' and url.path in ('', '/', '/index.html'):
+                        target = ROOT / 'company-home.html'
                 elif url.path.startswith("/"):
                     target = root / unquote(url.path).lstrip("/")
                 else:
