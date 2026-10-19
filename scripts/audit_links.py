@@ -53,6 +53,12 @@ def main():
                     target = root / unquote(url.path).lstrip("/")
                 else:
                     target = page.parent / unquote(url.path) if url.path else page
+                if root == ROOT and url.path.startswith('/api/') and (not url.netloc or SITES.get(url.hostname)==ROOT):
+                    route=Path(url.path.lstrip('/'))
+                    function=ROOT/'functions'/route.with_suffix('.js')
+                    if function.is_file():
+                        checked += 1
+                        continue
                 if target.is_dir():
                     target /= "index.html"
                 checked += 1

@@ -29,6 +29,15 @@ const root = path.resolve(__dirname,'..');
   assert.equal(JSON.stringify(unavailable).includes('private provider'),false);
   assert.equal((await api.onRequest({request:new Request(request.url,{method:'POST'})})).status,405);
   assert.equal(calls,5);
+  const entrySource=fs.readFileSync(path.join(root,'functions/api/quant-enter.js'),'utf8').replace("'./quant-status.js'",JSON.stringify('data:text/javascript;base64,'+Buffer.from(source).toString('base64')));
+  const entry=await import('data:text/javascript;base64,'+Buffer.from(entrySource).toString('base64'));
+  for(const [status,realm,expected] of [[401,'Basic realm="FundPilot isolated trial"','https://8766-ac6a65e93d8d4e6a.monkeycode-ai.online/'],[503,'','https://zgland.com/quant-console/?cloud=unavailable#cloudTitle'],[200,'','https://zgland.com/quant-console/?cloud=unsafe#cloudTitle']]){
+    global.fetch=async()=>new Response('',{status,headers:{'www-authenticate':realm}});
+    const result=await entry.onRequest({request:new Request('https://zgland.com/api/quant-enter?target=https://evil.invalid')});
+    assert.equal(result.status,303);assert.equal(result.headers.get('location'),expected);
+    assert.equal(result.headers.get('cache-control'),'no-store');
+  }
+  assert.equal((await entry.onRequest({request:new Request('https://zgland.com/api/quant-enter',{method:'POST'})})).status,405);
   const portal=fs.readFileSync(path.join(root,'index.html'),'utf8');
   for(const href of ['/fund/','/fund/workbench/','/quant-console/','https://hzct.zgland.com/','/hzyx/','https://feitianshan.zgland.com/','/history-cycle/','/network/','/proxy/','/domain-console/'])assert(portal.includes(href),href);
   assert(portal.includes('<title>ZGLAND'));
