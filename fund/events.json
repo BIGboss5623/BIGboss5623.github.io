@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-19T23:40:35+08:00",
+  "last_checked": "2026-10-20T14:04:58+08:00",
   "collection_errors": [],
   "events": [
     {
@@ -24,6 +24,19 @@
       "symbols": [],
       "source": "大众证券报",
       "url": "https://finance.eastmoney.com/a/202610193899994220.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "97255c38e7ae710a",
+      "title": "郑州煤电跌停",
+      "published_at": "2026-10-19 15:50:38",
+      "recorded_at": "2026-10-20T14:04:58+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202610193899896858.html",
       "status": "自动收集·待核实",
       "category": "重大风险候选",
       "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
@@ -339,5 +352,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-19T23:40:35+08:00"
+  "last_attempted": "2026-10-20T14:04:58+08:00"
 }
