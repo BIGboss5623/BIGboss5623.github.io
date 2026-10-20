@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-20T14:04:58+08:00",
+  "last_checked": "2026-10-20T21:35:32+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "d1e33e13328637b8",
+      "title": "央视曝光后，厦门立案调查",
+      "published_at": "2026-10-20 14:29:10",
+      "recorded_at": "2026-10-20T21:35:32+08:00",
+      "symbols": [],
+      "source": "券商中国",
+      "url": "https://finance.eastmoney.com/a/202610203901259634.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "f593f32b0cc79f61",
       "title": "总台曝光后 多地立案调查！",
@@ -352,5 +365,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-20T14:04:58+08:00"
+  "last_attempted": "2026-10-20T21:35:32+08:00"
 }
