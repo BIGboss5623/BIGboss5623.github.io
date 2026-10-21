@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-20T21:35:32+08:00",
+  "last_checked": "2026-10-21T14:05:07+08:00",
   "collection_errors": [],
   "events": [
     {
@@ -365,5 +365,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-20T21:35:32+08:00"
+  "last_attempted": "2026-10-21T14:05:07+08:00"
 }
