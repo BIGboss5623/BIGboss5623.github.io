@@ -1,8 +1,34 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-22T14:09:05+08:00",
+  "last_checked": "2026-10-22T21:50:12+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "42b005d7efba88ad",
+      "title": "前三季度智能网联汽车召回超2000万辆，被督促调查召回占比超七成",
+      "published_at": "2026-10-22 15:04:10",
+      "recorded_at": "2026-10-22T21:50:12+08:00",
+      "symbols": [],
+      "source": "第一财经",
+      "url": "https://finance.eastmoney.com/a/202610223904058543.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "08103e001b84a0f6",
+      "title": "000712，跌停！",
+      "published_at": "2026-10-21 15:13:00",
+      "recorded_at": "2026-10-22T21:50:12+08:00",
+      "symbols": [],
+      "source": "中国基金报",
+      "url": "https://finance.eastmoney.com/a/202610213902601133.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "d1e33e13328637b8",
       "title": "央视曝光后，厦门立案调查",
@@ -365,5 +391,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-22T14:09:05+08:00"
+  "last_attempted": "2026-10-22T21:50:12+08:00"
 }
