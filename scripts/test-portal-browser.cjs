@@ -40,7 +40,7 @@ const live = base.startsWith('https:');
     await page.goto(base+'/quant-console/');
     assert.equal(await page.locator('#enterLocal').getAttribute('href'),'http://127.0.0.1:8765/');
     assert.equal(await page.locator('#activateCloud,#enterCloud,#checkCloud').count(),0);
-    assert((await page.locator('body').textContent()).includes('原服务器数据没有删除'));
+    assert((await page.locator('body').textContent()).includes('原环境和原有备份文件均未删除'));
     assert.equal(await page.locator('#enterServer').getAttribute('href'),'https://quant.zgland.com/');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
     if(process.env.QA_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.QA_SCREENSHOT_DIR,`quant-console-${live?'live':'local'}-390.png`),fullPage:true});
