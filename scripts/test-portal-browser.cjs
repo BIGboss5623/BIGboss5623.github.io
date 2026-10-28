@@ -40,11 +40,13 @@ const live = base.startsWith('https:');
     await page.goto(base+'/quant-console/');
     assert.equal(await page.locator('#enterLocal').getAttribute('href'),'http://127.0.0.1:8765/');
     assert.equal(await page.locator('#activateCloud,#enterCloud,#checkCloud').count(),0);
-    assert((await page.locator('body').innerText()).includes('原服务器数据没有删除'));
+    assert((await page.locator('body').textContent()).includes('原服务器数据没有删除'));
+    assert.equal(await page.locator('#enterServer').getAttribute('href'),'https://quant.zgland.com/');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
+    if(process.env.QA_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.QA_SCREENSHOT_DIR,`quant-console-${live?'live':'local'}-390.png`),fullPage:true});
     assert.deepEqual(remote,[]);
     assert.deepEqual(errors,[]);
     await context.close();
-    console.log('PASS: portal search/category/empty/reset, company content, desktop/mobile, local-first entry and no provider probes.');
+    console.log('PASS: portal search/category/empty/reset, company content, desktop/mobile, private server and local fallback entries, no automatic probes.');
   } finally {await browser.close()}
 })().catch(error=>{console.error(error);process.exitCode=1});
