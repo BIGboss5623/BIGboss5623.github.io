@@ -29,10 +29,11 @@ class Links(HTMLParser):
 
 def main():
     issues, checked = [], 0
+    credential_ids = {"item-" + item["id"] for item in json.loads((ROOT / "credentials/catalog.json").read_text(encoding="utf-8"))["entries"]}
     for root in (ROOT, ROOT.parent / "feitianshan"):
         pages = list(root.glob("*.html"))
         if root == ROOT:
-            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench", "games", "games/rich4")]
+            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench", "games", "games/rich4", "credentials")]
         for page in pages:
             parser = Links()
             parser.feed(page.read_text(encoding="utf-8"))
@@ -67,6 +68,8 @@ def main():
                 elif url.fragment and target.suffix == ".html":
                     other = Links()
                     other.feed(target.read_text(encoding="utf-8"))
+                    if target.resolve() == (ROOT / "credentials/index.html").resolve():
+                        other.ids.update(credential_ids)
                     if unquote(url.fragment) not in other.ids:
                         issues.append({"page": str(page.relative_to(root)), "link": href, "error": "missing anchor"})
         for css in root.glob("**/*.css"):
