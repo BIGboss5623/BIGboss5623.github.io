@@ -1,0 +1,27 @@
+{
+  "author": "iam567/rich4-renew-app",
+  "context": "Public project screenshots from upstream README; not a guarantee of the exact v0.7.4 UI.",
+  "screenshots": [
+    {
+      "filename": "01-title.jpg",
+      "source": "https://raw.githubusercontent.com/iam567/rich4-renew-app/main/screenshots/01-title.jpg",
+      "sha256": "bc0c54aa6ef439212a057cfe348dc3c4731f14e3ccfcf6d2b5ee61ec3b61e1ee",
+      "bytes": 282906,
+      "retrieved_on": "2026-10-29"
+    },
+    {
+      "filename": "02-classic-taiwan.jpg",
+      "source": "https://raw.githubusercontent.com/iam567/rich4-renew-app/main/screenshots/02-classic-taiwan.jpg",
+      "sha256": "d0b7733d5f0dd4fc4a60fdb8a9ab60f631d1d831c212f0db7ef5eebdce07f901",
+      "bytes": 290303,
+      "retrieved_on": "2026-10-29"
+    },
+    {
+      "filename": "03-tokyo.jpg",
+      "source": "https://raw.githubusercontent.com/iam567/rich4-renew-app/main/screenshots/03-tokyo.jpg",
+      "sha256": "ab0bc5e4863a78f242d52e24f8f54133b0e2034ef89c4613c574f20ced8b77d9",
+      "bytes": 293126,
+      "retrieved_on": "2026-10-29"
+    }
+  ]
+}

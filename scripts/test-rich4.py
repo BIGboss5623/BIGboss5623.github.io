@@ -54,6 +54,10 @@ def main():
                 assert response.status==200
                 expect(page.locator('#gameTitle')).to_contain_text('大富翁4重制版')
                 assert page.locator('#windowsDownload').get_attribute('href')==manifest['windows']['url']
+                expect(page.locator('.screenshot-grid img')).to_have_count(3)
+                for image in page.locator('.screenshot-grid img').all():
+                    image.scroll_into_view_if_needed()
+                    page.wait_for_function('(img)=>img.complete && img.naturalWidth===1600',arg=image.element_handle())
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
                 page.locator('#copyHash').click()
                 expect(page.locator('#copyStatus')).to_contain_text('已复制')
@@ -67,6 +71,7 @@ def main():
                     assert hashlib.sha256(target.read_bytes()).hexdigest()==manifest['source']['sha256']
                 if args.screenshots:
                     args.screenshots.mkdir(parents=True,exist_ok=True)
+                    page.evaluate('document.activeElement.blur();window.scrollTo(0,0)')
                     page.screenshot(path=str(args.screenshots/f'rich4-{width}.png'),full_page=True)
                 page.goto(base+'/')
                 page.locator('#siteSearch').fill('大富翁')
@@ -78,7 +83,7 @@ def main():
                 page.close()
             assert not errors,errors
             browser.close()
-        print(json.dumps({'passed':True,'browser_errors':errors,'checks':['Source ZIP SHA-256 and CRC, license and package version, no private runtime files','Desktop and 390px layout','Actual source download SHA-256','Windows URL and clipboard hash','Portal search entry and preserved 2048 board'],'base':base},ensure_ascii=False))
+        print(json.dumps({'passed':True,'browser_errors':errors,'checks':['Source ZIP SHA-256 and CRC, license and package version, no private runtime files','Desktop and 390px layout, three real game screenshots loaded','Actual source download SHA-256','Windows URL and clipboard hash','Portal search entry and preserved 2048 board'],'base':base},ensure_ascii=False))
     finally:
         if server:server.shutdown();server.server_close()
 
