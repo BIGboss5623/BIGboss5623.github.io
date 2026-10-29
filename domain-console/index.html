@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>域名控制台 | zgland</title>
+  <link rel="stylesheet" href="/assets/domain-expiry.7b891256bc53.css">
+  <script src="/assets/domain-expiry.691854991ace.js" defer></script>
   <style>
     :root{color-scheme:dark;--bg:#07111f;--panel:#0f2035;--line:#29415e;--blue:#62a8ff;--green:#57d6a3;--amber:#ffc96b;--red:#ff7d87;--text:#edf6ff;--muted:#9db0c5}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:radial-gradient(circle at 85% 0,#173b63 0,transparent 35%),linear-gradient(145deg,#050b14,#0a1727);color:var(--text)}
@@ -23,6 +25,7 @@
     <div class="top"><div class="brand">ZGLAND · Cloudflare</div><a class="back" href="https://zgland.com/">返回网站</a></div>
     <h1>子域名控制台</h1>
     <p class="lead">一个仓库可以承载多个独立页面：输入一个名称，先检查目录和 Cloudflare 计划，再确认应用，不需要为每个子域名单独建立 GitHub 项目。</p>
+    <section class="domain-expiry-panel" id="expiry" data-domain-expiry data-expiry-management aria-label="域名到期日期管理" style="margin-bottom:24px"></section>
     <div class="grid">
       <section class="card">
         <div class="field"><label for="subdomain">一级子域名</label><div class="input-wrap"><input class="subdomain" id="subdomain" autocomplete="off" placeholder="例如 network"><span class="suffix">.zgland.com</span></div></div>

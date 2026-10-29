@@ -1,0 +1,24 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{
+ const root=path.resolve(__dirname,'..');
+ const api=await import('data:text/javascript;base64,'+Buffer.from(fs.readFileSync(path.join(root,'functions/api/domain-expiry.js'),'utf8')).toString('base64'));
+ const config=JSON.parse(fs.readFileSync(path.join(root,'config/domain-expiry.json'),'utf8'));
+ assert.equal(api.remainingDays(new Date('2027-08-09T13:24:13Z'),new Date('2026-10-29T00:00:00Z')),284);
+ assert.equal(api.remainingDays(new Date('2027-08-09T13:24:13Z'),new Date('2027-08-08T16:00:00Z')),0);
+ assert.equal(api.remainingDays(new Date('2027-08-09T13:24:13Z'),new Date('2027-08-09T16:00:00Z')),-1);
+ assert.equal(api.remainingDays(new Date('2028-03-01T00:00:00Z'),new Date('2028-02-28T00:00:00Z')),2);
+ assert.equal(api.expiryDate('2027-02-30'),null);assert.equal(api.expiryDate('not-a-date'),null);
+ assert.equal(api.expiryDate('2027-08-09').toISOString(),'2027-08-09T15:59:59.000Z');
+ let calls=0;
+ global.fetch=async url=>{calls++;assert.equal(url,'https://rdap.verisign.com/com/v1/domain/zgland.com');return Response.json({ldhName:'ZGLAND.COM',events:[{eventAction:'expiration',eventDate:'2027-08-09T13:24:13Z'}]});};
+ const context=(override={},method='GET')=>({request:new Request('https://zgland.com/api/domain-expiry',{method}),env:{ASSETS:{fetch:async r=>{assert.equal(new URL(r.url).pathname,'/config/domain-expiry.json');return Response.json({...config,...override});}}}});
+ const live=await (await api.onRequest(context())).json();assert.equal(live.source_kind,'registry');assert.equal(live.verified,true);assert.equal(live.expiry_date,'2027-08-09');
+ calls=0;const manual=await (await api.onRequest(context({manual_expiry_date:'2028-08-09'}))).json();assert.equal(manual.source_kind,'manual');assert.equal(manual.expiry_date,'2028-08-09');assert.equal(manual.verified,false);assert.equal(calls,0);
+ const invalid=await (await api.onRequest(context({manual_expiry_date:'2027-02-30'}))).json();assert.equal(invalid.source_kind,'registry');assert(invalid.warning);
+ global.fetch=async()=>{throw Error('registry offline');};
+ const fallback=await (await api.onRequest(context())).json();assert.equal(fallback.source_kind,'snapshot');assert.equal(fallback.verified,false);assert(fallback.warning);
+ assert.equal((await api.onRequest(context({last_verified_expiry_at:'bad'}))).status,503);
+ assert.equal((await api.onRequest(context({},'POST'))).status,405);
+ const head=await api.onRequest(context({},'HEAD'));assert.equal(head.status,200);assert.equal(await head.text(),'');
+ console.log('PASS: UTC+8 days, midnight, leap year, strict dates, live RDAP, protected-file manual override, explicit stale fallback, unknown, HEAD, write rejection.');
+})().catch(e=>{console.error(e);process.exitCode=1;});

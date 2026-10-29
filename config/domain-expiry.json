@@ -1,0 +1,8 @@
+{
+  "domain": "zgland.com",
+  "manual_expiry_date": null,
+  "manual_note": "需要人工校正时，将 manual_expiry_date 设为 YYYY-MM-DD；恢复自动查询时设回 null。请勿填写剩余天数。",
+  "last_verified_expiry_at": "2027-08-09T13:24:13Z",
+  "last_verified_on": "2026-10-29T07:59:45Z",
+  "source": "https://rdap.verisign.com/com/v1/domain/zgland.com"
+}
