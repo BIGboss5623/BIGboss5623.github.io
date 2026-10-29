@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本地 AI 部署与远程控制指南 · ZGLAND</title>
+  <meta name="description" content="从硬件预算到 DeepSeek 本地部署：Ollama、Aider 执行工具、ZeroTier、Windows SSH、密钥、端口隧道与远程桌面的完整操作指南。">
+  <link rel="canonical" href="https://zgland.com/local-ai/">
+  <link rel="stylesheet" href="/assets/portal.ebd2df9dcbb9.css"><link rel="stylesheet" href="guide.3d15786d1c4e.css">
+  <script src="guide.2c28badee045.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#hardware">跳到部署指南</a>
+  <header class="topbar wrap"><a class="brand" href="/"><span class="brandmark">Z</span>ZGLAND<span class="muted"> / 实用指南</span></a><nav aria-label="主导航"><a href="/">网站首页</a><a href="/network/">网络工具</a><a href="#resources">官方资源 ↗</a></nav></header>
+  <main class="wrap">
+    <section class="guide-hero">
+      <div><p class="eyebrow">LOCAL AI / FIELD GUIDE</p><h1>在自己的电脑上，<br>让 AI 思考，也动手。</h1><p class="intro">先选一台够用的电脑，再跑通本地模型与代码工具。出门后，通过自己的虚拟网络连接回家里的工作台。</p><div class="actions"><a class="button" href="#install">开始本机部署 ↓</a><a class="button secondary" href="#remote">设置远程控制 →</a></div><p class="edition">Windows 11 为主 · 单人使用 · <time datetime="2026-10-29">资料核验：2026-10-29</time></p></div>
+      <aside class="route-map" aria-label="部署路线"><p class="eyebrow">一条完整的工作链</p><div><b>01</b><p><strong>脑子 · DeepSeek + Ollama</strong><span>理解需求、生成方案，在本机推理</span></p></div><div><b>02</b><p><strong>手 · Aider 与开发工具</strong><span>读写项目、检查修改、运行测试</span></p></div><div><b>03</b><p><strong>连接 · ZeroTier + SSH</strong><span>从外地使用自己的电脑与 AI</span></p></div><small>建议起步：32GB 内存 / 预留 100GB SSD / 14B 量化模型。显卡可选。</small></aside>
+    </section>
+    <div class="guide-layout">
+      <aside class="contents"><nav aria-label="指南目录"><p class="eyebrow">按顺序部署</p><a href="#hardware">01 · 硬件与预算</a><a href="#prepare">02 · 部署前准备</a><a href="#install">03 · 安装本地脑子</a><a href="#hands">04 · 接上写代码的手</a><a href="#remote">05 · ZeroTier 组网</a><a href="#ssh">06 · SSH 与密钥</a><a href="#tunnel">07 · 隧道与远程桌面</a><a href="#troubleshoot">08 · 排错与日常维护</a><a href="#checklist">09 · 部署检查清单</a><a href="#resources">10 · 官方资源书签</a></nav><button class="print-guide" type="button" id="printGuide">打印 / 保存为 PDF</button></aside>
+      <div class="guide-body">
+        <section id="hardware" class="chapter"><p class="eyebrow">01 / PLAN</p><h2>先决定模型，再决定硬件。</h2><p>“脑子”是模型；“手”通常是一套工具，不必另装一个大模型。本指南采用已有权重做<strong>推理</strong>，不包含训练。以下是单用户、一次一个任务、约 4K～8K 上下文的初步预算。</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="模型硬件预算，可横向滚动"><table><caption>R1 常见 4 位量化模型 · 文件大小来自 Ollama，其余为部署估算</caption><thead><tr><th scope="col">模型</th><th scope="col">模型文件</th><th scope="col">建议整机内存</th><th scope="col">预留 SSD</th><th scope="col">用途</th></tr></thead><tbody><tr><th scope="row">1.5B</th><td>1.1GB</td><td>8GB</td><td>20～30GB</td><td>流程实验</td></tr><tr><th scope="row">7B / 8B</th><td>4.7 / 5.2GB</td><td>16GB</td><td>40～60GB</td><td>简单任务入门</td></tr><tr class="recommended"><th scope="row">14B · 起步建议</th><td>9GB</td><td>32GB</td><td>80～100GB</td><td>日常分析与小项目</td></tr><tr><th scope="row">32B</th><td>20GB</td><td>48～64GB</td><td>100～150GB</td><td>较复杂的代码与分析</td></tr><tr><th scope="row">70B</th><td>43GB</td><td>96～128GB</td><td>150～250GB</td><td>更大的个人工作站</td></tr><tr><th scope="row">完整 R1 671B</th><td>约 404GB</td><td>512～768GB</td><td>1～2TB</td><td>服务器级初步预算</td></tr></tbody></table></div>
+          <p class="source-note">依据：<a href="https://ollama.com/library/deepseek-r1/tags" target="_blank" rel="noopener noreferrer">Ollama 标签与文件大小 ↗</a> · <a href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank" rel="noopener noreferrer">DeepSeek 官方模型说明 ↗</a>。小模型是蒸馏版本；量化也会改变精度。671B 一行仅是容量估算，不能据此保证可用速度。</p>
+          <div class="callout"><strong>慢一点能省显卡，不能补回模型能力。</strong><p>CPU 可以推理，速度取决于 CPU、内存带宽、上下文和输出长度。磁盘空间不能等价替代运行内存；大量使用交换文件会非常慢。代码是否完整、正确，还要通过实际运行和测试确认。</p></div>
+          <div class="planner"><label for="memoryPlan">按现有内存选择起步方案</label><select id="memoryPlan"><option value="8">8GB</option><option value="16">16GB</option><option value="32" selected>32GB</option><option value="64">64GB</option><option value="128">128GB 及以上</option></select><p id="planResult" role="status">32GB：优先试 14B，预留约 100GB SSD；关闭大型软件，先用 4K 上下文。</p></div>
+          <h3>显卡、工具和“双模型”怎么加预算？</h3><p>全 GPU 加速时，模型权重、上下文缓存和运行开销都要放得下。4 位量化的 8B / 14B / 32B 可分别按约 8GB / 12～16GB / 24～32GB 显存初选，仍需按实际上下文验证。显存不足可尝试部分卸载到 CPU，速度会下降。兼容性先查 <a href="https://docs.ollama.com/gpu" target="_blank" rel="noopener noreferrer">Ollama GPU 文档</a>。</p><p>普通执行工具可额外预算 2～6GB 内存、5～20GB 磁盘；浏览器、多项目依赖和容器会更多。表中整机预算已留基本工具余量。14B 思考＋8B 编程的权重合计约 14.2GB，轮流加载可先试 32GB 内存，同时常驻宜 48GB；32B＋8B 可按 64GB 内存、150～200GB 可用 SSD 预算。</p>
+        </section>
+        <section id="prepare" class="chapter"><p class="eyebrow">02 / PREPARE</p><h2>部署前，把这几项准备好。</h2><ol class="steps"><li><strong>确认系统与硬件。</strong>优先使用仍受支持的 Windows 11；Ollama 文档列出的 Windows 最低版本为 Windows 10 22H2。系统最低要求与系统是否仍获安全更新是两件事。记录 CPU、内存、显存和模型盘剩余空间。</li><li><strong>准备独立目录。</strong>例如 <code>D:\LocalAI\models</code> 放权重，<code>D:\LocalAI\workspace</code> 放测试项目；以下路径均为示例，可换成有空间的磁盘。</li><li><strong>安装来源选官方。</strong>准备 Ollama、Git、Python 3.12。模型初次下载、工具安装和更新需要联网；下载完成后，本地推理不需要云端模型 API。</li><li><strong>先做一个小实验。</strong>先验证一轮问答和一个小项目，再升级大模型。编程工具先操作项目副本，保留 Git 记录。</li></ol><p>在本机普通 PowerShell 查看信息：</p>
+<pre><code>Get-CimInstance Win32_Processor | Select-Object Name
+Get-CimInstance Win32_ComputerSystem | Select-Object @{N='RAM_GB';E={[math]::Round($_.TotalPhysicalMemory / 1GB)}}
+Get-Volume | Where-Object DriveLetter | Select-Object DriveLetter, @{N='Free_GB';E={[math]::Round($_.SizeRemaining / 1GB)}}
+# NVIDIA 显卡可另运行：nvidia-smi</code></pre><p class="source-note">系统与安装路径依据：<a href="https://docs.ollama.com/windows" target="_blank" rel="noopener noreferrer">Ollama Windows 文档</a>。</p></section>
+        <section id="install" class="chapter"><p class="eyebrow">03 / BRAIN</p><h2>用 Ollama 跑通本地 DeepSeek。</h2><h3>① 安装程序，先把模型目录设到空闲盘</h3><p>从 <a href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer">Ollama Windows 官网</a>下载安装包。安装后退出托盘中的 Ollama，在普通 PowerShell 执行：</p>
+<pre><code>New-Item -ItemType Directory -Force -Path 'D:\LocalAI\models' | Out-Null
+[Environment]::SetEnvironmentVariable('OLLAMA_MODELS', 'D:\LocalAI\models', 'User')
+[Environment]::SetEnvironmentVariable('OLLAMA_HOST', '127.0.0.1:11434', 'User')
+[Environment]::SetEnvironmentVariable('OLLAMA_CONTEXT_LENGTH', '4096', 'User')
+[Environment]::SetEnvironmentVariable('OLLAMA_NUM_PARALLEL', '1', 'User')
+[Environment]::SetEnvironmentVariable('OLLAMA_MAX_LOADED_MODELS', '1', 'User')</code></pre><p>随后从开始菜单重新启动 Ollama，并打开新的终端。环境变量不会自动改变已经运行的进程。更改模型目录不会自动搬走以前下载的权重；全新安装时先设好目录最省事。</p><h3>② 下载一个明确大小的模型</h3><p>32GB 内存先用 14B；16GB 改成 <code>deepseek-r1:8b</code>。只下载你当前要用的一档，避免一次存多份权重。</p>
+<pre><code>ollama --version
+ollama pull deepseek-r1:14b
+ollama run deepseek-r1:14b</code></pre><p>看到交互提示后，输入“请用 Python 写一个统计 CSV 行数的小程序，给出完整代码和运行方法”。退出对话用 <code>/bye</code>。程序能生成回答，还不代表代码已验证。</p><h3>③ 检查实际加载与本地接口</h3>
+<pre><code>ollama list
+ollama ps
+Invoke-RestMethod 'http://127.0.0.1:11434/api/tags'
+Get-NetTCPConnection -State Listen -LocalPort 11434</code></pre><p><code>ollama ps</code> 的 PROCESSOR 列显示 CPU / GPU 分配；接口应返回本地模型列表，监听地址应为 <code>127.0.0.1</code>。若服务已自动启动，不要再开一个 <code>ollama serve</code>；只有后台未运行时才需要手动启动。</p><details><summary>可选：做一次有输出上限的 API 验证</summary>
+<pre><code>$aiRequest = @{
+  model = 'deepseek-r1:14b'
+  prompt = '用一句话介绍你能做什么。'
+  stream = $false
+  options = @{ num_ctx = 4096; num_predict = 512 }
+} | ConvertTo-Json -Depth 4
+$aiResponse = Invoke-RestMethod -Uri 'http://127.0.0.1:11434/api/generate' -Method Post -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($aiRequest))
+$aiResponse.response</code></pre><p>推理模型的思考也可能耗尽输出预算，必要时提高 <code>num_predict</code>。CPU 模式的首次加载和长推理可能等待较久。</p></details><p class="source-note">配置与检查命令：<a href="https://docs.ollama.com/faq" target="_blank" rel="noopener noreferrer">Ollama FAQ</a>。对话窗口也可用官方 Ollama 应用；额外的网页聊天界面不是必需项。</p></section>
+        <section id="hands" class="chapter"><p class="eyebrow">04 / HANDS</p><h2>让模型真正修改项目。</h2><p>推荐先用 <strong>Aider</strong> 作为本地编程工具：模型给出修改，工具把修改写进文件，开发工具负责运行。它不是自动控制任意桌面软件的视觉代理；浏览器点击或桌面操作还需专门工具与相应模型。</p><h3>① 安装 Git、Python 与 Aider</h3><p>从下方官方资源安装 Git 和 Python 3.12，重新打开普通 PowerShell：</p>
+<pre><code>git --version
+python --version
+python -m pip install aider-install
+aider-install</code></pre><p>若找不到 <code>aider-install</code>，重新开终端并检查 Python 的 Scripts 路径，按 <a href="https://aider.chat/docs/install.html" target="_blank" rel="noopener noreferrer">官方安装说明</a>修复；不要反复安装到不同的 Python 环境。</p><h3>② 在独立测试目录接入本地模型</h3>
+<pre><code>New-Item -ItemType Directory -Force -Path 'D:\LocalAI\workspace\hello-ai' | Out-Null
+Set-Location 'D:\LocalAI\workspace\hello-ai'
+git init
+$env:OLLAMA_API_BASE = 'http://127.0.0.1:11434'
+aider --model ollama_chat/deepseek-r1:14b --no-analytics</code></pre><p>给它一个明确任务：“创建 app.py、README.md 和测试文件，实现命令行统计 CSV 行数；给出运行命令。”只把当前任务相关文件加入对话，先审核修改，再运行项目对应的测试。是否支持可靠的文件编辑，必须用所选模型实际验证；R1 会推理不等于每次都能正确编辑。</p><h3>③ 从“代码生成”到“可用项目”</h3><ol class="steps"><li>列清输入、输出、需要的文件和验收条件。</li><li>让工具修改文件；用 <code>git diff</code> 检查差异，确认依赖与启动说明齐全。</li><li>运行项目测试，把真实报错交回工具修改。Aider 中可用 <code>/run</code> 或 <code>/test</code> 配合具体命令，先核对命令的作用。</li><li>验收后保存 Git 提交。复杂任务拆成小步，避免让长思考挤满上下文。</li></ol><div class="callout"><strong>“完整开源系统”与“完整训练材料”有区别。</strong><p>可下载权重并使用开源工具本地运行，不代表官方公开了从零复现模型的全部训练数据与训练流水线；也不能承诺小模型达到完整 R1 或云端服务的能力。模型与工具分别核对许可证。</p></div><p class="source-note">接入方式：<a href="https://aider.chat/docs/llms/ollama.html" target="_blank" rel="noopener noreferrer">Aider + Ollama</a> · <a href="https://aider.chat/docs/usage.html" target="_blank" rel="noopener noreferrer">Aider 使用指南</a>。这里明确使用本地 <code>ollama_chat/</code>，不要误选需要云端 API 的 <code>deepseek</code> 提供商。</p></section>
+        <section id="remote" class="chapter"><p class="eyebrow">05 / PRIVATE NETWORK</p><h2>先用 ZeroTier 把两端连起来。</h2><p>ZeroTier 负责让不同网络的设备互通；SSH 负责命令、文件传输和隧道；远程桌面负责画面、鼠标和键盘。三者可以配合使用。这里的“主机”是家里运行 AI 的电脑，“客户端”是你在外面使用的电脑。</p><ol class="steps"><li>打开 <a href="https://central.zerotier.com/" target="_blank" rel="noopener noreferrer">新版 Central</a> 创建组织与网络，复制 16 位 Network ID。旧账户可在 <a href="https://my.zerotier.com/" target="_blank" rel="noopener noreferrer">Legacy Central</a> 管理已有网络，按实际账户界面操作。</li><li>从 <a href="https://www.zerotier.com/download/" target="_blank" rel="noopener noreferrer">ZeroTier 官方下载页</a> 给主机与客户端安装软件。托盘选择 Join New Network，加入同一个 Network ID。</li><li>在 Central 中核对两台设备的 Node ID，再授权设备。新版在设备详情中授权；旧版通常在 Members 勾选 Auth。仅输入 Network ID 并不代表已经获准访问。</li><li>记录两台设备的 Managed IP。例如主机 <code>10.147.17.10</code>，客户端 <code>10.147.17.20</code>，这些只是示例，后文必须替换为实际地址。</li><li>保留日常网络设置，不必开启全局路由、默认路由或改 DNS。按需在 Central 固定分配地址，避免后续地址变化使防火墙规则失效。</li></ol><p>已安装后可在管理员 PowerShell 检查，若命令不在 PATH，改用托盘界面：</p>
+<pre><code>zerotier-cli status
+zerotier-cli listnetworks
+Get-NetIPAddress -AddressFamily IPv4 | Where-Object InterfaceAlias -Like '*ZeroTier*' | Select-Object InterfaceAlias, IPAddress</code></pre><p>网络状态应为 <code>OK</code> 并分配地址。完成 SSH 设置后再用 <code>Test-NetConnection</code> 检查 22 端口；单靠 ping 失败不能判断不通，因为 ICMP 可能被防火墙拦截。受网络限制时可能经中继，速度以实际连接为准。</p><p class="source-note">依据：<a href="https://docs.zerotier.com/quickstart/" target="_blank" rel="noopener noreferrer">ZeroTier 官方快速入门</a>。已有配置入口在本站 <a href="/network/">网络连接工具</a>，新安装优先核对官方当前版本。</p></section>
+        <section id="ssh" class="chapter"><p class="eyebrow">06 / COMMAND LINE</p><h2>用 SSH 登录主机，配置密钥。</h2><h3>① 主机：安装并启动 OpenSSH Server</h3><p>以下修改在<strong>主机本地的管理员 PowerShell</strong>进行。先准备一个你自己的普通 Windows 账户并设置密码，日常 SSH 尽量使用普通账户；Windows Hello PIN 不是 SSH 登录密码。</p>
+<pre><code>Get-WindowsCapability -Online | Where-Object Name -Like 'OpenSSH.Server*'
+# 如果 State 不是 Installed，再安装：
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic
+Get-Service sshd</code></pre><h3>② 主机：把 SSH 入站范围限定到客户端</h3><p>先在本地控制台配置，避免误操作断开现有远程会话。填写<strong>实际虚拟 IP</strong>；新增规则成功后才收紧安装器创建的宽泛默认规则。</p>
+<pre><code>$ztHostIp = Read-Host '主机的 ZeroTier IPv4'
+$ztClientIp = Read-Host '客户端的 ZeroTier IPv4'
+if ($ztHostIp -notmatch '^\d{1,3}(\.\d{1,3}){3}$' -or $ztClientIp -notmatch '^\d{1,3}(\.\d{1,3}){3}$') { throw '请填写 IPv4 地址' }
+New-NetFirewallRule -Name 'LocalAI-SSH-ZeroTier' -DisplayName 'LocalAI SSH via ZeroTier' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 22 -LocalAddress $ztHostIp -RemoteAddress $ztClientIp -Profile Any -ErrorAction Stop
+Get-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -ErrorAction SilentlyContinue | Disable-NetFirewallRule</code></pre><p>如果自己以前创建过允许 22 端口或 sshd.exe 的其他规则，也要在“高级安全 Windows Defender 防火墙”核对范围；新增窄规则不会抵消别的宽泛允许规则。不需要在路由器映射公网 22、3389 或 11434。</p><h3>③ 客户端：首次登录，核对主机指纹</h3><p>在主机上查看指纹：</p>
+<pre><code>ssh-keygen -lf 'C:\ProgramData\ssh\ssh_host_ed25519_key.pub'</code></pre><p>在客户端普通 PowerShell 操作。若缺少 ssh 客户端，在 Windows“可选功能”安装 OpenSSH Client。</p>
+<pre><code>$ztHostIp = Read-Host '主机的 ZeroTier IPv4'
+$sshUser = Read-Host '主机上的 Windows 用户名'
+Test-NetConnection -ComputerName $ztHostIp -Port 22
+ssh "${sshUser}@${ztHostIp}"</code></pre><p>显示的 ED25519 指纹与主机一致才接受。登录后可执行 <code>whoami</code>。Windows SSH 默认可能进入 cmd；想用 PowerShell，先输入 <code>powershell -NoProfile</code>。</p><h3>④ 客户端生成密钥，主机安装公钥</h3><p>在客户端运行，设置密钥口令；已有同名文件时不要直接覆盖：</p>
+<pre><code>ssh-keygen -t ed25519 -f "$env:USERPROFILE\.ssh\local_ai_ed25519"
+Get-Content "$env:USERPROFILE\.ssh\local_ai_ed25519.pub"</code></pre><p>复制 <code>.pub</code> 那一整行到主机。<strong>私钥留在客户端，不复制到主机或网站。</strong>在主机，以目标<strong>普通账户</strong>打开 PowerShell，粘贴公钥：</p>
+<pre><code>New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.ssh" | Out-Null
+$sshPublicKey = Read-Host '粘贴客户端 .pub 的完整一行'
+if ($sshPublicKey -notmatch '^ssh-ed25519\s+') { throw '请粘贴 ed25519 公钥' }
+Add-Content -LiteralPath "$env:USERPROFILE\.ssh\authorized_keys" -Value $sshPublicKey -Encoding ascii</code></pre><p>回到客户端，明确测试公钥登录：</p>
+<pre><code>ssh -o PreferredAuthentications=publickey -o PasswordAuthentication=no -i "$env:USERPROFILE\.ssh\local_ai_ed25519" "${sshUser}@${ztHostIp}"</code></pre><p>输入的应是<strong>私钥口令</strong>，不是 Windows 账户密码。确认新开窗口也能登录后，再决定是否在主机 <code>C:\ProgramData\ssh\sshd_config</code> 设置 <code>PasswordAuthentication no</code>，随后管理员执行 <code>sshd -t</code> 验证配置、<code>Restart-Service sshd</code> 生效；保留本地控制台备用。</p><details><summary>如果登录账户属于 Administrators 组</summary><p>Windows 默认规则通常改读 <code>C:\ProgramData\ssh\administrators_authorized_keys</code>，而非用户目录的 authorized_keys；文件 ACL 需要只允许 SYSTEM 与 Administrators。不要用关闭权限检查来解决。请按 <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement" target="_blank" rel="noopener noreferrer">微软管理员密钥配置步骤</a>执行；日常用独立普通账户更易分清权限。</p></details><p class="source-note">依据：<a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse" target="_blank" rel="noopener noreferrer">微软 OpenSSH 安装</a> · <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement" target="_blank" rel="noopener noreferrer">微软密钥认证</a>。</p></section>
+        <section id="tunnel" class="chapter"><p class="eyebrow">07 / REMOTE WORKSPACE</p><h2>远程使用 AI，或操作整台电脑。</h2><h3>方式 A · SSH 命令行运行</h3><p>登录主机后进入项目目录，运行 Ollama 或 Aider。程序和文件都在主机，客户端只传输命令和文本。需在该 SSH 会话重新设置 <code>OLLAMA_API_BASE</code>；临时断线可能终止前台任务。长任务用主机上的任务计划程序等方式托管，并保存日志，先验证退出连接后的行为。</p><h3>方式 B · SSH 隧道调用主机 AI</h3><p>主机上的 Ollama 保持 <code>127.0.0.1:11434</code>。在客户端一个新 PowerShell 窗口中填写地址并建立隧道：</p>
+<pre><code>$ztHostIp = Read-Host '主机的 ZeroTier IPv4'
+$sshUser = Read-Host '主机上的 Windows 用户名'
+ssh -N -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -L 127.0.0.1:11435:127.0.0.1:11434 -i "$env:USERPROFILE\.ssh\local_ai_ed25519" "${sshUser}@${ztHostIp}"</code></pre><p>这个窗口没有输出通常是正常的，保持打开；Ctrl+C 关闭隧道。用 11435 避开客户端本身可能已占用的 11434。另开客户端 PowerShell 测试：</p>
+<pre><code>Invoke-RestMethod 'http://127.0.0.1:11435/api/tags'
+# 如果客户端也安装了 Aider，可让它使用主机模型：
+$env:OLLAMA_API_BASE = 'http://127.0.0.1:11435'
+# 先进入客户端要编辑的项目目录，再运行：
+aider --model ollama_chat/deepseek-r1:14b --no-analytics</code></pre><div class="callout"><strong>模型在哪台电脑运行，与文件在哪台电脑修改，是两件事。</strong><p>客户端运行 Aider＋隧道：模型在主机，文件修改在客户端。SSH 登录主机后运行 Aider：模型与文件都在主机。两端的 127.0.0.1 各自代表当前设备；公开网站不会替你启动、连接或控制这些服务。</p></div><h3>补充 · 用 SCP 传输项目文件</h3><p>在客户端项目目录中执行，沿用上面填写的用户名与主机虚拟 IP。第一条把本地 README.md 复制到主机登录账户的默认目录；第二条下载回来并另存，避免覆盖本地原件。</p>
+<pre><code>scp -i "$env:USERPROFILE\.ssh\local_ai_ed25519" .\README.md "${sshUser}@${ztHostIp}:README.md"
+scp -i "$env:USERPROFILE\.ssh\local_ai_ed25519" "${sshUser}@${ztHostIp}:README.md" .\README-from-host.md</code></pre><p>私钥不随项目传输；较大项目优先使用 Git 管理代码，模型权重通常无需在两端重复传输。</p><h3>方式 C · ZeroTier + Windows 远程桌面</h3><ol class="steps"><li>主机需要支持 RDP 被控端的 Windows 专业版、企业版、教育版或相应 Server 版本；家庭版可以作为客户端，不能直接作为微软 RDP 主机。</li><li>主机在“设置 → 系统 → 远程桌面”开启，保留网络级别身份验证，选择允许登录的账户。</li><li>在主机高级防火墙中核对 Remote Desktop 的 TCP / UDP 入站规则，把远程地址限定为客户端的实际 ZeroTier IP。不能同时留下其他面向所有地址的宽泛允许规则。</li><li>客户端运行 <code>mstsc</code>，计算机填写主机的 ZeroTier IP，使用主机账户登录。无需路由器公网端口映射。</li><li>家庭版可用 SSH 完成命令行工作；若确需画面，可另行评估 RustDesk 等工具的安装、密码与中继方式。</li></ol><p class="source-note">依据：<a href="https://support.microsoft.com/en-us/windows/experience/connectivity-networking/how-to-use-remote-desktop" target="_blank" rel="noopener noreferrer">微软远程桌面说明</a>。RDP 会话下 GPU 的可用性需实测，用 <code>ollama ps</code> 检查；ZeroTier 不会自动唤醒一台已关机的电脑。</p></section>
+        <section id="troubleshoot" class="chapter"><p class="eyebrow">08 / OPERATE</p><h2>遇到问题，按层检查。</h2><details><summary>模型很慢、内存不足，或电脑开始频繁读盘</summary><p>先看任务管理器与 <code>ollama ps</code>，关闭其他大型程序，改用 8B、4K 上下文、单任务。用 <code>ollama stop deepseek-r1:14b</code> 卸载当前模型；要删除磁盘权重则用 <code>ollama rm deepseek-r1:14b</code>，以后使用需重新下载。不要把大交换文件当成等价扩容。</p></details><details><summary>Ollama 11434 连不上，或提示端口已占用</summary><p>先在主机执行 <code>Invoke-RestMethod http://127.0.0.1:11434/api/tags</code>。核对托盘进程与监听端口，已经启动时不要重复 serve。修改环境变量后需彻底退出并重新启动。Windows 原生 Ollama 与 WSL 中的服务是不同运行环境，先固定使用一个。</p></details><details><summary>ZeroTier 已授权，但 SSH 超时</summary><p>核对双方 Network ID、状态与 Managed IP，主机 sshd 是否 Running，再从客户端测试 TCP 22。检查主机防火墙、ZeroTier flow rules 和客户端当前 IP 是否与允许规则一致。网络显示在线不等于某个应用端口一定可达。</p></details><details><summary>SSH 拒绝密钥，或 RDP 无法登录</summary><p>区分账户密码、Windows Hello PIN 和私钥口令。核对用户名、普通 / 管理员公钥路径、文件权限，以及主机指纹。RDP 再核对 Windows 版本、远程桌面开关、用户权限、3389 规则；不要通过关闭整个防火墙排错。</p></details><details><summary>隧道建立了，但客户端仍访问不到 AI</summary><p>先验证主机本地接口，再检查隧道窗口是否还在。客户端用 11435，主机服务用 11434；若客户端 11435 也被占用，只改 -L 第一个端口并同步调整客户端地址。出现 administratively prohibited 时，检查主机 SSH 的 AllowTcpForwarding / PermitOpen 配置和匹配规则。</p></details><details><summary>重启、外出与断网前后要注意什么？</summary><p>ZeroTier 与 sshd 设为自动启动并验证。Windows 托盘版 Ollama 通常依赖用户登录启动，不能把它当作已配置的开机系统服务；无人值守可评估任务计划或 Linux 服务。关闭自动睡眠并兼顾散热，重启后实测外部连接。安装、更新、下载需要联网；本地权重推理可离线，但 ZeroTier 远程连接通常仍需网络。</p></details><details><summary>将来换 Linux 主机，哪些地方需要变化？</summary><p>模型选择与客户端命令可复用；安装方式改按 <a href="https://docs.ollama.com/linux" target="_blank" rel="noopener noreferrer">Ollama Linux 文档</a>，环境变量通过 systemd 配置，SSH 服务与防火墙按发行版设置。不要把 Windows 的 Set-Service 或 NetFirewall 命令直接复制过去。Windows RDP 主机流程也不适用于 Linux 桌面。</p></details></section>
+        <section id="checklist" class="chapter"><p class="eyebrow">09 / ACCEPTANCE</p><h2>一步步核验，留给真正部署的那天。</h2><p>勾选只保存在当前浏览器，不上传设备信息；换设备不会自动同步。</p><div class="checklist"><label><input type="checkbox" data-check="capacity">已确认内存、模型盘空间和模型大小</label><label><input type="checkbox" data-check="brain">本机 Ollama 能回答，接口只监听回环地址</label><label><input type="checkbox" data-check="hands">Aider 已在测试目录修改文件，代码运行通过</label><label><input type="checkbox" data-check="network">两端 ZeroTier 已核对 Node ID、授权并取得虚拟 IP</label><label><input type="checkbox" data-check="ssh">SSH 指纹已核对，公钥登录新窗口测试通过</label><label><input type="checkbox" data-check="scope">防火墙限已授权来源，未映射公网 22 / 3389 / 11434</label><label><input type="checkbox" data-check="tunnel">客户端隧道能访问主机模型，已分清修改文件的位置</label><label><input type="checkbox" data-check="restart">已实测重启、登录、睡眠与断线后的服务状态</label><label><input type="checkbox" data-check="backup">项目、配置已备份，私钥另行安全保管</label></div><div class="check-footer"><span id="checkProgress" role="status">已完成 0 / 9 项</span><button id="resetChecks" type="button">清空本页勾选</button></div></section>
+        <section id="resources" class="chapter"><p class="eyebrow">10 / BOOKMARKS</p><h2>重要资源，放在同一个地方。</h2><p>优先官方文档与作者仓库。软件版本、硬件支持、套餐与命令可能变化，真正部署前再次核对。本站提供指南，不托管你的模型、私钥或远程会话。</p><div class="resource-list">
+          <a href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank" rel="noopener noreferrer"><strong>DeepSeek-R1 官方仓库 ↗</strong><span>模型版本、权重入口、蒸馏关系与许可</span></a>
+          <a href="https://huggingface.co/deepseek-ai" target="_blank" rel="noopener noreferrer"><strong>DeepSeek · Hugging Face ↗</strong><span>官方组织与模型文件，核对发布者</span></a>
+          <a href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer"><strong>Ollama Windows 下载 ↗</strong><span>本地模型运行程序</span></a>
+          <a href="https://ollama.com/library/deepseek-r1/tags" target="_blank" rel="noopener noreferrer"><strong>R1 大小与量化标签 ↗</strong><span>选明确的大小，不只下载 latest</span></a>
+          <a href="https://docs.ollama.com/windows" target="_blank" rel="noopener noreferrer"><strong>Ollama Windows 部署 ↗</strong><span>系统要求、安装与模型存放目录</span></a>
+          <a href="https://docs.ollama.com/faq" target="_blank" rel="noopener noreferrer"><strong>Ollama 配置与排错 ↗</strong><span>上下文、环境变量、内存与服务</span></a>
+          <a href="https://docs.ollama.com/gpu" target="_blank" rel="noopener noreferrer"><strong>Ollama GPU 支持 ↗</strong><span>购买显卡前核对型号与平台</span></a>
+          <a href="https://aider.chat/docs/install.html" target="_blank" rel="noopener noreferrer"><strong>Aider 安装文档 ↗</strong><span>隔离安装、Python 要求与命令入口</span></a>
+          <a href="https://aider.chat/docs/llms/ollama.html" target="_blank" rel="noopener noreferrer"><strong>Aider 接入 Ollama ↗</strong><span>本地模型、端点与模型命名</span></a>
+          <a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer"><strong>Git 官方下载 ↗</strong><span>保存项目版本与审核变更</span></a>
+          <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer"><strong>Python 官方下载 ↗</strong><span>优先选择与工具兼容的版本</span></a>
+          <a href="https://www.zerotier.com/download/" target="_blank" rel="noopener noreferrer"><strong>ZeroTier 官方下载 ↗</strong><span>两端设备都需要安装</span></a>
+          <a href="https://docs.zerotier.com/quickstart/" target="_blank" rel="noopener noreferrer"><strong>ZeroTier 官方入门 ↗</strong><span>新版与旧版 Central、加入网络与授权</span></a>
+          <a href="https://central.zerotier.com/" target="_blank" rel="noopener noreferrer"><strong>新版 ZeroTier Central ↗</strong><span>组织、网络与设备授权</span></a>
+          <a href="https://my.zerotier.com/" target="_blank" rel="noopener noreferrer"><strong>Legacy Central ↗</strong><span>旧账户与已有网络管理</span></a>
+          <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse" target="_blank" rel="noopener noreferrer"><strong>微软 OpenSSH 入门 ↗</strong><span>安装、服务、连接与防火墙</span></a>
+          <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement" target="_blank" rel="noopener noreferrer"><strong>微软 SSH 密钥管理 ↗</strong><span>普通账户与管理员的路径、权限区别</span></a>
+          <a href="https://support.microsoft.com/en-us/windows/experience/connectivity-networking/how-to-use-remote-desktop" target="_blank" rel="noopener noreferrer"><strong>微软远程桌面 ↗</strong><span>被控端版本要求与启用步骤</span></a>
+          <a href="https://code.visualstudio.com/docs/remote/ssh" target="_blank" rel="noopener noreferrer"><strong>VS Code Remote - SSH ↗</strong><span>通过 SSH 编辑主机项目，先核对远端系统要求</span></a>
+          <a href="https://rustdesk.com/" target="_blank" rel="noopener noreferrer"><strong>RustDesk ↗</strong><span>需要图形控制时的另一种工具选择</span></a>
+        </div></section>
+      </div>
+    </div>
+  </main><footer class="wrap"><span>ZGLAND · 本地 AI 与远程控制指南</span><a href="/">返回导航首页</a><a href="/network/">网络工具</a><a href="/privacy.html">隐私说明</a></footer>
+  <p id="copyStatus" class="copy-status" role="status" aria-live="polite"></p>
+</body></html>

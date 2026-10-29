@@ -41,3 +41,8 @@
 /proxy/downloads/*
   Cache-Control: public, max-age=86400
   X-Content-Type-Options: nosniff
+
+/local-ai/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

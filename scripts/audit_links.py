@@ -33,7 +33,7 @@ def main():
     for root in (ROOT, ROOT.parent / "feitianshan"):
         pages = list(root.glob("*.html"))
         if root == ROOT:
-            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench", "games", "games/rich4", "credentials")]
+            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench", "games", "games/rich4", "credentials", "local-ai")]
         for page in pages:
             parser = Links()
             parser.feed(page.read_text(encoding="utf-8"))

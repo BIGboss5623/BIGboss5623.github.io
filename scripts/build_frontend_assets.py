@@ -9,7 +9,7 @@ ASSETS = ("assets/js/site-tools.js", "assets/subpages.css", "network/network.js"
           "hzyx/site.js", "history-cycle/app.js", "history-cycle/usability.css",
           "assets/js/site.js", "assets/css/usability.css", "assets/portal.js", "assets/portal.css", "quant-console/console.js",
           "games/rich4/rich4.css", "games/rich4/rich4.js", "assets/domain-expiry.css", "assets/domain-expiry.js",
-          "credentials/style.css", "credentials/app.js")
+          "credentials/style.css", "credentials/app.js", "local-ai/guide.css", "local-ai/guide.js")
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
             target.write_bytes(content)
         versions[source.resolve()] = name
     pages = list(ROOT.glob("*.html")) + [ROOT / d / "index.html" for d in
-            ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials")]
+            ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials", "local-ai")]
     for page in pages:
         if not page.is_file():
             continue
