@@ -1,0 +1,31 @@
+{
+  "project": "iam567/rich4-renew-app",
+  "upstream": "https://github.com/iam567/rich4-renew-app",
+  "verified_on": "2026-10-29",
+  "selected_desktop_version": "0.7.4",
+  "windows": {
+    "filename": "rich4-0.7.4-windows.zip",
+    "bytes": 2099493842,
+    "sha256": "9705dfe9d0c99c0900da67c5690779e4f7e6f6b6ac42aa9ebcba072c1e933680",
+    "url": "https://github.com/iam567/rich4-renew-app/releases/download/v0.7.4/rich4-0.7.4-windows.zip",
+    "release_page": "https://github.com/iam567/rich4-renew-app/releases/tag/v0.7.4",
+    "hosted_on_this_site": false,
+    "verification": "Local ZIP SHA-256 matches upstream v0.7.4 release asset digest. ZIP contains Rich4/Rich4.exe and Rich4/resources/app.asar.",
+    "run": "Extract the entire ZIP, then launch Rich4/Rich4.exe. Do not move the executable out of its directory."
+  },
+  "source": {
+    "filename": "rich4-source-20261024.zip",
+    "bytes": 16513792,
+    "sha256": "602e86352d8dcce1e82fa2f175b736662861ea0e355ca14dddf347a0e4119696",
+    "url": "https://zgland.com/games/rich4/downloads/rich4-source-20261024.zip",
+    "snapshot_downloaded_on": "2026-10-24",
+    "original_branch": "main",
+    "exact_git_commit": null,
+    "package_version": "0.7.4",
+    "hosted_on_this_site": true,
+    "license": "GPL-3.0-or-later",
+    "verification": "Original downloaded archive retained byte-for-byte; ZIP CRC check passed, 444 entries. No node_modules, local .env or complete game asset bundle included.",
+    "playable_without_build_or_assets": false
+  },
+  "asset_policy": "Upstream README excludes original game assets and redraws from the source license and describes them as private-use only. This site retains the source archive and links to the upstream desktop release rather than mirroring its assets."
+}
