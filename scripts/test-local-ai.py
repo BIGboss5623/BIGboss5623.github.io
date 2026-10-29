@@ -40,8 +40,18 @@ def main():
             context = browser.new_context(permissions=['clipboard-read', 'clipboard-write'])
             page = context.new_page()
             errors = []
+            blocked_analytics = []
             page.on('pageerror', lambda error: errors.append(str(error)))
-            page.on('console', lambda message: errors.append(message.text) if message.type == 'error' and 'Content Security Policy' in message.text else None)
+            def check_console(message):
+                if message.type != 'error' or 'Content Security Policy' not in message.text:
+                    return
+                # Pages may inject its optional analytics beacon. The guide's
+                # self-only CSP intentionally blocks that third-party script.
+                if "Refused to load the script 'https://static.cloudflareinsights.com/beacon.min.js/" in message.text:
+                    blocked_analytics.append(message.text)
+                else:
+                    errors.append(message.text)
+            page.on('console', check_console)
             # Test visible expiry colors deterministically; this is not a live RDAP check.
             context.route('**/api/domain-expiry*', lambda route: route.fulfill(status=503, content_type='application/json', body='{}'))
             for width in (1440, 390):
@@ -102,7 +112,7 @@ def main():
                     page.screenshot(path=str(args.screenshots / f'local-ai-{width}.png'), full_page=True)
             assert not errors, errors
             browser.close()
-        print(json.dumps({'result': 'PASS', 'checks': ['desktop/mobile', 'light portal search and categories', 'chapter anchors', 'copy exact commands', 'memory planner', 'persistent checklist/reset', 'print details', 'CSP/no script errors']}, ensure_ascii=False))
+        print(json.dumps({'result': 'PASS', 'blocked_optional_cloudflare_analytics': len(blocked_analytics), 'checks': ['desktop/mobile', 'light portal search and categories', 'chapter anchors', 'copy exact commands', 'memory planner', 'persistent checklist/reset', 'print details', 'CSP/no script errors']}, ensure_ascii=False))
     finally:
         if server:
             server.shutdown()
