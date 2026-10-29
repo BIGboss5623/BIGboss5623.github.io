@@ -57,7 +57,7 @@ def main():
                 expect(page.locator('.screenshot-grid img')).to_have_count(3)
                 for image in page.locator('.screenshot-grid img').all():
                     image.scroll_into_view_if_needed()
-                    page.wait_for_function('(img)=>img.complete && img.naturalWidth===1600',arg=image.element_handle())
+                    expect(image).to_have_js_property('naturalWidth',1600)
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
                 page.locator('#copyHash').click()
                 expect(page.locator('#copyStatus')).to_contain_text('已复制')
