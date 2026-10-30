@@ -1,0 +1,40 @@
+(() => {
+  'use strict';
+  const base = 'https://zgland.com';
+  const links = [['ZGLAND 全站导航','/','所有 网站 首页 主页'],['杭州创投企业官网','https://hzct.zgland.com/','影视 企业 创投 hzct 作品'],['量化操作中心','/quant-console/','Python 云端 工作台 更新 备份'],['本地资料库','https://files.zgland.com/','文件 文献 PDF Word 数据 资料库'],['量化研究台','/fund/','基金 股票 策略 回测'],['浏览器回测','/fund/workbench/','CSV 导入 导出 均线'],['历史周期研究','/history-cycle/','国家 历史 经济 年代'],['网络工具','/network/','ZeroTier VPN 组网 远程桌面 RDP'],['软件下载','/proxy/','Clash VPN 代理 客户端'],['钰玺医药','/hzyx/','企业 医药 公司'],['飞天山农庄','https://feitianshan.zgland.com/','旅游 民宿 住宿 郴州'],['域名控制台','/domain-console/','Cloudflare DNS 管理 子域名'],['联系反馈','/contact.html','邮箱 留言 联系']];
+  const style = document.createElement('style');
+  style.textContent = `.zg-tools{position:fixed;right:16px;bottom:18px;z-index:9000;font:14px/1.5 system-ui,'Microsoft YaHei',sans-serif;color:#edf6ff}.zg-tools summary{list-style:none;cursor:pointer;background:#123044;border:1px solid #7cb7c9;border-radius:24px;padding:11px 18px;box-shadow:0 4px 18px #0003}.zg-tools summary::-webkit-details-marker{display:none}.zg-tools nav{position:absolute;right:0;bottom:55px;width:190px;max-height:65vh;overflow:auto;background:#102637;border:1px solid #7193a5;border-radius:14px;padding:8px;box-shadow:0 8px 30px #0005}.zg-tools a,.zg-tools button{display:block;box-sizing:border-box;width:100%;text-align:left;color:#edf6ff!important;background:transparent;border:0;border-radius:8px;padding:10px;text-decoration:none!important;font:inherit;cursor:pointer}.zg-tools a:hover,.zg-tools button:hover{background:#27485b}.zg-tools :focus-visible{outline:3px solid #f6cc71;outline-offset:2px}@media(max-width:600px){.zg-tools{right:10px;bottom:max(12px,env(safe-area-inset-bottom))}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}@media print{.zg-tools{display:none}}`;
+  document.head.append(style);
+  const isolation = document.createElement('style');
+  isolation.textContent = '.zg-tools nav{display:block;margin:0;gap:0;letter-spacing:normal}.zg-tools a,.zg-tools button{min-height:44px}.zg-tools a[aria-current="page"]{background:#27485b}.zg-tools summary{min-height:44px}.zg-tools a,.zg-tools button{line-height:1.5}.zg-tools input{box-sizing:border-box;width:100%;min-height:44px;border:1px solid #7193a5;border-radius:8px;background:#091726;color:#fff;font:inherit;padding:10px;margin:0 0 8px}.zg-tools [hidden]{display:none!important}.zg-tools .zg-feedback{margin:8px;padding:0;font-size:12px;color:#b9d4e4}';
+  document.head.append(isolation);
+  isolation.textContent+='details.zg-tools nav{display:block}.zg-tools input{font-size:16px}.zg-tools .zg-feedback{overflow-wrap:anywhere}';
+  const panel = document.createElement('details');
+  panel.className = 'zg-tools';
+  const summary = document.createElement('summary'); summary.textContent = '网站导航';
+  const nav = document.createElement('nav'); nav.setAttribute('aria-label','网站快捷导航');
+  const search=document.createElement('input');search.type='search';search.placeholder='查找网站或工具';search.setAttribute('aria-label','筛选网站导航');nav.append(search);
+  const items=[];
+  summary.title='网站导航 · Alt+K';summary.setAttribute('aria-keyshortcuts','Alt+K');
+  for (const [label,path,keywords] of links) {
+    const a = document.createElement('a'); a.textContent=label; a.href=path.startsWith('https://')?path:base+path;
+    const url = new URL(a.href);
+    const currentPath = ['zgland.com','www.zgland.com','hzct.zgland.com'].includes(location.hostname) ? location.pathname : `/${location.hostname.split('.')[0]}${location.pathname}`;
+    if ((url.hostname === 'zgland.com' && currentPath === url.pathname) || (url.hostname === location.hostname && location.pathname === url.pathname)) a.setAttribute('aria-current','page');
+    nav.append(a);
+    items.push(a);
+    a.dataset.keywords=keywords;
+  }
+  const empty=document.createElement('p');empty.className='zg-feedback';empty.textContent='没有匹配入口，请换个关键词。';empty.hidden=true;nav.append(empty);
+  search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();for(const a of items)a.hidden=!`${a.textContent} ${a.href} ${a.dataset.keywords}`.toLowerCase().includes(q);empty.hidden=items.some(a=>!a.hidden);});
+  search.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();items.find(a=>!a.hidden)?.click();}if(e.key==='ArrowDown'){e.preventDefault();items.find(a=>!a.hidden)?.focus();}});
+  const copy=document.createElement('button');copy.type='button';copy.textContent='复制本页链接';nav.append(copy);
+  const feedback=document.createElement('p');feedback.className='zg-feedback';feedback.setAttribute('role','status');feedback.hidden=true;nav.append(feedback);
+  copy.onclick=async()=>{feedback.hidden=false;try{await navigator.clipboard.writeText(location.href);feedback.textContent='页面链接已复制。';}catch{feedback.textContent='请从浏览器地址栏复制：'+location.href;}};
+  const top = document.createElement('button'); top.type='button'; top.textContent='↑ 返回顶部'; top.onclick=()=>{window.scrollTo({top:0});panel.open=false;}; nav.append(top);
+  panel.append(summary,nav); document.body.append(panel);
+  panel.addEventListener('toggle',()=>{if(panel.open)search.focus();});
+  document.addEventListener('keydown',e=>{if(e.altKey&&!e.ctrlKey&&!e.metaKey&&e.key.toLowerCase()==='k'&&!e.target.closest('input,textarea,[contenteditable="true"]')){e.preventDefault();panel.open=!panel.open;}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && panel.open){panel.open=false;summary.focus();}});
+  document.addEventListener('click',e=>{if(!panel.contains(e.target))panel.open=false;});
+})();

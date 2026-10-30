@@ -26,7 +26,7 @@ def main():
             target.write_bytes(content)
         versions[source.resolve()] = name
     pages = list(ROOT.glob("*.html")) + [ROOT / d / "index.html" for d in
-            ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials", "local-ai")]
+            ("fund", "fund/workbench", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials", "local-ai")]
     for page in pages:
         if not page.is_file():
             continue
