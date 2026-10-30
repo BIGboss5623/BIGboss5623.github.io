@@ -66,11 +66,12 @@ def significant(current, baseline):
 
 
 class Operations:
-    def __init__(self, folder, notifications_only=False):
+    def __init__(self, folder, notifications_only=False, config_path=None):
         self.folder = Path(folder)
         self.security = Security(self.folder/'operations.sqlite3')
         self.notifications_only = notifications_only
-        self.config = {'recipient':DEFAULT_RECIPIENT} if notifications_only else json.loads((self.folder/'config.json').read_text(encoding='utf-8'))
+        config_file=Path(config_path) if config_path else self.folder/'config.json'
+        self.config = {'recipient':DEFAULT_RECIPIENT} if notifications_only else json.loads(config_file.read_text(encoding='utf-8'))
         self.stop = threading.Event()
         self.last_schedule = 0
         self.summary_cache = (0, None)
@@ -286,6 +287,6 @@ def configured():
     global _instance
     folder = os.environ.get('ZGLAND_OPS_STATE')
     if folder and _instance is None:
-        _instance = Operations(folder)
+        _instance = Operations(folder,config_path=os.environ.get('ZGLAND_OPS_CONFIG'))
         _instance.start()
     return _instance

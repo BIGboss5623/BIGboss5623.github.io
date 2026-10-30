@@ -20,6 +20,15 @@ const root=path.resolve(__dirname,'..');
   await page.goto(base+'/');await page.locator('#siteSearch').fill('建站');assert.equal(await page.locator('.site-card:visible').count(),1);
   await page.locator('.zg-tools summary').click();assert(await page.getByRole('link',{name:'网站访问统计',exact:true}).isVisible());
   offline=true;await page.goto(base+'/site-stats/');await page.waitForSelector('#error:not([hidden])');assert.equal(await page.locator('#todayPv').textContent(),'—');assert.deepEqual(errors,[]);
+  // Browser-only package decryption must keep working with every server API down.
+  const crypto=require('node:crypto'),salt=Buffer.alloc(16,1),iv=Buffer.alloc(16,2),password='isolated-browser-test';
+  const key=crypto.pbkdf2Sync(password,salt,1000,64,'sha256'),cipher=crypto.createCipheriv('aes-256-cbc',key.subarray(0,32),iv);
+  const encrypted=Buffer.concat([cipher.update(Buffer.from('504b0506000000000000000000000000000000000000','hex')),cipher.final()]);
+  const fixture={salt:salt.toString('base64'),iv:iv.toString('base64'),iterations:1000,ciphertext:encrypted.toString('base64'),tag:crypto.createHmac('sha256',key.subarray(32)).update(Buffer.concat([iv,encrypted])).digest('base64'),filename:'isolated-test.zip'};
+  await page.route('**/api/**',route=>route.abort());
+  await page.route('**/config.enc.json*',route=>route.fulfill({json:fixture}));
+  await page.goto(base+'/network/');await page.locator('#password').fill(password);const download=page.waitForEvent('download');await page.locator('#unlockForm button[type=submit]').click();assert.equal((await download).suggestedFilename(),'isolated-test.zip');
+  assert((await page.locator('#message').textContent()).includes('验证成功'));
   console.log('PASS: real browser desktop/mobile stats, chart/table, blueprint 9 sections, no page overflow, directory search, global links, offline does not show zero.');
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exitCode=1;});

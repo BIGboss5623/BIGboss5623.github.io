@@ -6,7 +6,7 @@
 
 服务器后台线程承担私密持久邮件队列、每小时调度检查、访问日变化（至少30%且20次）每天最多一封、域名每月一次/30天内每日一次。每日检查时区UTC+8、10点以后；漏过当天可补发当前应发项，不追发全部历史日期。供应商失败5分钟起退避，最长6小时。供应商接受不等于收件箱送达；网络超时后重试仍存在供应商已接收但响应丢失造成重复投递的可能。
 
-部署时需配置私密 `config.json`：`edge_key`（Pages派生通信密钥）、`domain_digest`、`visitor_key`（随机256位）、`recipient`、`expiry_snapshot`。不提交这些值。服务环境 `ZGLAND_OPS_CODE` 指向本目录分发，`ZGLAND_OPS_STATE` 指向秘密状态目录。RSA私钥用于一次加密配置交接，Pages仅保存公钥。轮换Cloudflare API令牌后须重新交接派生密钥，失败时保护接口返回503，绝不退回无计数验证。
+部署时需配置私密 `config.json`：`edge_key`（Pages派生通信密钥）、`domain_digest`、`visitor_key`（随机256位）、`recipient`、`expiry_snapshot`。不提交这些值。服务环境 `ZGLAND_OPS_CODE` 指向本目录分发，`ZGLAND_OPS_STATE` 指向服务账户可写的私有状态目录，`ZGLAND_OPS_CONFIG`单独指向只读秘密配置。不得为SQLite写入给服务账户开放整个secrets目录的修改权限。RSA私钥用于一次加密配置交接，Pages仅保存公钥。轮换Cloudflare API令牌后须重新交接派生密钥，失败时保护接口返回503，绝不退回无计数验证。
 
 公共接口 `/api/site-stats`；采集 `/api/visit` 的可信来源元数据由Pages补入并签名。来源限制、机器人过滤和去重只能减少噪声，不能提供防作弊保证。统计保留90天、原始IP不进统计表，私密安全邮件独立保存IP。访客摘要每日变化，跨日不可当成独立人数。DNT/GPC不采集。
 
