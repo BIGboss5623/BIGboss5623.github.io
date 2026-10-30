@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-29T23:15:54+08:00",
+  "last_checked": "2026-10-30T15:12:17+08:00",
   "collection_errors": [],
   "events": [
     {
@@ -24,6 +24,19 @@
       "symbols": [],
       "source": "期货日报",
       "url": "https://finance.eastmoney.com/a/202610263907802166.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "747a7dfaccba80e3",
+      "title": "*ST卓然提前锁定退市，或成科创板首家市值退市公司",
+      "published_at": "2026-10-24 19:10:28",
+      "recorded_at": "2026-10-30T15:12:17+08:00",
+      "symbols": [],
+      "source": "红星资本局",
+      "url": "https://finance.eastmoney.com/a/202610243907107393.html",
       "status": "自动收集·待核实",
       "category": "重大风险候选",
       "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
@@ -469,5 +482,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-29T23:15:54+08:00"
+  "last_attempted": "2026-10-30T15:12:17+08:00"
 }
