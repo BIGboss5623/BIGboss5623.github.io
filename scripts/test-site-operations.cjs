@@ -8,7 +8,7 @@ const load=rel=>import(pathToFileURL(path.join(root,rel)).href);
  global.fetch=async(url,init)=>{
    calls.push({url,init});const time=init.headers['X-Zg-Time'];
    assert.equal(init.headers['X-Zg-Signature'],crypto.createHmac('sha256',edgeKey).update(time+'\n'+init.body).digest('hex'));
-   assert.equal(init.redirect,'error');assert(init.signal);
+   assert.equal(init.redirect,'manual');assert(init.signal);
    const body=JSON.parse(init.body);
    if(url.endsWith('/verify'))return Response.json({ok:body.password==='test-password'},{status:body.password==='test-password'?200:429,headers:{'Retry-After':'3600'}});
    return Response.json({ok:true});
@@ -25,6 +25,8 @@ const load=rel=>import(pathToFileURL(path.join(root,rel)).href);
  const paused=await edge.checkPassword(request({}),env,'wrong','domain-console','test');assert.equal(paused.status,429);assert.equal(paused.headers.get('Retry-After'),'3600');
  const encrypted=await provision.onRequest({request:new Request('https://zgland.com/api/ops-provision'),env});assert.equal(encrypted.status,200);
  const text=await encrypted.text();assert(!text.includes(env.CLOUDFLARE_API_TOKEN));assert(!text.includes(env.DOMAIN_CONSOLE_PASSWORD));assert.equal(Buffer.from(JSON.parse(text).encrypted,'base64').length,384);
+ global.fetch=async()=>new Response(null,{status:302,headers:{Location:'https://attacker.example'}});
+ await assert.rejects(()=>edge.forward(env,'/verify',{password:'test-only'}),/redirect refused/);
  const network=fs.readFileSync(path.join(root,'network/network.js'),'utf8');assert(network.includes('crypto.subtle.decrypt'));assert(!network.includes('/api/network-config'));
  console.log('PASS: HMAC, trusted metadata, CORS, DNT/GPC, no private queries, password bridge, 429, encrypted-only provision, browser-only network decryption retained. No live mail sent.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

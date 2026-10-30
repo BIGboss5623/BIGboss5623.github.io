@@ -16,8 +16,10 @@ export async function forward(env,route,payload) {
   const key = await crypto.subtle.importKey('raw',Uint8Array.from(edge_key.match(/../g),x=>parseInt(x,16)),{name:'HMAC',hash:'SHA-256'},false,['sign']);
   const body = JSON.stringify(payload), at = String(Math.floor(Date.now()/1000));
   const signature = hex(await crypto.subtle.sign('HMAC',key,encoder.encode(at+'\n'+body)));
-  return fetch(BASE+route,{method:'POST',headers:{'content-type':'application/json','User-Agent':'ZGLAND-Operations/1.0','X-Zg-Time':at,'X-Zg-Signature':signature},
-    body,redirect:'error',signal:AbortSignal.timeout(12000)});
+  const response=await fetch(BASE+route,{method:'POST',headers:{'content-type':'application/json','User-Agent':'ZGLAND-Operations/1.0','X-Zg-Time':at,'X-Zg-Signature':signature},
+    body,redirect:'manual',signal:AbortSignal.timeout(12000)});
+  if(response.status>=300 && response.status<400)throw Error('Upstream redirect refused');
+  return response;
 }
 
 export const publicHeaders = {'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'};
