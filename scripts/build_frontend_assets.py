@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ("assets/js/site-tools.js", "assets/subpages.css", "network/network.js", "proxy/game.js",
+ASSETS = ("assets/operations.css", "assets/site-stats.js", "assets/js/site-tools.js", "assets/subpages.css", "network/network.js", "proxy/game.js",
           "hzyx/site.js", "history-cycle/app.js", "history-cycle/usability.css",
           "assets/js/site.js", "assets/css/usability.css", "assets/portal.js", "assets/portal.css", "quant-console/console.js",
           "games/rich4/rich4.css", "games/rich4/rich4.js", "assets/domain-expiry.css", "assets/domain-expiry.js",
@@ -26,7 +26,7 @@ def main():
             target.write_bytes(content)
         versions[source.resolve()] = name
     pages = list(ROOT.glob("*.html")) + [ROOT / d / "index.html" for d in
-            ("fund", "fund/workbench", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials", "local-ai")]
+            ("fund", "fund/workbench", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials", "local-ai", "site-stats", "site-blueprint")]
     for page in pages:
         if not page.is_file():
             continue

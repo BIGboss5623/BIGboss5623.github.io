@@ -1,0 +1,82 @@
+{
+  "version": "2026-10-31",
+  "blueprint": "https://zgland.com/site-blueprint/blueprint.md",
+  "routes": [
+    {
+      "route": "/",
+      "purpose": "全部网站卡片、研究/企业与生活/工具分类、关键词搜索、常用操作、域名倒计时"
+    },
+    {
+      "route": "hzct.zgland.com/",
+      "purpose": "杭州创投企业首页：品牌、影视作品与合作联系；源页面company-home"
+    },
+    {
+      "route": "/about、/company、/contact、/help、/privacy",
+      "purpose": "关于、企业介绍、联系表单、帮助与隐私说明；农庄另保留对应子页面"
+    },
+    {
+      "route": "/quant-console/",
+      "purpose": "服务器工作台入口、备份和恢复说明、本地备用；不在公开页面保存密码，不自动保活"
+    },
+    {
+      "route": "quant.zgland.com",
+      "purpose": "独立密码与记住设备登录、行情任务进度、回测、图表和数据备份；业务写入权限与行情更新权限分别控制"
+    },
+    {
+      "route": "/fund/",
+      "purpose": "公开量化研究、历史行情和策略展示；公开展示与私人持仓分离"
+    },
+    {
+      "route": "/fund/workbench/",
+      "purpose": "浏览器CSV回测，数据在本浏览器处理；新增统计事件不上传CSV或回测内容"
+    },
+    {
+      "route": "/history-cycle/",
+      "purpose": "历史周期资料与对照研究；来源、适用范围和不确定性应保留"
+    },
+    {
+      "route": "/network/",
+      "purpose": "ZeroTier安装与受口令保护的自动配置包、加入网络和Central授权步骤；在浏览器本地解密，服务器离线仍可使用，不上传口令或用户磁盘文件"
+    },
+    {
+      "route": "/proxy/",
+      "purpose": "网络及游戏工具、可核实的官方下载与使用边界"
+    },
+    {
+      "route": "/hzyx/",
+      "purpose": "钰玺医药企业展示与联系方式"
+    },
+    {
+      "route": "feitianshan.zgland.com",
+      "purpose": "飞天山梦里故乡农庄、乡村旅游、民宿和联系信息，独立图片与品牌"
+    },
+    {
+      "route": "/domain-console/",
+      "purpose": "域名到期日、子域名绑定预览与应用；禁止根域名、通配符和冲突记录被误改"
+    },
+    {
+      "route": "/credentials/",
+      "purpose": "证书互认与职业规划，国家/类别/职称筛选、最多三项比较、CSV导出、来源核查日期"
+    },
+    {
+      "route": "/local-ai/",
+      "purpose": "本地AI硬件估算、Ollama/Aider安装与ZeroTier/SSH远程使用指南；不承诺性能、不保存用户勾选到服务器"
+    },
+    {
+      "route": "/games/、/games/rich4/",
+      "purpose": "游戏资源与大富翁4重制版下载；区分源码与可玩完整包，保留许可及校验值"
+    },
+    {
+      "route": "files.zgland.com",
+      "purpose": "按原文件夹逐层浏览、检索、文档分段、PDF/Word看页、内嵌图片、数值文件结构预览"
+    },
+    {
+      "route": "/site-stats/",
+      "purpose": "真实PV、每日UV估算、30天趋势、网站分布与栏目排行，离线显示不可用"
+    },
+    {
+      "route": "/site-blueprint/",
+      "purpose": "本建站思路、Markdown下载和结构化路由清单；后续架构改动同步更新"
+    }
+  ]
+}

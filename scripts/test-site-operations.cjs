@@ -1,0 +1,30 @@
+const assert=require('node:assert/strict'),crypto=require('node:crypto'),path=require('node:path'),fs=require('node:fs');
+const {pathToFileURL}=require('node:url'),root=path.resolve(__dirname,'..');
+const load=rel=>import(pathToFileURL(path.join(root,rel)).href);
+(async()=>{
+ const visit=await load('functions/api/visit.js'),edge=await load('operations/edge.js'),provision=await load('functions/api/ops-provision.js');
+ const env={CLOUDFLARE_API_TOKEN:'test-edge-token-not-a-real-token',DOMAIN_CONSOLE_PASSWORD:'test-password'};
+ const edgeKey=crypto.createHmac('sha256',env.CLOUDFLARE_API_TOKEN).update('zgland-site-ops/v1').digest();let calls=[];
+ global.fetch=async(url,init)=>{
+   calls.push({url,init});const time=init.headers['X-Zg-Time'];
+   assert.equal(init.headers['X-Zg-Signature'],crypto.createHmac('sha256',edgeKey).update(time+'\n'+init.body).digest('hex'));
+   assert.equal(init.redirect,'error');assert(init.signal);
+   const body=JSON.parse(init.body);
+   if(url.endsWith('/verify'))return Response.json({ok:body.password==='test-password'},{status:body.password==='test-password'?200:429,headers:{'Retry-After':'3600'}});
+   return Response.json({ok:true});
+ };
+ const request=(body,headers={})=>new Request('https://zgland.com/api/visit',{method:'POST',headers:{Origin:'https://feitianshan.zgland.com','CF-Connecting-IP':'192.0.2.33','User-Agent':'Mozilla/5.0 Test Browser',...headers},body:JSON.stringify(body)});
+ assert.equal((await visit.onRequest({request:request({path:'/about',ip:'attacker',host:'attacker.example'}),env})).status,204);
+ const payload=JSON.parse(calls[0].init.body);assert.equal(payload.ip,'192.0.2.33');assert.equal(payload.host,'feitianshan.zgland.com');assert.equal(payload.path,'/about');
+ const before=calls.length;
+ assert.equal((await visit.onRequest({request:request({path:'/'},{Origin:'https://attacker.example'}),env})).status,403);
+ assert.equal((await visit.onRequest({request:request({path:'/'},{DNT:'1'}),env})).status,204);
+ assert.equal((await visit.onRequest({request:request({path:'/'},{'Sec-GPC':'1'}),env})).status,204);
+ assert.equal((await visit.onRequest({request:request({path:'/x?private=1'}),env})).status,400);assert.equal(calls.length,before);
+ assert.equal((await edge.checkPassword(request({}),env,'test-password','domain-console','test')).status,200);
+ const paused=await edge.checkPassword(request({}),env,'wrong','domain-console','test');assert.equal(paused.status,429);assert.equal(paused.headers.get('Retry-After'),'3600');
+ const encrypted=await provision.onRequest({request:new Request('https://zgland.com/api/ops-provision'),env});assert.equal(encrypted.status,200);
+ const text=await encrypted.text();assert(!text.includes(env.CLOUDFLARE_API_TOKEN));assert(!text.includes(env.DOMAIN_CONSOLE_PASSWORD));assert.equal(Buffer.from(JSON.parse(text).encrypted,'base64').length,384);
+ const network=fs.readFileSync(path.join(root,'network/network.js'),'utf8');assert(network.includes('crypto.subtle.decrypt'));assert(!network.includes('/api/network-config'));
+ console.log('PASS: HMAC, trusted metadata, CORS, DNT/GPC, no private queries, password bridge, 429, encrypted-only provision, browser-only network decryption retained. No live mail sent.');
+})().catch(e=>{console.error(e);process.exitCode=1;});

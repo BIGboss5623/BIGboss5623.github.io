@@ -1,3 +1,4 @@
+import {checkPassword, unavailable, boundedJson} from '../../operations/edge.js';
 const API_BASE = "https://api.cloudflare.com/client/v4";
 const ROOT_DOMAIN = "zgland.com";
 
@@ -98,10 +99,18 @@ async function handleRequest(context) {
     return json({ ok: false, message: "控制台尚未完成首次配置。", missing }, 503);
   }
 
-  const body = await request.json().catch(() => null);
-  if (!body || !(await sameSecret(body.password, env.DOMAIN_CONSOLE_PASSWORD))) {
-    return json({ ok: false, message: "控制台密码不正确。" }, 401);
-  }
+  const origin=request.headers.get('Origin');
+  if(origin && origin!==new URL(request.url).origin) return json({ok:false,message:'Forbidden origin'},403);
+  const body = await boundedJson(request).catch(() => null);
+  if (!body) return json({ok:false,message:'请求无效'},400);
+  // No local-only or memory-only counter: all edge regions use one durable guard.
+  let authResponse;
+  try {authResponse=await checkPassword(request,env,body.password,'domain-console',
+      body.action==='apply'?'配置子域名绑定':'预览子域名绑定');}
+  catch {return unavailable();}
+  if(!authResponse.ok) return new Response(await authResponse.text(),{status:authResponse.status,
+    headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','Retry-After':authResponse.headers.get('Retry-After')||'60'}});
+  if (!(await sameSecret(body.password, env.DOMAIN_CONSOLE_PASSWORD))) return unavailable();
 
   const action = body.action === "apply" ? "apply" : "plan";
   const hostname = normalizeHostname(body.hostname);

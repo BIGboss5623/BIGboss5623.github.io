@@ -1,10 +1,12 @@
 const fs=require('node:fs'),assert=require('node:assert/strict');
 (async()=>{
-  const code=fs.readFileSync(require('node:path').resolve(__dirname,'../functions/api/domains.js'),'utf8');
-  const api=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+  const api=await import(require('node:url').pathToFileURL(require('node:path').resolve(__dirname,'../functions/api/domains.js')).href);
   const env={CLOUDFLARE_API_TOKEN:'test',CLOUDFLARE_ACCOUNT_ID:'account',CLOUDFLARE_ZONE_ID:'zone',CLOUDFLARE_PAGES_PROJECT:'project',CLOUDFLARE_PAGES_TARGET:'test.pages.dev',DOMAIN_CONSOLE_PASSWORD:'test-only'};
   let calls=[],records=[],domains=[];
   global.fetch=async(url,init={})=>{
+    if(url==='https://quant.zgland.com/site-ops/verify'){
+      const body=JSON.parse(init.body);return Response.json({ok:body.password==='test-only'},{status:body.password==='test-only'?200:401});
+    }
     calls.push({url,method:init.method||'GET'});
     const dns=url.includes('/dns_records');
     if(init.method==='POST'){const body=JSON.parse(init.body);if(dns)records=[{id:'dns',...body}];else domains=[{name:body.name,status:'active'}];}
