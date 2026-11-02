@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-10-30T23:05:08+08:00",
+  "last_checked": "2026-11-02T15:42:50+08:00",
   "collection_errors": [],
   "events": [
     {
@@ -76,6 +76,19 @@
       "symbols": [],
       "source": "证券时报",
       "url": "https://finance.eastmoney.com/a/202610223904559552.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "d19368a61ff9b2a5",
+      "title": "000016，明日摘牌退市",
+      "published_at": "2026-10-22 18:52:00",
+      "recorded_at": "2026-11-02T15:42:50+08:00",
+      "symbols": [],
+      "source": "证券时报网",
+      "url": "https://finance.eastmoney.com/a/202610223904293177.html",
       "status": "自动收集·待核实",
       "category": "重大风险候选",
       "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
@@ -482,5 +495,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-10-30T23:05:08+08:00"
+  "last_attempted": "2026-11-02T15:42:50+08:00"
 }
