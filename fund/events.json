@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-02T15:42:50+08:00",
+  "last_checked": "2026-11-03T02:26:43+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "4a414e872c40512f",
+      "title": "总台曝光后 多地立案调查！",
+      "published_at": "2026-11-02 09:43:54",
+      "recorded_at": "2026-11-03T02:26:43+08:00",
+      "symbols": [],
+      "source": "央视财经",
+      "url": "https://finance.eastmoney.com/a/202611023919144757.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "13fe93844502d3d4",
       "title": "一年内两起重大事故，西班牙高铁防护系统再遭质疑",
@@ -495,5 +508,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-02T15:42:50+08:00"
+  "last_attempted": "2026-11-03T02:26:43+08:00"
 }
