@@ -1,8 +1,47 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-04T15:31:45+08:00",
+  "last_checked": "2026-11-05T00:22:21+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "13e35de9d4a53cd1",
+      "title": "路特斯召回33辆进口莲花Elise",
+      "published_at": "2026-11-04 22:08:35",
+      "recorded_at": "2026-11-05T00:22:21+08:00",
+      "symbols": [],
+      "source": "中国证券报·中证金牛座",
+      "url": "https://finance.eastmoney.com/a/202611043922279356.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "ed645b6aee7d0108",
+      "title": "路特斯召回部分进口莲花汽车",
+      "published_at": "2026-11-04 20:07:06",
+      "recorded_at": "2026-11-05T00:22:21+08:00",
+      "symbols": [],
+      "source": "北京商报",
+      "url": "https://finance.eastmoney.com/a/202611043922139691.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "2912665ffe08e8a6",
+      "title": "广汽丰田召回部分国产汽车",
+      "published_at": "2026-11-04 18:25:57",
+      "recorded_at": "2026-11-05T00:22:21+08:00",
+      "symbols": [],
+      "source": "财联社",
+      "url": "https://finance.eastmoney.com/a/202611043922069482.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "1622c80313a5ab24",
       "title": "603578，遭证监会立案调查！",
@@ -534,5 +573,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-04T15:31:45+08:00"
+  "last_attempted": "2026-11-05T00:22:21+08:00"
 }
