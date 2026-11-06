@@ -1,8 +1,34 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-06T15:57:20+08:00",
+  "last_checked": "2026-11-06T23:57:18+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "e40854fa0464cc09",
+      "title": "保时捷召回部分进口汽车",
+      "published_at": "2026-11-06 18:00:14",
+      "recorded_at": "2026-11-06T23:57:18+08:00",
+      "symbols": [],
+      "source": "财联社",
+      "url": "https://finance.eastmoney.com/a/202611063924973189.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "c45df5ba5d1ef551",
+      "title": "斯巴鲁召回196494辆进口汽车",
+      "published_at": "2026-11-06 17:59:15",
+      "recorded_at": "2026-11-06T23:57:18+08:00",
+      "symbols": [],
+      "source": "财联社",
+      "url": "https://finance.eastmoney.com/a/202611063924928566.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "43a33b13ade477cf",
       "title": "宝马中国辟谣气囊召回短信",
@@ -599,5 +625,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-06T15:57:20+08:00"
+  "last_attempted": "2026-11-06T23:57:18+08:00"
 }
