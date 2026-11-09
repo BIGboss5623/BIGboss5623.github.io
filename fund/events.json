@@ -1,8 +1,34 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-06T23:57:18+08:00",
+  "last_checked": "2026-11-09T16:00:25+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "04cbb1b001d2c148",
+      "title": "沃尔沃辟谣气囊召回短信",
+      "published_at": "2026-11-07 16:05:10",
+      "recorded_at": "2026-11-09T16:00:25+08:00",
+      "symbols": [],
+      "source": "界面新闻",
+      "url": "https://finance.eastmoney.com/a/202611073925505137.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "eb472338026fce71",
+      "title": "80万辆真召回刚发布 “假召回”短信就来了 有车主被骗2万元",
+      "published_at": "2026-11-07 14:14:35",
+      "recorded_at": "2026-11-09T16:00:25+08:00",
+      "symbols": [],
+      "source": "红星资本局",
+      "url": "https://finance.eastmoney.com/a/202611073925495429.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "e40854fa0464cc09",
       "title": "保时捷召回部分进口汽车",
@@ -625,5 +651,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-06T23:57:18+08:00"
+  "last_attempted": "2026-11-09T16:00:25+08:00"
 }
