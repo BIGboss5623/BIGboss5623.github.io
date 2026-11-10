@@ -95,7 +95,14 @@ def main() -> None:
     print("\n[3/4] 生成本地恢复留档……")
     ARCHIVE_DIR.mkdir(exist_ok=True)
     archive = ARCHIVE_DIR / f"{ROOT.name}_{timestamp}.bundle"
-    bundled = git("bundle", "create", str(archive), "--all", check=False)
+    bundled = git("bundle", "create", str(archive), branch, check=False)
+    if bundled.returncode == 0:
+        # 轮转：只保留最新 5 份和最早 1 份留档，避免本地留档无限膨胀。
+        archives = sorted(ARCHIVE_DIR.glob(f"{ROOT.name}_*.bundle"), key=lambda item: item.name)
+        doomed = archives[1:-5] if len(archives) > 6 else []  # 保留最早 1 份与最新 5 份
+        for stale in doomed:
+            stale.unlink()
+            print(f"已清理旧留档：{stale.name}")
     if bundled.returncode != 0:
         fail("本地 Git 留档生成失败，因此暂不上传。")
     print(f"留档位置：{archive}")

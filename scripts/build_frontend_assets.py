@@ -25,6 +25,32 @@ def main():
         if not target.exists():
             target.write_bytes(content)
         versions[source.resolve()] = name
+
+def prune_superseded(versions):
+    """Remove all but the two newest fingerprints per source, never touching a name a page still references."""
+    referenced = set()
+    for page in list(ROOT.glob("*.html")) + [ROOT / d / "index.html" for d in
+            ("fund", "fund/workbench", "proxy", "network", "hzyx", "history-cycle", "domain-console",
+             "quant-console", "games", "games/rich4", "credentials", "local-ai", "site-stats", "site-blueprint")]:
+        if page.is_file():
+            referenced |= set(re.findall(r'(?:src|href)="([^"]+)"', page.read_text(encoding="utf-8", errors="utf-8-sig")))
+    live = {Path(urlsplit(ref).path).name for ref in referenced if urlsplit(ref).path}
+    for relative in ASSETS:
+        source = ROOT / relative
+        if not source.is_file():
+            continue
+        pattern = source.stem + ".*" + source.suffix
+        siblings = [item for item in source.parent.glob(pattern) if re.fullmatch(re.escape(source.stem) + r"\.[0-9a-f]{12}" + re.escape(source.suffix), item.name)]
+        if len(siblings) <= 2:
+            continue
+        siblings.sort(key=lambda item: (item.stat().st_mtime, item.name), reverse=True)
+        for stale in siblings[2:]:
+            if stale.name in live:
+                continue
+            stale.unlink()
+            print(f"Pruned superseded fingerprint: {stale.relative_to(ROOT)}")
+
+
     pages = list(ROOT.glob("*.html")) + [ROOT / d / "index.html" for d in
             ("fund", "fund/workbench", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "games", "games/rich4", "credentials", "local-ai", "site-stats", "site-blueprint")]
     for page in pages:
@@ -49,6 +75,7 @@ def main():
         new = re.sub(r'(src|href)="([^"]+)"', rewrite, old)
         if old != new:
             page.write_bytes(new.encode("utf-8"))
+    prune_superseded(versions)
     print("Frontend asset fingerprints prepared.")
 
 

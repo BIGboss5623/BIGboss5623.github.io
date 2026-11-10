@@ -46,3 +46,26 @@
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://zgland.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+
+/quant-console/*.js
+  Cache-Control: public, max-age=2592000
+/quant-console/*.css
+  Cache-Control: public, max-age=2592000
+/fund/*.js
+  Cache-Control: public, max-age=2592000
+/fund/*.css
+  Cache-Control: public, max-age=2592000
+/domain-console/*.js
+  Cache-Control: public, max-age=2592000
+/domain-console/*.css
+  Cache-Control: public, max-age=2592000
+/local-ai/*.js
+  Cache-Control: public, max-age=2592000
+/local-ai/*.css
+  Cache-Control: public, max-age=2592000
+/site-stats/*.js
+  Cache-Control: public, max-age=2592000
+/games/*.js
+  Cache-Control: public, max-age=2592000
+/games/*.css
+  Cache-Control: public, max-age=2592000
