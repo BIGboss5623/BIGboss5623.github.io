@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-10T16:27:33+08:00",
+  "last_checked": "2026-11-11T15:46:58+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "04aedf919d641724",
+      "title": "小螺号｜假召回短信蹭上车企，防“召回陷阱”不能止于辟谣",
+      "published_at": "2026-11-11 11:27:00",
+      "recorded_at": "2026-11-11T15:46:58+08:00",
+      "symbols": [],
+      "source": "新京报",
+      "url": "https://finance.eastmoney.com/a/202611113928291247.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "08cb1e9b6bcb2341",
       "title": "奥迪中国辟谣虚假召回短信",
@@ -664,5 +677,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-10T16:27:33+08:00"
+  "last_attempted": "2026-11-11T15:46:58+08:00"
 }
