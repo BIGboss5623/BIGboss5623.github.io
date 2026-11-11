@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-11T15:46:58+08:00",
+  "last_checked": "2026-11-12T00:13:38+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "a032d23dfb42ca4d",
+      "title": "人民鉴真207期丨长城汽车：警惕假冒召回短信 短信所称“召回事项”纯属捏造",
+      "published_at": "2026-11-11 21:24:00",
+      "recorded_at": "2026-11-12T00:13:38+08:00",
+      "symbols": [],
+      "source": "证券时报网",
+      "url": "https://finance.eastmoney.com/a/202611113928751915.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "04aedf919d641724",
       "title": "小螺号｜假召回短信蹭上车企，防“召回陷阱”不能止于辟谣",
@@ -677,5 +690,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-11T15:46:58+08:00"
+  "last_attempted": "2026-11-12T00:13:38+08:00"
 }
