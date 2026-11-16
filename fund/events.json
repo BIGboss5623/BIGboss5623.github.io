@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-16T16:01:41+08:00",
+  "last_checked": "2026-11-17T02:37:09+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "036c519d5beb4cb2",
+      "title": "警惕“车辆召回”“气囊召回”等诈骗信息，理想、蔚来等多家车企辟谣",
+      "published_at": "2026-11-16 18:12:39",
+      "recorded_at": "2026-11-17T02:37:09+08:00",
+      "symbols": [],
+      "source": "红星资本局",
+      "url": "https://finance.eastmoney.com/a/202611163931909216.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "a79a4ac5e3f22df9",
       "title": "Outlook全球宕机超10小时，AI时代科技巨头为何难防重大事故？",
@@ -703,5 +716,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-16T16:01:41+08:00"
+  "last_attempted": "2026-11-17T02:37:09+08:00"
 }
