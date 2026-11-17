@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-17T02:37:09+08:00",
+  "last_checked": "2026-11-17T17:15:53+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "308c88e9cd13bca0",
+      "title": "小米辟谣汽车召回短信",
+      "published_at": "2026-11-17 11:48:30",
+      "recorded_at": "2026-11-17T17:15:53+08:00",
+      "symbols": [],
+      "source": "界面新闻",
+      "url": "https://finance.eastmoney.com/a/202611173932749768.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "036c519d5beb4cb2",
       "title": "警惕“车辆召回”“气囊召回”等诈骗信息，理想、蔚来等多家车企辟谣",
@@ -11,6 +24,32 @@
       "symbols": [],
       "source": "红星资本局",
       "url": "https://finance.eastmoney.com/a/202611163931909216.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "513112788a7a0b10",
+      "title": "本田在美国召回14648辆汽车",
+      "published_at": "2026-11-14 16:28:33",
+      "recorded_at": "2026-11-17T17:15:53+08:00",
+      "symbols": [],
+      "source": "财联社",
+      "url": "https://finance.eastmoney.com/a/202611143931343545.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "29d5ea0447ccdcf0",
+      "title": "假召回短信背后的车主信息疑云",
+      "published_at": "2026-11-14 11:40:17",
+      "recorded_at": "2026-11-17T17:15:53+08:00",
+      "symbols": [],
+      "source": "中国经营网",
+      "url": "https://finance.eastmoney.com/a/202611143931313121.html",
       "status": "自动收集·待核实",
       "category": "重大风险候选",
       "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
@@ -716,5 +755,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-17T02:37:09+08:00"
+  "last_attempted": "2026-11-17T17:15:53+08:00"
 }
