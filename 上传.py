@@ -92,25 +92,43 @@ def main() -> None:
         git("rebase", "--abort", check=False)
         fail("同步远端版本失败。已保留本地提交且没有覆盖线上内容，请查看上方提示。")
 
-    print("\n[3/4] 生成本地恢复留档……")
+    print("\n[3/4] 检查并生成本地恢复留档……")
     ARCHIVE_DIR.mkdir(exist_ok=True)
-    archive = ARCHIVE_DIR / f"{ROOT.name}_{timestamp}.bundle"
-    bundled = git("bundle", "create", str(archive), branch, check=False)
-    if bundled.returncode == 0:
-        # 轮转：只保留最新 5 份和最早 1 份留档，避免本地留档无限膨胀。
-        archives = sorted(ARCHIVE_DIR.glob(f"{ROOT.name}_*.bundle"), key=lambda item: item.name)
-        doomed = archives[1:-5] if len(archives) > 6 else []  # 保留最早 1 份与最新 5 份
-        for stale in doomed:
-            stale.unlink()
-            print(f"已清理旧留档：{stale.name}")
-    if bundled.returncode != 0:
-        fail("本地 Git 留档生成失败，因此暂不上传。")
+    archives = sorted(ARCHIVE_DIR.glob(f"{ROOT.name}_*.bundle"), key=lambda item: item.name, reverse=True)
+    current_commit = git("rev-parse", branch, capture=True).stdout.strip()
+    archive = None
+    if archives:
+        bundle_refs = git("bundle", "list-heads", str(archives[0]), check=False, capture=True)
+        if bundle_refs.returncode == 0:
+            for line in bundle_refs.stdout.splitlines():
+                columns = line.split()
+                if len(columns) >= 2 and columns[1] == f"refs/heads/{branch}" and columns[0] == current_commit:
+                    archive = archives[0]
+                    print("网站提交未变化，复用现有留档，不再创建重复的完整备份。")
+                    break
+    if archive is None:
+        archive = ARCHIVE_DIR / f"{ROOT.name}_{timestamp}.bundle"
+        bundled = git("bundle", "create", str(archive), branch, check=False)
+        if bundled.returncode != 0:
+            fail("本地 Git 留档生成失败，因此暂不上传。")
+    verified = git("bundle", "verify", str(archive), check=False, capture=True)
+    if verified.returncode != 0:
+        fail("本地 Git 留档校验失败，因此暂不上传。")
     print(f"留档位置：{archive}")
 
     print("\n[4/4] 上传到 GitHub……")
     pushed = git("push", "origin", branch, check=False)
     if pushed.returncode != 0:
         fail("上传失败，但本地提交和留档都已保存；解决网络或登录问题后可再次运行。")
+
+    # 上传成功后，最多保留最近两份完整 Git 留档。
+    archives = sorted(ARCHIVE_DIR.glob(f"{ROOT.name}_*.bundle"), key=lambda item: item.name, reverse=True)
+    for stale in archives[2:]:
+        try:
+            stale.unlink()
+            print(f"已清理旧留档：{stale.name}")
+        except OSError as exc:
+            print(f"警告：旧留档未能清理（请手动检查）{stale.name}：{exc}")
 
     print("\n完成：网站版本已保存、留档并上传到 GitHub。")
     pause()
