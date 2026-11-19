@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-18T16:35:36+08:00",
+  "last_checked": "2026-11-19T16:50:57+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "499017d63a5af507",
+      "title": "300276董事，被立案调查并留置",
+      "published_at": "2026-11-17 19:12:49",
+      "recorded_at": "2026-11-19T16:50:57+08:00",
+      "symbols": [],
+      "source": "中国基金报",
+      "url": "https://finance.eastmoney.com/a/202611173933013969.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "308c88e9cd13bca0",
       "title": "小米辟谣汽车召回短信",
@@ -755,5 +768,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-18T16:35:36+08:00"
+  "last_attempted": "2026-11-19T16:50:57+08:00"
 }
