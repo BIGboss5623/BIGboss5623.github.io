@@ -1,8 +1,47 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T16:50:57+08:00",
+  "last_checked": "2026-11-20T16:36:57+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "b99658c4c6af1e1d",
+      "title": "奔驰召回近18万辆汽车",
+      "published_at": "2026-11-20 16:12:00",
+      "recorded_at": "2026-11-20T16:36:57+08:00",
+      "symbols": [],
+      "source": "券商中国",
+      "url": "https://finance.eastmoney.com/a/202611203936116278.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "5734bf31c6c8aa04",
+      "title": "奔驰召回17.94万辆汽车",
+      "published_at": "2026-11-20 15:10:47",
+      "recorded_at": "2026-11-20T16:36:57+08:00",
+      "symbols": [],
+      "source": "中新经纬",
+      "url": "https://finance.eastmoney.com/a/202611203936092964.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
+    {
+      "id": "4b8d94ff7e157331",
+      "title": "奔驰召回部分进口和国产汽车",
+      "published_at": "2026-11-20 15:01:23",
+      "recorded_at": "2026-11-20T16:36:57+08:00",
+      "symbols": [],
+      "source": "界面新闻",
+      "url": "https://finance.eastmoney.com/a/202611203936066131.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "499017d63a5af507",
       "title": "300276董事，被立案调查并留置",
@@ -768,5 +807,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-19T16:50:57+08:00"
+  "last_attempted": "2026-11-20T16:36:57+08:00"
 }
