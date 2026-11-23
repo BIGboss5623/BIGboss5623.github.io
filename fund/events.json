@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-20T16:36:57+08:00",
+  "last_checked": "2026-11-23T17:09:57+08:00",
   "collection_errors": [],
   "events": [
+    {
+      "id": "b781243377a1aef7",
+      "title": "当诈骗盯上了汽车召回",
+      "published_at": "2026-11-22 16:48:00",
+      "recorded_at": "2026-11-23T17:09:57+08:00",
+      "symbols": [],
+      "source": "国际金融报",
+      "url": "https://finance.eastmoney.com/a/202611223936967940.html",
+      "status": "自动收集·待核实",
+      "category": "重大风险候选",
+      "summary": "按标题风险关键词筛选，需点击来源核实公告与后续进展。",
+      "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
+    },
     {
       "id": "b99658c4c6af1e1d",
       "title": "奔驰召回近18万辆汽车",
@@ -807,5 +820,5 @@
       "market_observation": "尚未独立核验价格影响；不自动判断利空、跌停原因或买卖动作。"
     }
   ],
-  "last_attempted": "2026-11-20T16:36:57+08:00"
+  "last_attempted": "2026-11-23T17:09:57+08:00"
 }
