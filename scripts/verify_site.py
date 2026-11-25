@@ -9,6 +9,7 @@ CHECKS=[
  ['node','scripts/test-site-qa-rules.cjs'],
  ['node','scripts/test-seo-routing.cjs'],
  ['node','scripts/test-robots-checker.cjs'],
+ [sys.executable,'-m','py_compile','scripts/check_live_seo.py'],
  [sys.executable,'scripts/test_seo.py'],
  [sys.executable,'scripts/test-verify-site.py'],
  [sys.executable,'scripts/test-tunnel-health.py'],

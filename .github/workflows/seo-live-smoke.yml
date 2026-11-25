@@ -1,0 +1,31 @@
+name: Public SEO page smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/robots-checker/**'
+      - 'guides/cloudflare-search-crawling/**'
+      - 'sitemap*.xml'
+      - 'index.html'
+      - '.github/workflows/seo-live-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zgland-live-seo-check
+  cancel-in-progress: true
+
+jobs:
+  verify-public-seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify deployment of public SEO utility (GET only, 6 bounded attempts)
+        run: python scripts/check_live_seo.py
