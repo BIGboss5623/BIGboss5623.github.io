@@ -17,6 +17,7 @@ CHECKS=[
  ['node','scripts/test-domain-expiry.cjs'],
  ['node','scripts/test-site-operations.cjs'],
  ['node','scripts/test-backup-check.cjs'],
+ [sys.executable,'scripts/test_audit_links.py'],
  [sys.executable,'scripts/audit_links.py'],
  [sys.executable,'scripts/test_site_operations.py'],
 ]

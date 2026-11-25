@@ -16,10 +16,10 @@
     "key": "d3b4bda8d4c078293f5fa7ad93f41970",
     "urls": [
       "/",
-      "/company.html",
-      "/about.html",
-      "/help.html",
-      "/contact.html"
+      "/company",
+      "/about",
+      "/help",
+      "/contact"
     ]
   },
   "hzyx.zgland.com": {

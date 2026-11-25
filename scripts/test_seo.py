@@ -8,7 +8,7 @@ import json,re
 R=Path(__file__).resolve().parents[1]
 hosts={
  'zgland.com':('sitemap.xml',{'/':'index.html','/local-ai/':'local-ai/index.html','/fund/':'fund/index.html','/fund/workbench/':'fund/workbench/index.html','/history-cycle/':'history-cycle/index.html','/credentials/':'credentials/index.html','/games/':'games/index.html','/games/rich4/':'games/rich4/index.html','/proxy/':'proxy/index.html','/site-blueprint/':'site-blueprint/index.html','/guides/remote-ssh/':'guides/remote-ssh/index.html','/guides/website-publishing/':'guides/website-publishing/index.html'}),
- 'hzct.zgland.com':('sitemap-hzct.xml',{'/':'company-home.html','/company.html':'company.html','/about.html':'about.html','/help.html':'help.html','/contact.html':'contact.html','/privacy.html':'privacy.html'}),
+ 'hzct.zgland.com':('sitemap-hzct.xml',{'/':'company-home.html','/company':'company.html','/about':'about.html','/help':'help.html','/contact':'contact.html','/privacy':'privacy.html'}),
  'hzyx.zgland.com':('sitemap-hzyx.xml',{'/':'hzyx/index.html'})
 }
 class Head(HTMLParser):

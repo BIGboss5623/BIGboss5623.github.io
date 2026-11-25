@@ -27,13 +27,24 @@ class Links(HTMLParser):
             self.links.append((tag, attrs[key]))
 
 
+def resolve_published_html(target):
+    """Follow Cloudflare Pages /foo -> source foo.html clean URL mapping."""
+    if target.is_dir():
+        return target / "index.html"
+    if not target.is_file() and not target.suffix:
+        candidate = target.with_suffix(".html")
+        if candidate.is_file():
+            return candidate
+    return target
+
+
 def main():
     issues, checked = [], 0
     credential_ids = {"item-" + item["id"] for item in json.loads((ROOT / "credentials/catalog.json").read_text(encoding="utf-8"))["entries"]}
     for root in (ROOT, ROOT.parent / "feitianshan"):
         pages = list(root.glob("*.html"))
         if root == ROOT:
-            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench", "games", "games/rich4", "credentials", "local-ai")]
+            pages += [root / folder / "index.html" for folder in ("fund", "proxy", "network", "hzyx", "history-cycle", "domain-console", "quant-console", "fund/workbench", "games", "games/rich4", "credentials", "local-ai", "site-blueprint", "site-stats", "guides/remote-ssh", "guides/website-publishing")]
         for page in pages:
             parser = Links()
             parser.feed(page.read_text(encoding="utf-8"))
@@ -60,8 +71,7 @@ def main():
                     if function.is_file():
                         checked += 1
                         continue
-                if target.is_dir():
-                    target /= "index.html"
+                target = resolve_published_html(target)
                 checked += 1
                 if not target.is_file():
                     issues.append({"page": str(page.relative_to(root)), "link": href, "error": "missing file"})
