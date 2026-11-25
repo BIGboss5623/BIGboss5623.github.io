@@ -7,7 +7,6 @@ import sys
 CHECKS = [
     ("https://zgland.com/tools/robots-checker/", "id=\"robots\""),
     ("https://zgland.com/tools/robots-checker/rules.js", "RobotsCheck"),
-    ("https://zgland.com/tools/robots-checker/client.js", "getElementById") if False else
     ("https://zgland.com/tools/robots-checker/client.js", "querySelector"),
     ("https://zgland.com/guides/cloudflare-search-crawling/", "/tools/robots-checker/"),
     ("https://zgland.com/sitemap.xml", "https://zgland.com/tools/robots-checker/"),
