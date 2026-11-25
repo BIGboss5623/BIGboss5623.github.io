@@ -36,3 +36,5 @@ ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 - 2026-11-25 搜索发现与原创内容：新增两篇原创指南（Windows SSH 排障、静态网站双发布），3 站独立 XML sitemap，canonical/meta/OG，首页 WebSite JSON-LD，以及 3 个公开 IndexNow 验证密钥。新测试 test_seo.py 与 test-seo-routing.cjs 检查路由、站点地图和规范地址。运行 python scripts/submit_indexnow.py 仅预览；加 --send 后先验证公网密钥与 sitemap 才向 IndexNow 提交。Cloudflare 管理的 robots.txt 还需在 Cloudflare Security 中单独审查搜索爬虫权限，不能靠源码假定已覆盖。提交索引不能保证收录、排名或访客增长。
 
 - 2026-11-25 搜索自然增长：新增 /guides/ 统一知识入口，公开文章和免费工具按实际问题分组；完善首页/文内内链、Sitemap 和 IndexNow，更新本地/线上巡检。每日 GitHub Actions 只读检查三个公开主机的 robots.txt、百度/Google/Bing 抓取规则与 sitemap，百度现有禁用属于明确警告，其他搜索引擎意外被禁会标记为失败；不模拟爬虫点击。真实访问量需在站长工具中验证。
+
+- 2026-11-25 网络切换容错：公开 SEO 巡检优先遵循客户端代理环境；只有首个 HTTPS 请求发生 TLS 握手错误时，才对 zgland.com 各公开主机及 GitHub Pages 备用域名尝试一次直连 HTTPS。不会禁用证书验证、修改代理设置，也不会对陌生域名或私人管理 API 绕过代理。单元测试：python scripts/test_public_http.py。

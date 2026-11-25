@@ -1,5 +1,6 @@
 """Read-only public SEO smoke test: GET only, never POST visit statistics."""
-from urllib.request import Request, urlopen
+from urllib.request import Request
+from public_http import open_public
 from urllib.error import HTTPError
 from time import sleep
 import sys
@@ -19,7 +20,7 @@ def inspect(url, marker):
         "Cache-Control": "no-cache",
         "Accept": "text/html,application/xml,application/javascript,text/javascript,*/*"
     })
-    with urlopen(req, timeout=12) as response:
+    with open_public(req, timeout=12) as response:
         body = response.read(210000).decode("utf-8", "replace")
         return response.status == 200 and marker in body, response.status
 def main():

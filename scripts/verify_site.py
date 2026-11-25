@@ -12,6 +12,7 @@ CHECKS=[
  [sys.executable,'-m','py_compile','scripts/check_live_seo.py'],
  [sys.executable,'scripts/test_seo.py'],
  [sys.executable,'scripts/test_check_search_crawlers.py'],
+ [sys.executable,'scripts/test_public_http.py'],
  [sys.executable,'scripts/test-verify-site.py'],
  [sys.executable,'scripts/test-tunnel-health.py'],
  ['node','scripts/test-navigation-links.cjs'],

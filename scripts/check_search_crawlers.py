@@ -5,6 +5,7 @@ Uses real public responses; sitemap/Googlebot/bingbot failures stop CI.
 Baiduspider blockage is an explicit warning until the Cloudflare owner resolves it.
 """
 from urllib import robotparser,request
+from public_http import open_public
 from urllib.error import HTTPError,URLError
 from datetime import datetime,timezone
 import json,os,sys
@@ -27,7 +28,7 @@ def main():
         url='https://'+host+'/robots.txt'
         try:
             req=request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; ZGLAND-public-SEO-health/1.0)','Accept':'text/plain,*/*','Cache-Control':'no-cache','DNT':'1','Sec-GPC':'1'})
-            with request.urlopen(req,timeout=16) as response:
+            with open_public(req,timeout=16) as response:
                 if response.status!=200:raise ValueError('HTTP '+str(response.status))
                 text=response.read(160000).decode('utf-8','replace')
             if not text:raise ValueError('empty robots.txt')
