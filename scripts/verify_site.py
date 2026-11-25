@@ -7,6 +7,7 @@ ALL=['/','/about.html','/company.html','/contact.html','/help.html','/privacy.ht
 SMOKE=['/','/domain-console/','/site-stats/','/fund/','/quant-console/','/credentials/','/local-ai/','/hzyx/']
 CHECKS=[
  ['node','scripts/test-site-qa-rules.cjs'],
+ [sys.executable,'scripts/test-verify-site.py'],
  [sys.executable,'scripts/test-tunnel-health.py'],
  ['node','scripts/test-navigation-links.cjs'],
  ['node','scripts/test-portal.cjs'],
@@ -42,12 +43,42 @@ def pagecheck(report,mode,base,env,pages):
   v['pages']=len(data)
   v['expected_static_function_404']=sum(len(i.get('expectedLocalFunctions',[])) for i in data)
   v['telemetry_warnings']=sum(len(i.get('telemetryWarnings',[])) for i in data)
-  v['failing_pages']=[{'url':i.get('url'),'failures':i.get('failed'), 'errors':i.get('errors'), 'message':i.get('error')}
-     for i in data if i.get('error') or i.get('failed') or i.get('errors') or
-     i.get('status')!=200 or i.get('overflow') or i.get('desktopOverflow') or
-     (i.get('nav') and i.get('visibleNavLinks',0)<15)]
+  v['failing_pages']=[
+    {'url':i.get('url'),'status':i.get('status'),'failures':i.get('failed',[]),
+     'errors':i.get('errors',[]),'message':i.get('error'),
+     'overflow':bool(i.get('overflow') or i.get('desktopOverflow')),
+     'broken_images':i.get('brokenImages',[]),'analytics_requests':i.get('analyticsRequests',[]),
+     'nav_ok':not i.get('nav') or i.get('visibleNavLinks',0)>=15}
+    for i in data if i.get('error') or i.get('failed') or i.get('errors') or
+    i.get('status')!=200 or i.get('overflow') or i.get('desktopOverflow') or
+    i.get('brokenImages') or i.get('analyticsRequests') or
+    (i.get('nav') and i.get('visibleNavLinks',0)<15)]
  report['checks'][mode+'_pages']=v
- print(mode.upper()+' PAGES '+('PASS' if v['ok'] else 'FAIL')+' '+str(v.get('pages','?')),flush=True)
+ page_count=v.get('pages',0)
+ problems=len(v.get('failing_pages',[]))
+ print(f'{mode.upper()} PAGES: {page_count-problems}/{page_count} healthy; {problems} affected',flush=True)
+def frontend_release_ready(checks: dict) -> bool:
+    """Strict frontend gate, separately reporting an explicitly degraded private stats upstream."""
+    if any(not v.get('ok',False) for k,v in checks.items() if k not in ('tunnel_health','live_pages')):
+        return False
+    live=checks.get('live_pages')
+    if live is None or live.get('ok',False):
+        return True
+    degraded=live.get('failing_pages',[])
+    if not degraded:
+        return False
+    for page in degraded:
+        if page.get('url')!='https://zgland.com/site-stats/':
+            return False
+        if page.get('status')!=200 or page.get('message') or page.get('errors') or page.get('overflow'):
+            return False
+        if page.get('broken_images') or page.get('analytics_requests') or page.get('nav_ok') is not True:
+            return False
+        if page.get('failures') != [{'url':'https://zgland.com/api/site-stats','status':503}]:
+            return False
+    return True
+
+
 def main():
  import argparse
  parser=argparse.ArgumentParser()
@@ -87,6 +118,11 @@ def main():
     print('LIVE PORTAL '+('PASS' if v['ok'] else 'FAIL'),flush=True)
  total=len(report['checks']);passed=sum(c.get('ok',False) for c in report['checks'].values())
  report.update(passed=passed,total=total,ok=passed==total)
+ report['frontend_release_ready']=frontend_release_ready(report['checks'])
+ report['backend_health_ok']=report['checks'].get('tunnel_health',{}).get('ok')
+ print('FRONTEND RELEASE '+('READY' if report['frontend_release_ready'] else 'BLOCKED'),flush=True)
+ if report['backend_health_ok'] is False:
+  print('PRIVATE BACKEND DEGRADED (not silently treated as healthy)',flush=True)
  out=Q/(report['stamp']+'-summary.json')
  out.write_text(json.dumps(report,indent=2,ensure_ascii=False),encoding='utf-8')
  print('VERDICT '+str(passed)+'/'+str(total)+' '+('PASS' if report['ok'] else 'FAIL'),flush=True)
