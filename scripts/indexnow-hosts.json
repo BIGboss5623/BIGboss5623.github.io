@@ -9,7 +9,8 @@
       "/history-cycle/",
       "/credentials/",
       "/guides/remote-ssh/",
-      "/guides/website-publishing/"
+      "/guides/website-publishing/",
+      "/guides/cloudflare-search-crawling/"
     ]
   },
   "hzct.zgland.com": {
