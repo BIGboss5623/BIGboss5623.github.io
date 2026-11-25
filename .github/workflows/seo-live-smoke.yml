@@ -8,6 +8,9 @@ on:
       - 'guides/cloudflare-search-crawling/**'
       - 'sitemap*.xml'
       - 'index.html'
+      - 'guides/**'
+      - 'scripts/check_live_seo.py'
+      - 'scripts/public_http.py'
       - '.github/workflows/seo-live-smoke.yml'
   workflow_dispatch:
 

@@ -3,6 +3,12 @@ name: ZGLAND public crawler policy monitoring
 on:
   schedule:
     - cron: '31 4 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check_search_crawlers.py'
+      - 'scripts/public_http.py'
+      - '.github/workflows/seo-crawler-health.yml'
   workflow_dispatch:
 
 permissions:
