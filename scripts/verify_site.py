@@ -3,14 +3,15 @@ import subprocess,functools,http.server,threading,json,os,sys
 from datetime import datetime,timezone
 R=Path(__file__).resolve().parents[1]
 Q=R/'本地留档'/'qa-reports'
-ALL=['/','/about.html','/company.html','/contact.html','/help.html','/privacy.html','/network/','/proxy/','/hzyx/','/history-cycle/','/domain-console/','/fund/','/quant-console/','/credentials/','/local-ai/','/games/','/site-stats/','/site-blueprint/','/fund/workbench/','/guides/remote-ssh/','/guides/website-publishing/','/guides/cloudflare-search-crawling/','/tools/robots-checker/']
-SMOKE=['/','/domain-console/','/site-stats/','/fund/','/quant-console/','/credentials/','/local-ai/','/hzyx/','/guides/remote-ssh/','/guides/website-publishing/','/guides/cloudflare-search-crawling/','/tools/robots-checker/']
+ALL=['/','/about.html','/company.html','/contact.html','/help.html','/privacy.html','/network/','/proxy/','/hzyx/','/history-cycle/','/domain-console/','/fund/','/quant-console/','/credentials/','/local-ai/','/games/','/site-stats/','/site-blueprint/','/fund/workbench/','/guides/remote-ssh/','/guides/website-publishing/','/guides/cloudflare-search-crawling/','/tools/robots-checker/','/guides/']
+SMOKE=['/','/domain-console/','/site-stats/','/fund/','/quant-console/','/credentials/','/local-ai/','/hzyx/','/guides/remote-ssh/','/guides/website-publishing/','/guides/cloudflare-search-crawling/','/tools/robots-checker/','/guides/']
 CHECKS=[
  ['node','scripts/test-site-qa-rules.cjs'],
  ['node','scripts/test-seo-routing.cjs'],
  ['node','scripts/test-robots-checker.cjs'],
  [sys.executable,'-m','py_compile','scripts/check_live_seo.py'],
  [sys.executable,'scripts/test_seo.py'],
+ [sys.executable,'scripts/test_check_search_crawlers.py'],
  [sys.executable,'scripts/test-verify-site.py'],
  [sys.executable,'scripts/test-tunnel-health.py'],
  ['node','scripts/test-navigation-links.cjs'],

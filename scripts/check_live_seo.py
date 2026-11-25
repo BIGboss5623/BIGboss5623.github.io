@@ -6,6 +6,7 @@ import sys
 
 CHECKS = [
     ("https://zgland.com/tools/robots-checker/", "id=\"robots\""),
+    ("https://zgland.com/guides/", "实用指南与免费工具"),
     ("https://zgland.com/tools/robots-checker/rules.js", "RobotsCheck"),
     ("https://zgland.com/tools/robots-checker/client.js", "querySelector"),
     ("https://zgland.com/guides/cloudflare-search-crawling/", "/tools/robots-checker/"),

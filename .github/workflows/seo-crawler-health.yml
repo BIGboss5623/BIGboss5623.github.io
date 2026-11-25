@@ -1,0 +1,21 @@
+name: ZGLAND public crawler policy monitoring
+
+on:
+  schedule:
+    - cron: '31 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-crawler-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read public robots.txt and summarize search access
+        run: python scripts/check_search_crawlers.py

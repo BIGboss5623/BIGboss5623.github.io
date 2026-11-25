@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实用指南与免费工具：Windows SSH、Cloudflare 与网站 SEO | ZGLAND</title>
+<meta name="description" content="ZGLAND 原创技术指南与免费工具入口：Windows SSH、VS Code Remote-SSH、ZeroTier、Tailscale、Cloudflare Pages 部署、robots.txt 和搜索爬虫排查。">
+<link rel="canonical" href="https://zgland.com/guides/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ZGLAND 实用指南与免费工具">
+<meta property="og:description" content="面向真实问题的免费技术指南、排障清单及浏览器工具，包含 Windows SSH、双平台网站发布和搜索抓取。">
+<meta property="og:url" content="https://zgland.com/guides/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/guides/guide.css">
+<style>
+.entries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0 30px}
+.entry{border:1px solid #dce6ef;border-radius:12px;padding:19px;background:#f8fbff}
+.entry h3{margin:9px 0}.entry h3 a{text-decoration:none}.entry p{margin:10px 0 14px}
+.topic{font-size:12px;font-weight:700;color:#315e86}.read{font-size:14px;font-weight:650}
+.pathways{margin:18px 0;padding:0 0 0 21px}.pathways li{margin:10px 0}
+@media(max-width:650px){.entries{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"ZGLAND 实用指南与免费工具","itemListElement":[{"@type":"ListItem","position":1,"name":"Windows SSH / ZeroTier / Tailscale 远程连接故障排查","url":"https://zgland.com/guides/remote-ssh/"},{"@type":"ListItem","position":2,"name":"Cloudflare Pages 与 GitHub Pages 双发布实践","url":"https://zgland.com/guides/website-publishing/"},{"@type":"ListItem","position":3,"name":"Cloudflare robots.txt 与百度搜索抓取排障","url":"https://zgland.com/guides/cloudflare-search-crawling/"},{"@type":"ListItem","position":4,"name":"robots.txt 离线抓取规则检查器","url":"https://zgland.com/tools/robots-checker/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ZGLAND","item":"https://zgland.com/"},{"@type":"ListItem","position":2,"name":"实用指南与工具","item":"https://zgland.com/guides/"}]}</script>
+</head>
+<body>
+<header class="top"><div class="wrap"><a href="/" class="brand">ZGLAND / 技术知识库</a><nav class="nav" aria-label="网站导航"><a href="/">总站</a><a href="/local-ai/">本地 AI</a><a href="/site-blueprint/">建站蓝图</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+<p class="eyebrow">ZGLAND · Guides &amp; free tools</p>
+<h1>实用指南与免费工具</h1>
+<p class="intro">Windows 远程连接、网站部署、搜索引擎抓取：把可复现的排障步骤、官方资料和小工具整理在同一个入口。这里优先解决实际问题，不收集密码，不出售访问量。</p>
+<p class="date">更新于 2026 年 11 月 25 日 · 内容适用于授权设备与公开网站</p>
+</section>
+<section class="content" aria-labelledby="guides-title">
+<h2 id="guides-title">按问题选择指南</h2>
+<p>内容分成四个入口：先定位问题，再选择具体操作；每篇指南列出适用范围、常见误判和相关官方文档。</p>
+<div class="entries"><article class="entry"><span class="topic">网络与远程连接</span><h3><a href="/guides/remote-ssh/">Windows SSH / ZeroTier / Tailscale 远程连接故障排查</a></h3><p>分清网络是否可达、22 端口是否监听、账户与 SSH 密钥认证是否匹配；附只读命令和安全边界。</p><a class="read" href="/guides/remote-ssh/">查看详细内容 →</a></article><article class="entry"><span class="topic">网站发布与持续集成</span><h3><a href="/guides/website-publishing/">Cloudflare Pages 与 GitHub Pages 双发布实践</a></h3><p>以两个不同托管平台为例，解释 git push、构建、域名发布与业务后台健康为什么需要分别验收。</p><a class="read" href="/guides/website-publishing/">查看详细内容 →</a></article><article class="entry"><span class="topic">搜索抓取与收录</span><h3><a href="/guides/cloudflare-search-crawling/">Cloudflare robots.txt 与百度搜索抓取排障</a></h3><p>解读 Bot Preference Sync、Search/Agent/Training 偏好，并给出保留安全防护的排查次序。</p><a class="read" href="/guides/cloudflare-search-crawling/">查看详细内容 →</a></article><article class="entry"><span class="topic">免费互动工具</span><h3><a href="/tools/robots-checker/">robots.txt 离线抓取规则检查器</a></h3><p>粘贴公开的 robots.txt，用 Baiduspider、Googlebot 等 User-agent 检查 Allow/Disallow 规则的基础匹配。</p><a class="read" href="/tools/robots-checker/">查看详细内容 →</a></article></div>
+<h2>从现象出发，最快找到答案</h2>
+<ol class="pathways">
+<li><strong>VS Code Remote-SSH 提示超时或拒绝连接：</strong>从 <a href="/guides/remote-ssh/">SSH 分层排障清单</a>开始，先检查虚拟网络、端口，再检查身份验证。</li>
+<li><strong>GitHub 推送成功但网站没有更新：</strong>参考 <a href="/guides/website-publishing/">双发布验收流程</a>，分别排查 CI、Pages、域名和后台服务。</li>
+<li><strong>网页正常但百度搜索爬虫被拒绝：</strong>先读 <a href="/guides/cloudflare-search-crawling/">Cloudflare 抓取规则排障</a>，再把当前公网 <code>robots.txt</code> 复制到 <a href="/tools/robots-checker/">离线检查器</a>对照。</li>
+</ol>
+<h2>适用范围与安全说明</h2>
+<p>文章根据公开平台文档和网站维护实践编写。涉及 DNS、Cloudflare WAF、服务器权限或 SSH 密钥时，以你自己的授权环境为准；不要为了搜索曝光禁用全部安全策略。免费规则工具在本地解析输入，不声称检测到真实搜索引擎抓取或排名结果。</p>
+<p>更多站点背景见 <a href="/site-blueprint/">ZGLAND 网站架构与恢复蓝图</a>，本地 AI 相关问题见 <a href="/local-ai/">本地 AI 部署与远程控制指南</a>。</p>
+<div class="refs"><strong>官方参考：</strong><p>
+<a href="https://code.visualstudio.com/docs/remote/ssh">VS Code Remote-SSH</a>
+<a href="https://developers.cloudflare.com/pages/">Cloudflare Pages</a>
+<a href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide">Google 搜索优化指南</a>
+</p></div>
+</section>
+</main>
+<footer class="footer"><div class="wrap"><span>© ZGLAND · 原创实用指南与工具</span><a href="/">返回网站导航</a></div></footer>
+</body>
+</html>

@@ -1,6 +1,10 @@
 # BIGboss5623.github.io
 ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 
+
+公开技术资源：[实用指南与免费工具](https://zgland.com/guides/)｜[SSH 连接排障](https://zgland.com/guides/remote-ssh/)｜[Cloudflare 与 GitHub 双发布](https://zgland.com/guides/website-publishing/)｜[robots.txt 免费检查器](https://zgland.com/tools/robots-checker/)。
+
+
 2026-10-31运维升级：`/site-stats/`公开真实访问汇总与口径，`/site-blueprint/`保留可下载的建站与AI恢复规范。`operations/`为密码50次/1小时暂停、邮件队列与调度的规范源代码，详见其中README。真正写入数据和管理的认证由服务端保护；网络配置按站主要求保留浏览器本地解密，不依赖量化服务器在线。域名邮件改由自有服务器每月一次，到期前30天每天一次，旧GitHub定时发送已停用。
 
 - `zgland.com` / `www.zgland.com`：`index.html`，子站总导航、搜索分类与常用操作。
@@ -30,3 +34,5 @@ ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 - 2026-11-25 GitHub 双平台构建兼容：根目录 .nojekyll 关闭 GitHub Pages 对纯静态站不必要的 Jekyll 转换，避免它与已经编译好的 assets/css 目录产生冲突；GitHub Actions 在临时工作目录只读检出公开的 feitianshan 仓库到相邻目录，确保 scripts/audit_links.py 检查跨站文件而不是因缺少相邻仓库误报失败。正式生产部署仍由 Cloudflare Pages 承担。
 
 - 2026-11-25 搜索发现与原创内容：新增两篇原创指南（Windows SSH 排障、静态网站双发布），3 站独立 XML sitemap，canonical/meta/OG，首页 WebSite JSON-LD，以及 3 个公开 IndexNow 验证密钥。新测试 test_seo.py 与 test-seo-routing.cjs 检查路由、站点地图和规范地址。运行 python scripts/submit_indexnow.py 仅预览；加 --send 后先验证公网密钥与 sitemap 才向 IndexNow 提交。Cloudflare 管理的 robots.txt 还需在 Cloudflare Security 中单独审查搜索爬虫权限，不能靠源码假定已覆盖。提交索引不能保证收录、排名或访客增长。
+
+- 2026-11-25 搜索自然增长：新增 /guides/ 统一知识入口，公开文章和免费工具按实际问题分组；完善首页/文内内链、Sitemap 和 IndexNow，更新本地/线上巡检。每日 GitHub Actions 只读检查三个公开主机的 robots.txt、百度/Google/Bing 抓取规则与 sitemap，百度现有禁用属于明确警告，其他搜索引擎意外被禁会标记为失败；不模拟爬虫点击。真实访问量需在站长工具中验证。

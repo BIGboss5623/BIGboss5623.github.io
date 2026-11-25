@@ -7,7 +7,7 @@ from datetime import date
 import json,re
 R=Path(__file__).resolve().parents[1]
 hosts={
- 'zgland.com':('sitemap.xml',{'/':'index.html','/local-ai/':'local-ai/index.html','/fund/':'fund/index.html','/fund/workbench/':'fund/workbench/index.html','/history-cycle/':'history-cycle/index.html','/credentials/':'credentials/index.html','/games/':'games/index.html','/games/rich4/':'games/rich4/index.html','/proxy/':'proxy/index.html','/site-blueprint/':'site-blueprint/index.html','/guides/remote-ssh/':'guides/remote-ssh/index.html','/guides/website-publishing/':'guides/website-publishing/index.html','/guides/cloudflare-search-crawling/':'guides/cloudflare-search-crawling/index.html','/tools/robots-checker/':'tools/robots-checker/index.html'}),
+ 'zgland.com':('sitemap.xml',{'/':'index.html','/local-ai/':'local-ai/index.html','/fund/':'fund/index.html','/fund/workbench/':'fund/workbench/index.html','/history-cycle/':'history-cycle/index.html','/credentials/':'credentials/index.html','/games/':'games/index.html','/games/rich4/':'games/rich4/index.html','/proxy/':'proxy/index.html','/site-blueprint/':'site-blueprint/index.html','/guides/remote-ssh/':'guides/remote-ssh/index.html','/guides/website-publishing/':'guides/website-publishing/index.html','/guides/cloudflare-search-crawling/':'guides/cloudflare-search-crawling/index.html','/tools/robots-checker/':'tools/robots-checker/index.html','/guides/':'guides/index.html'}),
  'hzct.zgland.com':('sitemap-hzct.xml',{'/':'company-home.html','/company':'company.html','/about':'about.html','/help':'help.html','/contact':'contact.html','/privacy':'privacy.html'}),
  'hzyx.zgland.com':('sitemap-hzyx.xml',{'/':'hzyx/index.html'})
 }
@@ -66,4 +66,9 @@ for host,v in keys.items():
  f=(R/'hzyx'/f'{key}.txt') if host=='hzyx.zgland.com' else R/f'{key}.txt'
  assert f.read_text(encoding='utf-8')==key
  for path in v['urls']:assert 'https://'+host+path in all_urls
-print('PASS SEO: 3 host-specific sitemaps, 20 canonical URLs, search metadata, structured guides and IndexNow keys')
+print('PASS SEO: 3 host-specific sitemaps, 21 canonical URLs, search metadata, structured guides and IndexNow keys')
+
+# Check guide hub metadata and structured list.
+h=Head();h.feed((R/'guides/index.html').read_text(encoding='utf-8'))
+assert all(h.o.get(x) for x in ['og:title','og:url','og:description','og:type'])
+assert {'ItemList','BreadcrumbList'}=={x.get('@type') for x in h.ld}
