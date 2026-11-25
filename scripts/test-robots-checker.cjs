@@ -1,0 +1,11 @@
+'use strict';const assert=require('node:assert/strict'),{check}=require('../tools/robots-checker/rules.js');
+const s='User-agent: Baiduspider\nDisallow: /\n\nUser-agent: Googlebot\nAllow: /\n\nUser-agent: *\nDisallow: /private/\nAllow: /';
+assert.equal(check(s,'Baiduspider','/x').allowed,false);
+assert.equal(check(s,'Googlebot','/x').allowed,true);
+assert.equal(check(s,'bingbot','/private/x').allowed,false);
+assert.equal(check(s,'bingbot','/public').allowed,true);
+assert.equal(check('User-agent: *\nDisallow: /foo\nAllow: /foo','bingbot','/foo').allowed,true);
+assert.equal(check('User-agent: *\nDisallow: /api$','bingbot','/api').allowed,false);
+assert.equal(check('User-agent: *\nDisallow: /api$','bingbot','/api/x').allowed,true);
+assert.equal(check('User-agent: *\nDisallow: /a*b$','bingbot','/axyb').allowed,false);
+console.log('PASS robots.txt offline checker');
