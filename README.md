@@ -24,3 +24,5 @@ ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 - 2026-11-25 公开统计连通性诊断：python scripts/check_tunnel_health.py 仅检查公开主页、统计 API 和认证网关，不读取口令；Cloudflare 530 / 1033 直接标记为 Tunnel 断连，HTTP 401 仅代表认证网关可达，不能代替业务健康确认。网站发布与自有服务器维护分离；不可因统计断连而伪造访问数据。
 
 - 2026-11-25 巡检结果区分公开页面发布就绪与独立量化后台健康：已确认的 /site-stats/ 对 /api/site-stats 返回 503 仅标注私人统计后台降级；其他接口失败、页面溢出、脚本错误、异常埋点均阻止公开站发布就绪。整体健康状态仍保持严格失败，不掩盖统计服务故障。
+
+- 2026-11-25 CI 自动验收：.github/workflows/site-static-qa.yml 对每次主分支代码更新、PR 和手动触发运行 python scripts/verify_site.py --mode static，仅授予 contents:read；行情事件文件单独更新不重复触发静态站点测试。不会自动修复/重启服务器，不会发送邮件或写入 Cloudflare 配置。公开站的代码质量通过与私有 Tunnel 健康状态分开判定。

@@ -1,0 +1,29 @@
+name: ZGLAND static security and link QA
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'fund/events.json'
+  pull_request:
+    paths-ignore:
+      - 'fund/events.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-site-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate site navigation, boundaries and links
+        run: python scripts/verify_site.py --mode static
