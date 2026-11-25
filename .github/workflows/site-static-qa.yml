@@ -25,5 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Checkout public farm-site sibling for cross-site link audit
+        run: git clone --depth 1 --single-branch --branch main https://github.com/BIGboss5623/feitianshan.git ../feitianshan
       - name: Validate site navigation, boundaries and links
         run: python scripts/verify_site.py --mode static
