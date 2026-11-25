@@ -1,0 +1,42 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloudflare robots.txt 禁止百度抓取？搜索爬虫与 AI 训练权限排障 | ZGLAND</title><meta name="description" content="Cloudflare robots.txt 的 Baiduspider Disallow 如何排查？了解 Bot Preference Sync、Search/Agent/Training 偏好、WAF 与 Sitemap 验证，提升中文网站搜索发现能力。"><link rel="canonical" href="https://zgland.com/guides/cloudflare-search-crawling/">
+<meta property="og:type" content="article"><meta property="og:title" content="Cloudflare robots.txt 禁止百度抓取？搜索爬虫与 AI 训练权限排障 | ZGLAND"><meta property="og:description" content="Cloudflare robots.txt 的 Baiduspider Disallow 如何排查？了解 Bot Preference Sync、Search/Agent/Training 偏好、WAF 与 Sitemap 验证，提升中文网站搜索发现能力。"><meta property="og:url" content="https://zgland.com/guides/cloudflare-search-crawling/"><meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/guides/guide.css"><script src="/guides/share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Cloudflare robots.txt 禁止搜索爬虫？正确区分搜索、代理与训练","description":"Cloudflare robots.txt 的 Baiduspider Disallow 如何排查？了解 Bot Preference Sync、Search/Agent/Training 偏好、WAF 与 Sitemap 验证，提升中文网站搜索发现能力。","url":"https://zgland.com/guides/cloudflare-search-crawling/","datePublished":"2026-11-25","dateModified":"2026-11-25","inLanguage":"zh-CN","author":{"@type":"Organization","name":"ZGLAND","url":"https://zgland.com/"}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ZGLAND","item":"https://zgland.com/"},{"@type":"ListItem","position":2,"name":"Cloudflare robots.txt 禁止搜索爬虫？正确区分搜索、代理与训练","item":"https://zgland.com/guides/cloudflare-search-crawling/"}]}</script>
+</head><body><header class="top"><div class="wrap"><a class="brand" href="/">ZGLAND / 搜索优化实战</a><nav class="nav" aria-label="网站导航"><a href="/">全部网站</a><a href="/guides/website-publishing/">双发布实践</a><a href="/site-blueprint/">建站蓝图</a></nav></div></header>
+<main class="wrap" id="main"><section class="hero"><p class="eyebrow">ZGLAND · 原创技术指南</p><h1>Cloudflare robots.txt 禁止搜索爬虫？正确区分搜索、代理与训练</h1><p class="intro">网站地图已更新，页面也能打开，但中文搜索引擎一直没有抓取？先检查公网的 robots.txt，看看它是否与 Git 仓库中的规则不同。</p><p class="date">2026 年 11 月 25 日 · 依据 Cloudflare 官方文档和公开站点排障经验</p></section>
+<article class="content">
+<h2 id="discovery">一、源文件允许搜索，为什么在线 robots.txt 仍然禁止 Baiduspider？</h2>
+<p>Cloudflare 可以在原有 robots.txt 前面加入由 Bot Preference Sync 产生的托管规则。此时你的代码仓库可能只有 <code>User-agent: *</code> 和 <code>Allow: /</code>，公网请求却能看到一组独立的机器人限制，其中某些用户代理被指定 <code>Disallow: /</code>。</p>
+<p>这类问题不是反复提交 sitemap 就能修复：搜索引擎首先需要获准抓取页面。要分别查看 <a href="https://zgland.com/robots.txt">ZGLAND 实际 robots.txt</a>、杭州创投和钰玺医药子域名的文件，确认具体是谁在禁止抓取。不要根据某个网站的情况推断所有 Cloudflare 域名都有相同的策略。</p>
+<div class="note">这一案例来自公开站点维护排障。Cloudflare 规则会随管理员设置和产品迭代改变；正文描述的是诊断方式，而不是声称当前所有搜索爬虫都被允许。</div>
+<h2 id="policies">二、将 Search、Agent、Training 三类用途分开评估</h2>
+<div class="table-wrap"><table><thead><tr><th>用途</th><th>期望</th><th>风险检查</th></tr></thead><tbody>
+<tr><td>Search 搜索</td><td>正常公开搜索索引通常应可抓取</td><td>目标搜索引擎是否受阻，是否为混合用途爬虫</td></tr>
+<tr><td>Agent 代理</td><td>根据站点业务选择</td><td>不应为了排名而放开私人管理界面</td></tr>
+<tr><td>Training 训练</td><td>如不愿被用于模型训练，可保留 Disallow</td><td>训练限制是否同时影响承担搜索任务的爬虫</td></tr>
+</tbody></table></div>
+<p>Cloudflare 当前的机器人偏好会将这些选择反映到托管 robots.txt 中。若某爬虫同时涉及搜索与训练，只把 Search 改成 Allow 仍可能不足以恢复其抓取。因此应该以最终的公网规则以及真实的安全事件为判断依据。</p>
+<h2 id="steps">三、按这个顺序处理，避免误关安全防护</h2>
+<ol>
+<li><strong>先做只读记录。</strong> 访问各个公开主机的 /robots.txt，保存日期、出现的 User-agent 和 Disallow 项，并核对 Sitemap 是否指向本主机。</li>
+<li><strong>验证目标页面。</strong> 打开 sitemap 中的 URL，确认 HTTP 200、规范地址正确、没有 noindex。遇到 /company.html 自动跳转 /company 时，应使用最终网址。</li>
+<li><strong>核对 Cloudflare Security Settings。</strong> 在站点对应的 zone 中查看 Bot Preference Sync 以及 Search、Agent、Training 偏好，不要误以为上传 robots.txt 就能覆盖所有托管策略。</li>
+<li><strong>根据公开内容需求评估搜索抓取权限。</strong> 如果希望中文网站出现在百度等自然搜索结果中，可核对 Search 是否允许；训练数据使用偏好应单独决定，不能因 SEO 而全面解除。</li>
+<li><strong>公开验证并复测。</strong> 调整后重新获取 /robots.txt，并结合 WAF/安全事件判断请求是否在边缘层遭到额外拦截。保留旧配置以便必要时恢复。</li>
+</ol>
+<h2 id="pitfalls">四、三类容易混淆的验收结论</h2>
+<h3>1. robots.txt 允许，不代表必然抓取成功</h3>
+<p>robots.txt 是面向自愿遵守协议的爬虫的访问规则。即使它写着 Allow，防火墙、验证码、速率限制或 DNS 错误仍可能阻断请求。需要在真实站长平台和安全日志中核对。</p>
+<h3>2. HTTP 202 不代表 IndexNow 已经收录</h3>
+<p>IndexNow 的接收回应与搜索排名没有直接对应关系。请求被接受只是搜索发现的一个线索；搜索引擎会自行决定是否抓取、解析、建立索引和展示结果。</p>
+<h3>3. 网站首页 200，不代表统计服务健康</h3>
+<p>静态站和自有统计后端可以部署在不同主机上。公开页面正常但统计隧道断开时，页面访问量可能暂时不可见。此时不能把缺失数据当成真实零访客，更不能通过自动刷新制造 PV。</p>
+<h2 id="growth">五、怎样验证是否真的带来搜索流量</h2>
+<p>在调整之前保存自然搜索曝光、点击、索引状态和主要关键词基线。分别比较第 7、14 和 30 天的数据。优先看具体查询与用户是否真正进入相关实用文章，而不是只盯网页总请求量。</p>
+<p>新内容应解决用户能明确表述的实际问题，提供可验证步骤、官方来源、清楚的边界和相关站内链接。重复堆叠关键词、购买虚假外链、模拟搜索点击都不属于可靠的长期增长方法。</p>
+<h2 id="references">六、参考文档和相关实战</h2>
+<div class="refs"><strong>官方说明</strong><p><a href="https://developers.cloudflare.com/bots/additional-configurations/managed-robots-txt/">Cloudflare：Bot Preference Sync / 管理 robots.txt</a><a href="https://developers.cloudflare.com/bots/additional-configurations/block-ai-bots/">Cloudflare：AI 爬虫策略</a><a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap">Google：构建与提交站点地图</a></p>
+<strong>相关指南</strong><p><a href="/guides/website-publishing/">Cloudflare 与 GitHub 双发布及回归验收</a><a href="/site-blueprint/">ZGLAND 建站蓝图</a></p></div>
+<div class="share"><button type="button" data-copy-url>复制本页链接</button><span class="small">欢迎引用或分享，请保留原文链接。</span></div>
+</article></main><footer class="footer"><div class="wrap"><span>© ZGLAND · 公开技术指南</span><a href="/">返回总站</a></div></footer></body></html>

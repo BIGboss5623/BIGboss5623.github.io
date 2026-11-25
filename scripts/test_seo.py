@@ -7,7 +7,7 @@ from datetime import date
 import json,re
 R=Path(__file__).resolve().parents[1]
 hosts={
- 'zgland.com':('sitemap.xml',{'/':'index.html','/local-ai/':'local-ai/index.html','/fund/':'fund/index.html','/fund/workbench/':'fund/workbench/index.html','/history-cycle/':'history-cycle/index.html','/credentials/':'credentials/index.html','/games/':'games/index.html','/games/rich4/':'games/rich4/index.html','/proxy/':'proxy/index.html','/site-blueprint/':'site-blueprint/index.html','/guides/remote-ssh/':'guides/remote-ssh/index.html','/guides/website-publishing/':'guides/website-publishing/index.html'}),
+ 'zgland.com':('sitemap.xml',{'/':'index.html','/local-ai/':'local-ai/index.html','/fund/':'fund/index.html','/fund/workbench/':'fund/workbench/index.html','/history-cycle/':'history-cycle/index.html','/credentials/':'credentials/index.html','/games/':'games/index.html','/games/rich4/':'games/rich4/index.html','/proxy/':'proxy/index.html','/site-blueprint/':'site-blueprint/index.html','/guides/remote-ssh/':'guides/remote-ssh/index.html','/guides/website-publishing/':'guides/website-publishing/index.html','/guides/cloudflare-search-crawling/':'guides/cloudflare-search-crawling/index.html'}),
  'hzct.zgland.com':('sitemap-hzct.xml',{'/':'company-home.html','/company':'company.html','/about':'about.html','/help':'help.html','/contact':'contact.html','/privacy':'privacy.html'}),
  'hzyx.zgland.com':('sitemap-hzyx.xml',{'/':'hzyx/index.html'})
 }
@@ -48,11 +48,11 @@ for host,(xml,paths) in hosts.items():
  robots={'zgland.com':'robots.txt','hzct.zgland.com':'robots-hzct.txt','hzyx.zgland.com':'robots-hzyx.txt'}[host]
  assert 'Sitemap: https://'+host+'/sitemap.xml' in (R/robots).read_text(encoding='utf-8')
 assert len(set(all_urls))==len(all_urls)
-for page in ['index.html','company.html','help.html','hzyx/index.html','fund/index.html','history-cycle/index.html','guides/remote-ssh/index.html','guides/website-publishing/index.html']:
+for page in ['index.html','company.html','help.html','hzyx/index.html','fund/index.html','history-cycle/index.html','guides/remote-ssh/index.html','guides/website-publishing/index.html','guides/cloudflare-search-crawling/index.html']:
  h=Head();h.feed((R/page).read_text(encoding='utf-8'))
  assert all(h.o.get(x) for x in ['og:title','og:url','og:description','og:type']),page
  assert h.o['og:url']==h.c[0],page
-for page in ['guides/remote-ssh/index.html','guides/website-publishing/index.html']:
+for page in ['guides/remote-ssh/index.html','guides/website-publishing/index.html','guides/cloudflare-search-crawling/index.html']:
  text=(R/page).read_text(encoding='utf-8')
  h=Head();h.feed(text)
  assert len(text)>4200 and {'TechArticle','BreadcrumbList'}=={x.get('@type') for x in h.ld},page
@@ -66,4 +66,4 @@ for host,v in keys.items():
  f=(R/'hzyx'/f'{key}.txt') if host=='hzyx.zgland.com' else R/f'{key}.txt'
  assert f.read_text(encoding='utf-8')==key
  for path in v['urls']:assert 'https://'+host+path in all_urls
-print('PASS SEO: 3 host-specific sitemaps, 19 canonical URLs, search metadata, structured guides and IndexNow keys')
+print('PASS SEO: 3 host-specific sitemaps, 20 canonical URLs, search metadata, structured guides and IndexNow keys')
