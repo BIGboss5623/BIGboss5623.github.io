@@ -14,13 +14,13 @@ const live = base.startsWith('https:');
     for (const width of [1360,390]) {
       await page.setViewportSize({width,height:900});
       assert.equal((await page.goto(base+'/?qa=portal')).status(),200);
-      await page.waitForFunction(()=>document.getElementById('siteCount').textContent.includes('12'));
-      assert.equal(await page.locator('.site-card:visible').count(),12);
+      await page.waitForFunction(()=>document.getElementById('siteCount').textContent.includes('17'));
+      assert.equal(await page.locator('.site-card:visible').count(),17);
       await page.locator('#siteSearch').fill('创投');
       assert.equal(await page.locator('.site-card:visible').count(),1);
       await page.locator('#siteSearch').press('Escape');
       await page.locator('[data-filter=research]').click();
-      assert.equal(await page.locator('.site-card:visible').count(),4);
+      assert.equal(await page.locator('.site-card:visible').count(),6);
       await page.locator('#siteSearch').fill('not-found-qa');
       assert.equal(await page.locator('#emptySites').isVisible(),true);
       await page.locator('#siteSearch').fill('');

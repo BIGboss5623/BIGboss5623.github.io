@@ -16,3 +16,5 @@ ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 发布使用原 `上传.py`。相关验证：`python scripts/audit_links.py`、`node scripts/test-domain-api.cjs`、`node scripts/test-portal.cjs`、`node scripts/test-backup-check.cjs`。
 
 - `/local-ai/`：本地 AI 与远程控制指南（2026-10-29核验），含 R1 量化硬件估算、Windows Ollama/Aider、ZeroTier、SSH 密钥、回环端口隧道与 RDP；复制命令、按内存选型、浏览器本地检查清单和打印。容量估算不是速度或代码正确性保证；仅提供步骤，不会安装软件或发起远程连接。首页与共用 portal 样式改为浅色；首页域名提醒随之调亮。验证：`python scripts/test-local-ai.py`。
+
+- 2026-11-25 导航整理：总入口常用网站增加 OpenAI 和 ChatGPT 官方快捷链接，保留第三方非合作声明；FundPilot、钰玺医药、企业信息子页增加返回 ZGLAND 的清晰入口，企业信息子页首页链接统一指向 hzct.zgland.com。回归：node scripts/test-navigation-links.cjs。
