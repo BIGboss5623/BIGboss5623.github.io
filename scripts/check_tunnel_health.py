@@ -2,6 +2,7 @@
 import json
 import urllib.request
 import urllib.error
+from public_http import open_public
 from dataclasses import dataclass
 from typing import Optional
 
@@ -34,7 +35,7 @@ def probe(url: str, timeout: int = 8) -> dict:
     err = ""
     try:
         request = urllib.request.Request(url, headers={"User-Agent": "ZGLAND-readonly-health-check/1.0"})
-        with urllib.request.urlopen(request, timeout=timeout) as response:
+        with open_public(request, timeout=timeout) as response:
             status = response.status
             body = response.read(350).decode("utf-8", "replace")
     except urllib.error.HTTPError as ex:

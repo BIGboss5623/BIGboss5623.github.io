@@ -4,7 +4,7 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base = process.argv[2] || 'http://127.0.0.1:8892';
 const live = base.startsWith('https:');
 (async () => {
-  const browser = await chromium.launch({channel:'msedge',headless:true});
+  const browser = await chromium.launch({channel:'msedge',headless:true,args:['--no-proxy-server']});
   try {
     const context = await browser.newContext({extraHTTPHeaders:{'DNT':'1','Sec-GPC':'1'}});
     await context.addInitScript(() => {
@@ -17,9 +17,21 @@ const live = base.startsWith('https:');
     page.on('request',request => {if(request.method()==='POST' && request.url().startsWith('https://zgland.com/api/visit')) analyticsRequests.push(request.url());});
     page.on('pageerror',error=>errors.push(error.message));
     if (!live) await context.route('https://zgland.com/assets/js/site-tools*.js*',route=>route.fulfill({path:path.resolve(__dirname,'../assets/js/site-tools.js'),contentType:'application/javascript'}));
+    async function navigate(url) {
+      for (let attempt=0; attempt<2; attempt++) {
+        try {
+          return await page.goto(url,{waitUntil:'load',timeout:30000});
+        } catch (error) {
+          if (!live || attempt===1 || !/net::ERR_CONNECTION_CLOSED|net::ERR_TIMED_OUT/.test(String(error))) throw error;
+          console.warn('Transient public-page connection close; retrying once:',url);
+          await page.waitForTimeout(700);
+        }
+      }
+      throw Error('Public page navigation exhausted retry');
+    }
     for (const width of [1360,390]) {
       await page.setViewportSize({width,height:900});
-      assert.equal((await page.goto(base+'/?qa=portal')).status(),200);
+      assert.equal((await navigate(live?base+'/':base+'/?qa=portal')).status(),200);
       await page.waitForFunction(()=>document.getElementById('siteCount').textContent.includes('17'));
       assert.equal(await page.locator('.site-card:visible').count(),17);
       await page.locator('#siteSearch').fill('创投');
@@ -34,7 +46,7 @@ const live = base.startsWith('https:');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
       if (process.env.QA_SCREENSHOT_DIR) await page.screenshot({path:path.join(process.env.QA_SCREENSHOT_DIR,`portal-${live?'live':'local'}-${width}.png`),fullPage:true});
       const companyUrl = live ? 'https://hzct.zgland.com/' : base+'/company-home.html';
-      assert.equal((await page.goto(companyUrl)).status(),200);
+      assert.equal((await navigate(companyUrl)).status(),200);
       assert((await page.title()).includes('杭州创投'));
       assert.equal(await page.locator('.work-evidence-grid img, .work-evidence img').count()>0 || await page.getByText('创投作品1 · 协拍人员',{exact:true}).count()>0,true);
       assert.equal(await page.getByText('量化研究与重点新闻',{exact:true}).count(),0);
@@ -43,7 +55,7 @@ const live = base.startsWith('https:');
       assert.equal(companyImages.length,2);
     }
     const remote=[];page.on('request',r=>{if(r.url().includes('monkeycode')||r.url().includes('/api/quant-status'))remote.push(r.url())});
-    await page.goto(base+'/quant-console/');
+    await navigate(base+'/quant-console/');
     assert.equal(await page.locator('#enterLocal').getAttribute('href'),'http://127.0.0.1:8765/');
     assert.equal(await page.locator('#activateCloud,#enterCloud,#checkCloud').count(),0);
     assert((await page.locator('body').textContent()).includes('原环境和原有备份文件均未删除'));

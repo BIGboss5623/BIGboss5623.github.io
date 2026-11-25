@@ -34,4 +34,7 @@ with patch.object(public_http,'urlopen',side_effect=URLError(ssl.SSLError('proxy
                 args=called.call_args.args[0]
                 assert '--noproxy' in args and '--insecure' not in args and '-k' not in args
 
+assert public_http._approved_public_url('https://quant.zgland.com/healthz')
+assert not public_http._approved_public_url('https://quant.zgland.com/')
+assert not public_http._approved_public_url('https://quant.zgland.com/private-admin')
 print('PASS HTTPS fallback: allowed first-party only; TLS validation retained; unexpected hosts do not bypass proxy')

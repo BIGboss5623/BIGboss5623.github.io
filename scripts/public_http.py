@@ -10,7 +10,13 @@ from urllib.request import urlopen,build_opener,ProxyHandler
 from urllib.error import URLError
 from urllib.parse import urlsplit
 
-PUBLIC_HOSTS=frozenset({'zgland.com','hzct.zgland.com','hzyx.zgland.com'})
+PUBLIC_HOSTS=frozenset({'zgland.com','hzct.zgland.com','hzyx.zgland.com','quant.zgland.com'})
+def _approved_public_url(url):
+    parsed=urlsplit(url)
+    return (parsed.scheme=='https' and parsed.hostname in PUBLIC_HOSTS
+            and not parsed.username and not parsed.password
+            and (parsed.hostname!='quant.zgland.com' or parsed.path=='/healthz'))
+
 class PublicResponse(io.BytesIO):
     def __init__(self,body,status):
         super().__init__(body)
@@ -22,7 +28,7 @@ def _curl_direct(req,timeout):
         raise URLError('HTTPS direct retry requires a certificate-verifying curl binary')
     url=req.full_url
     parsed=urlsplit(url)
-    if parsed.scheme!='https' or parsed.hostname not in PUBLIC_HOSTS or parsed.username or parsed.password:
+    if not _approved_public_url(url):
         raise ValueError('Direct fallback only accepts approved public HTTPS hosts')
     # --proto and --proto-redir enforce HTTPS even across redirects. No -k/--insecure.
     args=[executable,'--noproxy','*','--proto','=https','--proto-redir','=https',
@@ -46,7 +52,7 @@ def open_public(req,timeout=12):
     try:
         return urlopen(req,timeout=timeout)
     except URLError as exc:
-        if urlsplit(req.full_url).hostname not in PUBLIC_HOSTS or not isinstance(exc.reason,ssl.SSLError):
+        if not _approved_public_url(req.full_url) or not isinstance(exc.reason,ssl.SSLError):
             raise
     print('NOTICE: default HTTPS proxy handshake failed; checking first-party direct HTTPS',flush=True)
     try:
