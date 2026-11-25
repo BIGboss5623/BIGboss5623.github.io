@@ -18,3 +18,7 @@ ZGLAND 全站导航与杭州创投企业官网，共用仓库、独立首页。
 - `/local-ai/`：本地 AI 与远程控制指南（2026-10-29核验），含 R1 量化硬件估算、Windows Ollama/Aider、ZeroTier、SSH 密钥、回环端口隧道与 RDP；复制命令、按内存选型、浏览器本地检查清单和打印。容量估算不是速度或代码正确性保证；仅提供步骤，不会安装软件或发起远程连接。首页与共用 portal 样式改为浅色；首页域名提醒随之调亮。验证：`python scripts/test-local-ai.py`。
 
 - 2026-11-25 导航整理：总入口常用网站增加 OpenAI 和 ChatGPT 官方快捷链接，保留第三方非合作声明；FundPilot、钰玺医药、企业信息子页增加返回 ZGLAND 的清晰入口，企业信息子页首页链接统一指向 hzct.zgland.com。回归：node scripts/test-navigation-links.cjs。
+
+- 2026-11-25 深度巡检：一键运行 python scripts/verify_site.py --mode both（可追加 --full 扫描全部主要页面），完成静态安全测试、本地浏览器检查与线上检查；报告保存在不上传的 本地留档/qa-reports。检测到真实线上 HTTP 错误仍会报警，仅本地静态服务器无法执行的已有 Cloudflare Function 返回 404 被单独记录。浏览器检查需要 Playwright 和 Edge，可通过 PLAYWRIGHT_MODULE 指定本地已安装模块。巡检不执行部署或管理写入。
+
+- 2026-11-25 公开统计连通性诊断：python scripts/check_tunnel_health.py 仅检查公开主页、统计 API 和认证网关，不读取口令；Cloudflare 530 / 1033 直接标记为 Tunnel 断连，HTTP 401 仅代表认证网关可达，不能代替业务健康确认。网站发布与自有服务器维护分离；不可因统计断连而伪造访问数据。

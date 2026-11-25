@@ -6,9 +6,15 @@ const live = base.startsWith('https:');
 (async () => {
   const browser = await chromium.launch({channel:'msedge',headless:true});
   try {
-    const context = await browser.newContext();
+    const context = await browser.newContext({extraHTTPHeaders:{'DNT':'1','Sec-GPC':'1'}});
+    await context.addInitScript(() => {
+      Object.defineProperty(navigator,'doNotTrack',{configurable:true,value:'1'});
+      Object.defineProperty(navigator,'globalPrivacyControl',{configurable:true,value:true});
+    });
     const page = await context.newPage();
     const errors = [];
+    const analyticsRequests = [];
+    page.on('request',request => {if(request.method()==='POST' && request.url().startsWith('https://zgland.com/api/visit')) analyticsRequests.push(request.url());});
     page.on('pageerror',error=>errors.push(error.message));
     if (!live) await context.route('https://zgland.com/assets/js/site-tools*.js*',route=>route.fulfill({path:path.resolve(__dirname,'../assets/js/site-tools.js'),contentType:'application/javascript'}));
     for (const width of [1360,390]) {
@@ -46,6 +52,7 @@ const live = base.startsWith('https:');
     if(process.env.QA_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.QA_SCREENSHOT_DIR,`quant-console-${live?'live':'local'}-390.png`),fullPage:true});
     assert.deepEqual(remote,[]);
     assert.deepEqual(errors,[]);
+    assert.deepEqual(analyticsRequests,[],'QA must not inflate real visitor statistics');
     await context.close();
     console.log('PASS: portal search/category/empty/reset, company content, desktop/mobile, private server and local fallback entries, no automatic probes.');
   } finally {await browser.close()}
