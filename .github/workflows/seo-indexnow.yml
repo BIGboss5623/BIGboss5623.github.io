@@ -1,0 +1,42 @@
+name: Notify IndexNow after SEO sitemap updates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sitemap*.xml'
+      - 'scripts/indexnow-hosts.json'
+      - '.github/workflows/seo-indexnow.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zgland-indexnow-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  notify-indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify public sitemap and key before sending a bounded notification
+        shell: bash
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            echo "IndexNow deployment verification attempt $attempt of 6"
+            if python scripts/submit_indexnow.py --send; then
+              echo "IndexNow accepted or already recorded"
+              exit 0
+            fi
+            if [ "$attempt" -eq 6 ]; then
+              echo "Notification not accepted; see per-domain logs"
+              exit 1
+            fi
+            sleep 25
+          done
