@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-copy-url]').forEach(button => {button.addEventListener('click', async () => {try {await navigator.clipboard.writeText(location.href);button.textContent='链接已复制';}catch {button.textContent='复制失败，请使用浏览器地址栏';}});});

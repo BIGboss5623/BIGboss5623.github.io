@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hzyx.zgland.com/sitemap.xml

@@ -1,0 +1,31 @@
+{
+  "zgland.com": {
+    "key": "381ee8cb0f6fcc9c6fe7f0b2af06b639",
+    "urls": [
+      "/",
+      "/local-ai/",
+      "/fund/",
+      "/fund/workbench/",
+      "/history-cycle/",
+      "/credentials/",
+      "/guides/remote-ssh/",
+      "/guides/website-publishing/"
+    ]
+  },
+  "hzct.zgland.com": {
+    "key": "d3b4bda8d4c078293f5fa7ad93f41970",
+    "urls": [
+      "/",
+      "/company.html",
+      "/about.html",
+      "/help.html",
+      "/contact.html"
+    ]
+  },
+  "hzyx.zgland.com": {
+    "key": "47d8029e6c48af3610458266e4207970",
+    "urls": [
+      "/"
+    ]
+  }
+}

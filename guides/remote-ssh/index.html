@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Windows SSH 连接失败排查：ZeroTier、Tailscale 与 VS Code 实用清单 | ZGLAND</title>
+<meta name="description" content="Windows Remote-SSH 无法连接的排查顺序：ZeroTier/Tailscale 网络可达性、22端口、防火墙、SSH服务、主机指纹与公钥认证。含可复制的只读检查命令。">
+<link rel="canonical" href="https://zgland.com/guides/remote-ssh/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows SSH 连接失败排查：ZeroTier、Tailscale 与 VS Code 实用清单 | ZGLAND">
+<meta property="og:description" content="Windows Remote-SSH 无法连接的排查顺序：ZeroTier/Tailscale 网络可达性、22端口、防火墙、SSH服务、主机指纹与公钥认证。含可复制的只读检查命令。">
+<meta property="og:url" content="https://zgland.com/guides/remote-ssh/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/guides/guide.css">
+<script src="/guides/share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Windows 远程 SSH 连不上？按网络、端口、身份三层排查","description":"Windows Remote-SSH 无法连接的排查顺序：ZeroTier/Tailscale 网络可达性、22端口、防火墙、SSH服务、主机指纹与公钥认证。含可复制的只读检查命令。","url":"https://zgland.com/guides/remote-ssh/","datePublished":"2026-11-25","dateModified":"2026-11-25","inLanguage":"zh-CN","author":{"@type":"Organization","name":"ZGLAND","url":"https://zgland.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ZGLAND","item":"https://zgland.com/"},{"@type":"ListItem","position":2,"name":"Windows 远程 SSH 连不上？按网络、端口、身份三层排查","item":"https://zgland.com/guides/remote-ssh/"}]}</script>
+</head>
+<body>
+<header class="top"><div class="wrap"><a href="/" class="brand">ZGLAND / 实用研究</a><nav class="nav" aria-label="网站导航"><a href="/">全部网站</a><a href="/local-ai/">本地 AI</a><a href="/site-blueprint/">建站资料</a></nav></div></header>
+<main class="wrap" id="main">
+<section class="hero"><p class="eyebrow">ZGLAND · 经验与操作指南</p><h1>Windows 远程 SSH 连不上？按网络、端口、身份三层排查</h1><p class="intro">不用先重装 VS Code，也不用直接关闭防火墙。先确认是哪一层断开，避免把 IP 变化、服务未启动和密钥认证失败混为一谈。</p><p class="date">首次发布：2026 年 11 月 25 日 · 结合实际部署经验持续核验</p></section>
+<article class="content">
+
+<h2 id="route">一、先把连接链路分成三层</h2>
+<p>对 Windows 主机而言，远程连接通常同时涉及<strong>虚拟网络、TCP 端口和 SSH 身份验证</strong>。三层的错误提示不同，处理顺序也不同。VS Code Remote-SSH 只是 SSH 客户端入口；如果普通 SSH 尚未连通，重复卸载 VS Code 通常不能解决根因。</p>
+<div class="table-wrap"><table><thead><tr><th>观察到的现象</th><th>优先检查</th><th>下一步</th></tr></thead><tbody>
+<tr><td>ZeroTier / Tailscale 显示离线</td><td>双方客户端、服务状态及设备地址</td><td>先恢复虚拟网络，不要操作远端 SSH 密钥</td></tr>
+<tr><td>地址能 Ping，但 22 端口不通</td><td>sshd 服务、监听地址、Windows 防火墙</td><td>在目标主机本地或既有可信远程会话中诊断</td></tr>
+<tr><td>22 端口可达，却出现 Permission denied</td><td>用户名、私钥、公钥授权与 ACL</td><td>核对正确 Windows 账户，不要随意覆盖 authorized_keys</td></tr>
+<tr><td>REMOTE HOST IDENTIFICATION HAS CHANGED</td><td>机器身份与主机密钥指纹</td><td>通过独立可信渠道确认新指纹，不能盲目忽略校验</td></tr>
+<tr><td>SSH 已连上，VS Code 无法打开远程窗口</td><td>Remote-SSH 日志、服务器端扩展及权限</td><td>仅在基础 SSH 验证成功后排查扩展</td></tr>
+</tbody></table></div>
+<h2 id="commands">二、客户端先运行两条只读检查</h2>
+<p>将示例中的地址替换成你在 ZeroTier 或 Tailscale 中确认的目标设备地址；不要照抄示例 IP 当作真实主机。</p>
+<pre><code>Test-NetConnection 目标虚拟网络IP -Port 22
+ssh -v 用户名@目标虚拟网络IP</code></pre>
+<p><code>TcpTestSucceeded : True</code> 只证明 TCP 端口可建立连接，<strong>不等于已经有 SSH 管理权限</strong>。第二条命令会提供连接协商和认证相关日志；诊断时可以隐藏用户名、内部 IP 与密钥位置，不要上传私钥或密码。</p>
+<h2 id="server">三、目标 Windows 主机上的服务检查</h2>
+<p>当你已获准进入目标机器的本地终端或可信远程会话，可以执行下列只读命令：</p>
+<pre><code>Get-Service sshd
+Get-NetTCPConnection -LocalPort 22 -State Listen
+whoami
+$env:USERPROFILE</code></pre>
+<p>特别注意：<code>C:\Users\某目录</code> 不一定等于实际登录账户名。配置公钥时要确认 SSH 使用的真实账户是否属于管理员组，管理员账户和普通账户的授权文件与 ACL 处理方式可能不同。</p>
+<h2 id="safety">四、别把“连得上”变成新的安全问题</h2>
+<ul><li>优先使用已授权的 ZeroTier、Tailscale 或其他私有网络，不必为了 SSH 测试将 22 端口对公网开放。</li><li>保留 SSH 主机指纹校验，确认机器身份后再接受新增主机密钥。</li><li>Windows 防火墙应保留；需要授权规则时尽量约束来源地址和网络接口。</li><li>如果服务器正在进行科研计算或数据处理，先保证任务和文件安全，再考虑服务重启。</li><li>将测试限制在获得授权的电脑；不要借用不明来源的自动修复脚本。</li></ul>
+<h2 id="vscode">五、修复后这样验证 VS Code</h2>
+<ol><li>普通终端先用相同地址、用户名和密钥连接成功。</li><li>在本机 SSH config 为目标主机设置简洁的 Host 别名和正确的 HostName。</li><li>在 VS Code 中选择 <strong>Remote-SSH: Connect to Host</strong>。</li><li>如连接失败，仅查看 Remote-SSH 输出面板中本次失败步骤，并与终端的 SSH 日志对照。</li></ol>
+<p>如果公网域名访问异常但私有网络仍连通，还要把 HTTP 站点、反向代理、Cloudflare Tunnel 与 SSH 四者分开检查；它们不是同一个服务。</p>
+<div class="note">这份清单用于定位已授权设备的连接问题，不提供绕过账号认证、禁用安全防护或未经授权访问他人设备的方法。</div>
+<div class="refs"><strong>延伸阅读与官方文档：</strong><p><a href="/local-ai/">ZGLAND 本地 AI 部署与远程控制完整指南</a><a href="/network/">网络工具与官方下载入口</a><a href="https://code.visualstudio.com/docs/remote/ssh">VS Code Remote-SSH 文档</a><a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh-overview">微软 OpenSSH 文档</a><a href="https://tailscale.com/kb/">Tailscale 文档</a><a href="https://docs.zerotier.com/">ZeroTier 文档</a></p></div>
+
+<div class="share"><button type="button" data-copy-url>复制本页链接</button><span class="small">欢迎分享给需要解决同类问题的读者；引用时请保留页面来源。</span></div>
+</article>
+</main>
+<footer class="footer"><div class="wrap"><span>© ZGLAND · 原创实用指南</span><span><a href="/">返回总导航</a> · <a href="/privacy.html">网站隐私说明</a></span></div></footer>
+</body>
+</html>

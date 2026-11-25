@@ -11,6 +11,23 @@ function mappedDirectory(hostname) {
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const hostname = url.hostname.toLowerCase();
+  // The Cloudflare Pages project serves several distinct canonical hosts.
+  // Supply each company host's own sitemap and robots file without touching
+  // existing APIs or the independent files/quant tunnels.
+  const seoAssets = {
+    "hzct.zgland.com": {"/sitemap.xml":"/sitemap-hzct.xml", "/robots.txt":"/robots-hzct.txt"},
+    "hzyx.zgland.com": {"/sitemap.xml":"/sitemap-hzyx.xml", "/robots.txt":"/robots-hzyx.txt"}
+  };
+  // Public IndexNow verification key for the company's canonical subdomain.
+  if (hostname === "hzyx.zgland.com" && url.pathname === "/47d8029e6c48af3610458266e4207970.txt") {
+    url.pathname = "/hzyx/47d8029e6c48af3610458266e4207970.txt";
+    return context.env.ASSETS.fetch(new Request(url, context.request));
+  }
+  const seoPath = seoAssets[hostname]?.[url.pathname];
+  if (seoPath) {
+    url.pathname = seoPath;
+    return context.env.ASSETS.fetch(new Request(url, context.request));
+  }
   // Keep company assets and legacy root-level pages at their existing paths.
   // Only the company's home document differs from the navigation portal.
   if (hostname === `hzct.${ROOT_DOMAIN}` && ["/", "/index.html"].includes(url.pathname)) {

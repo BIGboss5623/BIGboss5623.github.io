@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloudflare Pages 与 GitHub Pages 双发布：静态网站构建、SEO 和故障排查 | ZGLAND</title>
+<meta name="description" content="ZGLAND 静态网站实践：区分 GitHub 推送、GitHub Pages/Jekyll 构建、Cloudflare Pages 上线和私有 Tunnel 健康；介绍 .nojekyll、只读 CI、站点地图与真实浏览器验收。">
+<link rel="canonical" href="https://zgland.com/guides/website-publishing/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cloudflare Pages 与 GitHub Pages 双发布：静态网站构建、SEO 和故障排查 | ZGLAND">
+<meta property="og:description" content="ZGLAND 静态网站实践：区分 GitHub 推送、GitHub Pages/Jekyll 构建、Cloudflare Pages 上线和私有 Tunnel 健康；介绍 .nojekyll、只读 CI、站点地图与真实浏览器验收。">
+<meta property="og:url" content="https://zgland.com/guides/website-publishing/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/guides/guide.css">
+<script src="/guides/share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"一个源码仓库，两条静态发布链路：从故障到可验证上线","description":"ZGLAND 静态网站实践：区分 GitHub 推送、GitHub Pages/Jekyll 构建、Cloudflare Pages 上线和私有 Tunnel 健康；介绍 .nojekyll、只读 CI、站点地图与真实浏览器验收。","url":"https://zgland.com/guides/website-publishing/","datePublished":"2026-11-25","dateModified":"2026-11-25","inLanguage":"zh-CN","author":{"@type":"Organization","name":"ZGLAND","url":"https://zgland.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ZGLAND","item":"https://zgland.com/"},{"@type":"ListItem","position":2,"name":"一个源码仓库，两条静态发布链路：从故障到可验证上线","item":"https://zgland.com/guides/website-publishing/"}]}</script>
+</head>
+<body>
+<header class="top"><div class="wrap"><a href="/" class="brand">ZGLAND / 实用研究</a><nav class="nav" aria-label="网站导航"><a href="/">全部网站</a><a href="/local-ai/">本地 AI</a><a href="/site-blueprint/">建站资料</a></nav></div></header>
+<main class="wrap" id="main">
+<section class="hero"><p class="eyebrow">ZGLAND · 经验与操作指南</p><h1>一个源码仓库，两条静态发布链路：从故障到可验证上线</h1><p class="intro">代码推送成功不代表网站已经发布；公开网页可用也不等于私有数据接口健康。这里整理一个多站点项目中实际采用的分层验收方法。</p><p class="date">首次发布：2026 年 11 月 25 日 · 结合实际部署经验持续核验</p></section>
+<article class="content">
+
+<h2 id="layers">一、把一次“上线成功”拆成四件事</h2>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>应该验证什么</th><th>常见误判</th></tr></thead><tbody>
+<tr><td>Git 源码</td><td>远端分支与本地提交 SHA 是否一致</td><td>误把 git push 的返回码当成网站已更新</td></tr>
+<tr><td>静态构建与 CI</td><td>测试是否真正运行，构建是否成功产生产物</td><td>仅在 Windows 本地通过，忽略 Linux CI 环境差异</td></tr>
+<tr><td>公开网站部署</td><td>HTTP 状态、关键内容、手机与桌面浏览器功能</td><td>GitHub Pages 已成功却未验证 Cloudflare 主域名</td></tr>
+<tr><td>私有业务后端</td><td>后台健康、鉴权、数据接口及依赖服务</td><td>公开首页 HTTP 200 就宣称整套服务健康</td></tr>
+</tbody></table></div>
+<h2 id="jekyll">二、纯静态网站遇到 Jekyll 构建冲突</h2>
+<p>若仓库本身已有完整 HTML、CSS、JavaScript 文件，而 GitHub Pages 又自动运行 Jekyll，就可能因为输出路径与已有静态目录冲突而失败。对不需要 Jekyll 转换的纯静态站，可在仓库根目录使用空文件 <code>.nojekyll</code>，让 GitHub Pages 直接按静态文件发布。</p>
+<p>这个选择不会替代 Cloudflare Pages 的部署，也不应该用来解决所有构建失败；应先查看 GitHub Actions 中失败步骤的真实日志，再实施针对性修复。</p>
+<h2 id="cross">三、跨仓库依赖是 CI 中容易忽略的一层</h2>
+<p>有些网站将主导航、企业站和其他公开子站拆成独立仓库。本地开发环境中，相邻目录可能已经存在，因此链接审计通过；GitHub Actions 默认仅检出当前仓库，相邻目录缺失，就可能被判定为断链。</p>
+<p>可在 CI 里<strong>只读检出对应的公开仓库</strong>到约定的相邻目录，再运行跨站审计。这样既不需要把无关源码复制多份，也不必禁用已经发现问题的测试。</p>
+<h2 id="sitemap">四、让搜索引擎正确发现多域名内容</h2>
+<ul><li>让公开页面拥有具体、与正文一致的标题与摘要，而不是所有页面重复“首页”。</li><li>通过规范地址 <code>rel="canonical"</code> 指明相同内容在不同入口下的首选网址。</li><li>为不同的公开主机维护准确的站点地图，提交真实且可访问的规范页面。</li><li>内部导航使用可点击的 HTML 链接，不要只依赖 JavaScript 事件跳转。</li><li>搜索收录与网站分析是两回事：统计服务断开时不应把实际访问量写成零。</li></ul>
+<p>Google 和 Bing 都把站点地图视为帮助发现网址的线索，但并不承诺收录、排名或流量。正式效果需要结合 Webmaster Tools 的真实点击与曝光数据判断。</p>
+<h2 id="acceptance">五、一次完整的上线验收应该保存什么</h2>
+<ol><li>本次提交的 SHA、GitHub CI 链接与构建结果。</li><li>正式域名及备用域名的 HTTP 状态、标题和页面关键内容。</li><li>手机与桌面端的浏览器交互测试，特别是搜索、导航与横向滚动。</li><li>异常接口单独标注，不让非关键统计错误掩盖公开网页已发布的事实，也不将真正故障当成健康。</li><li>至少保留可恢复的历史版本，并把详细测试报告放在不公开的备份目录中。</li></ol>
+<div class="note">本文介绍 ZGLAND 在 2026 年维护公开静态站点时形成的经验。不同托管项目的域名路由、权限与备份机制可能不同，操作前应以自己的实际配置为准。</div>
+<div class="refs"><strong>项目相关资料与官方文档：</strong><p><a href="/site-blueprint/">ZGLAND 公开建站蓝图</a><a href="/guides/remote-ssh/">远程 SSH 排障清单</a><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages">GitHub Pages 文档</a><a href="https://developers.cloudflare.com/pages/">Cloudflare Pages 文档</a><a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap">Google Sitemap 指南</a></p></div>
+
+<div class="share"><button type="button" data-copy-url>复制本页链接</button><span class="small">欢迎分享给需要解决同类问题的读者；引用时请保留页面来源。</span></div>
+</article>
+</main>
+<footer class="footer"><div class="wrap"><span>© ZGLAND · 原创实用指南</span><span><a href="/">返回总导航</a> · <a href="/privacy.html">网站隐私说明</a></span></div></footer>
+</body>
+</html>
