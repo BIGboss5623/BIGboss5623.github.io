@@ -23,7 +23,7 @@ const last=await wrong();assert.equal(last.status,429);assert.equal(last.headers
 assert.equal((await req('/admin/')).status,429);
 assert.equal((await pass()).status,429);
 clock+=60000;assert.equal((await wrong()).headers.get('Retry-After'),'1740');
-const other=await pass(ip2);assert.equal(other.status,303);const c2=cookieOf(other);assert.match(other.headers.get('set-cookie'),/Secure; HttpOnly; SameSite=Strict/);assert.match(other.headers.get('set-cookie'),/Max-Age=25920000/);
+const other=await pass(ip2);assert.equal(other.status,303);const c2=cookieOf(other);assert.match(other.headers.get('set-cookie'),/Secure; HttpOnly; SameSite=Strict/);assert.match(other.headers.get('set-cookie'),/Max-Age=604800/);
 assert.equal(await(await req('/admin/',{ip:ip2,cookie:c2})).text(),'PRIVATE-DASHBOARD');
 clock+=1740000;assert.equal((await wrong()).status,401);
 const good=await pass();assert.equal(good.status,303);const c=cookieOf(good);
@@ -35,7 +35,7 @@ for(let i=0;i<19;i++)assert.equal((await wrong()).status,401);
 const fresh=await pass();assert.equal(fresh.status,303);assert.equal((await wrong()).status,401);
 const c3=cookieOf(fresh);
 assert.equal((await req('/admin/api/audit',{cookie:c3,env:{...env,ADMIN_PASSWORD:'rotated-fixture-password'}})).status,401);
-clock+=299*86400000;assert.equal((await req('/admin/api/audit',{cookie:c3})).status,200);clock+=86400000;assert.equal((await req('/admin/api/audit',{cookie:c3})).status,401);const later=await pass();assert.equal(later.status,303);const laterAudit=await(await req('/admin/api/audit',{cookie:cookieOf(later)})).json();assert.ok(laterAudit.events.some(e=>e.event==='login_locked'));clock+=66*86400000;const retention=await(await req('/admin/api/audit',{cookie:cookieOf(later)})).json();assert.ok(retention.events.every(e=>e.created_at>=Math.floor(clock/1000)-365*86400));
+clock+=6*86400000;assert.equal((await req('/admin/api/audit',{cookie:c3})).status,200);clock+=86400000;assert.equal((await req('/admin/api/audit',{cookie:c3})).status,401);const later=await pass();assert.equal(later.status,303);const laterAudit=await(await req('/admin/api/audit',{cookie:cookieOf(later)})).json();assert.ok(laterAudit.events.some(e=>e.event==='login_locked'));clock+=359*86400000;const current=await pass();assert.equal(current.status,303);const retention=await(await req('/admin/api/audit',{cookie:cookieOf(current)})).json();assert.ok(retention.events.every(e=>e.created_at>=Math.floor(clock/1000)-365*86400));
 for(const path of ['/admin/','/admin/index.html','/admin/dashboard.v2.js','/admin/api/audit','/ADMIN/','/%61dmin/','/admin%2findex.html','/foo/../admin/']){
  const r=await onRequest({request:new Request(origin+path,{headers:{'CF-Connecting-IP':ip}}),env,next:()=>new Response('PUBLIC-BYPASS')});
  assert.ok([303,401].includes(r.status),path+' '+r.status);
@@ -46,5 +46,5 @@ for(const u of ['https://admin.zgland.com/','https://www.zgland.com/admin/','htt
 const publicPage=await onRequest({request:new Request(origin+'/'),env,next:()=>new Response('PUBLIC')});assert.equal(await publicPage.text(),'PUBLIC');
 const dbFail={prepare(){throw Error('fixture database down');}};
 assert.equal((await req('/admin/',{env:{...env,ADMIN_DB:dbFail}})).status,503);
-console.log('PASS: 19/20 attempts, 30-minute fixed lockout, distinct IP, expiry, success reset, 300-day secure cookie, logout, rotation, day 299/300 expiry, private IP and geo audit, 365-day audit window, same-origin POST, route aliases, public site, fail closed');
+console.log('PASS: 19/20 attempts, 30-minute fixed lockout, distinct IP, expiry, success reset, 7-day secure cookie, logout, rotation, day 6/7 expiry, private IP and geo audit, 365-day audit window, same-origin POST, route aliases, public site, fail closed');
 }finally{Date.now=originalNow;sql.close();}
