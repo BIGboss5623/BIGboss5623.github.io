@@ -1,3 +1,4 @@
+import {adminRequest} from '../operations/admin-auth.js';
 const ROOT_DOMAIN = "zgland.com";
 const ROOT_SITE_HOSTS = new Set([ROOT_DOMAIN, `www.${ROOT_DOMAIN}`, `hzct.${ROOT_DOMAIN}`]);
 
@@ -11,6 +12,23 @@ function mappedDirectory(hostname) {
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const hostname = url.hostname.toLowerCase();
+  // Guard before any hostname mapping or ASSETS.fetch. Encoded aliases
+  // are redirected rather than passed through to static asset routing.
+  let normalized=url.pathname;
+  try { for(let i=0;i<3;i++){const next=decodeURIComponent(normalized);if(next===normalized)break;normalized=next;} }
+  catch { return new Response('Bad request',{status:400}); }
+  normalized=normalized.replace(/\\/g,'/').replace(/\/+/g,'/');
+  const parts=[];
+  for(const part of normalized.split('/')){if(!part||part==='.')continue;if(part==='..')parts.pop();else parts.push(part);}
+  const clean='/'+parts.join('/');
+  const isAdmin=clean.toLowerCase()==='/admin'||clean.toLowerCase().startsWith('/admin/');
+  if(hostname==='admin.zgland.com'||isAdmin){
+    if(hostname!=='zgland.com'||!/^\/admin(?:\/|$)/.test(url.pathname)||normalized!==url.pathname){
+      return new Response(null,{status:303,headers:{Location:'https://zgland.com/admin/','Cache-Control':'no-store'}});
+    }
+    return adminRequest(context);
+  }
+
   // The Cloudflare Pages project serves several distinct canonical hosts.
   // Supply each company host's own sitemap and robots file without touching
   // existing APIs or the independent files/quant tunnels.
