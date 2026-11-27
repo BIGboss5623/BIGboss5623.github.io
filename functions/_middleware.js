@@ -11,6 +11,20 @@ function mappedDirectory(hostname) {
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const hostname = url.hostname.toLowerCase();
+  // The live dashboard is served by the existing authenticated local service.
+  // No public static admin asset or alternative hostname can bypass this gate.
+  let decoded=url.pathname;
+  try {for(let i=0;i<4;i++){const next=decodeURIComponent(decoded);if(next===decoded)break;decoded=next;}} catch {return new Response('Bad request',{status:400});}
+  const parts=[];
+  for(const part of decoded.replace(/\\/g,'/').split('/')){if(!part||part==='.')continue;if(part==='..')parts.pop();else parts.push(part);}
+  const clean='/'+parts.join('/');
+  if(hostname==='admin.zgland.com'||clean.toLowerCase()==='/admin'||clean.toLowerCase().startsWith('/admin/')){
+    const headers={'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow','Referrer-Policy':'no-referrer','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY'};
+    if(clean.toLowerCase().startsWith('/admin/api/'))return Response.json({ok:false,message:'Use the authenticated management service.'},{status:401,headers});
+    if(!['GET','HEAD'].includes(context.request.method))return new Response(null,{status:405,headers:{...headers,Allow:'GET, HEAD'}});
+    return new Response(null,{status:303,headers:{...headers,Location:'https://files.zgland.com/admin/'}});
+  }
+
   // The Cloudflare Pages project serves several distinct canonical hosts.
   // Supply each company host's own sitemap and robots file without touching
   // existing APIs or the independent files/quant tunnels.
