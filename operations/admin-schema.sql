@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS admin_audit (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   created_at INTEGER NOT NULL,
   event TEXT NOT NULL,
-  ip_key TEXT NOT NULL
+  ip_key TEXT NOT NULL,
+  ip_address TEXT NOT NULL DEFAULT '',
+  country TEXT NOT NULL DEFAULT '',
+  region TEXT NOT NULL DEFAULT '',
+  city TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS admin_audit_time ON admin_audit(created_at);
