@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-31",
+  "version": "2026-11-27",
   "blueprint": "https://zgland.com/site-blueprint/blueprint.md",
   "routes": [
     {
@@ -68,7 +68,7 @@
     },
     {
       "route": "files.zgland.com",
-      "purpose": "按原文件夹逐层浏览、检索、文档分段、PDF/Word看页、内嵌图片、数值文件结构预览"
+      "purpose": "独立认证的资料库；网页、目录、读取API和MCP均需授权；登录与详细访问审计仅管理员可见。"
     },
     {
       "route": "/site-stats/",
