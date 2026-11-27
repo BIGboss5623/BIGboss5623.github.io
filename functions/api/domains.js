@@ -1,6 +1,8 @@
 import {checkPassword, unavailable, boundedJson} from '../../operations/edge.js';
 const API_BASE = "https://api.cloudflare.com/client/v4";
 const ROOT_DOMAIN = "zgland.com";
+// These hosts have independent routing or a private management role.
+const RESERVED_HOSTS = new Set(["files", "quant", "admin", "feitianshan"].map(x=>`${x}.${ROOT_DOMAIN}`));
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data, null, 2), {
@@ -18,7 +20,7 @@ function normalizeHostname(value) {
 }
 
 function validManagedHostname(hostname) {
-  if (!hostname || hostname === ROOT_DOMAIN || !hostname.endsWith(`.${ROOT_DOMAIN}`)) return false;
+  if (!hostname || hostname === ROOT_DOMAIN || RESERVED_HOSTS.has(hostname) || !hostname.endsWith(`.${ROOT_DOMAIN}`)) return false;
   if (hostname.length > 253 || hostname.includes("*")) return false;
   const prefix = hostname.slice(0, -(ROOT_DOMAIN.length + 1));
   return /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(prefix);
@@ -96,7 +98,7 @@ async function handleRequest(context) {
 
   const missing = requiredEnv(env);
   if (missing.length) {
-    return json({ ok: false, message: "控制台尚未完成首次配置。", missing }, 503);
+    return json({ ok: false, message: "控制台尚未完成首次配置。" }, 503);
   }
 
   const origin=request.headers.get('Origin');
@@ -142,6 +144,10 @@ async function handleRequest(context) {
     return json({ ok: false, message: "发现多个同名 CNAME，已停止，请先在 Cloudflare 后台人工核对。" }, 409);
   }
 
+  // Never replace an existing unrelated CNAME or a named tunnel by accident.
+  if (current.cname && normalizeHostname(current.cname.content) !== target) {
+    return json({ok:false,message:"现有 CNAME 指向其他服务，已停止；请先在 Cloudflare 控制台核验，本站不会自动覆盖。"},409);
+  }
   const operations = [];
   if (!current.cname) operations.push({ area: "DNS", operation: "create", detail: `${hostname} → ${target}` });
   else if (normalizeHostname(current.cname.content) !== target || current.cname.proxied !== true) {
@@ -196,7 +202,7 @@ export async function onRequestPost(context) {
   try {
     return await handleRequest(context);
   } catch (error) {
-    return json({ ok: false, message: error instanceof Error ? error.message : "服务器处理失败。" }, 500);
+    return json({ ok: false, message: "服务器处理失败，请在授权控制台查看部署与操作记录。" }, 500);
   }
 }
 
